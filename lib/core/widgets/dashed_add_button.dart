@@ -20,9 +20,20 @@ class DashedAddButton extends StatelessWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              const Icon(Icons.add_circle_outline, color: AppColors.primary, size: 18),
+              const Icon(
+                Icons.add_circle_outline,
+                color: AppColors.primary,
+                size: 18,
+              ),
               const SizedBox(width: 8),
-              Text(label, style: const TextStyle(color: AppColors.primary, fontWeight: FontWeight.w700, fontSize: 14)),
+              Text(
+                label,
+                style: const TextStyle(
+                  color: AppColors.primary,
+                  fontWeight: FontWeight.w700,
+                  fontSize: 14,
+                ),
+              ),
             ],
           ),
         ),
@@ -67,7 +78,10 @@ class _DashedBorderPainter extends CustomPainter {
     for (final metric in source.computeMetrics()) {
       double distance = 0;
       while (distance < metric.length) {
-        dest.addPath(metric.extractPath(distance, distance + dashWidth), Offset.zero);
+        dest.addPath(
+          metric.extractPath(distance, distance + dashWidth),
+          Offset.zero,
+        );
         distance += dashWidth + dashSpace;
       }
     }

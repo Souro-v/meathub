@@ -5,6 +5,7 @@ import 'package:meathub/core/constants/app_strings.dart';
 
 class AuthHeader extends StatelessWidget {
   final VoidCallback? onBack;
+
   const AuthHeader({super.key, this.onBack});
 
   @override
@@ -22,7 +23,11 @@ class AuthHeader extends StatelessWidget {
               color: AppColors.white,
               border: Border.all(color: AppColors.divider),
             ),
-            child: const Icon(Icons.arrow_back, size: 18, color: AppColors.textDark),
+            child: const Icon(
+              Icons.arrow_back,
+              size: 18,
+              color: AppColors.textDark,
+            ),
           ),
         ),
         Column(

@@ -4,6 +4,7 @@ import 'package:meathub/core/constants/app_colors.dart';
 
 class AuthScaffold extends StatelessWidget {
   final Widget child;
+
   const AuthScaffold({super.key, required this.child});
 
   @override
