@@ -21,8 +21,22 @@ class ResetPasswordScreen extends StatelessWidget {
             textAlign: TextAlign.center,
             text: const TextSpan(
               children: [
-                TextSpan(text: 'Create ', style: TextStyle(fontSize: 24, fontWeight: FontWeight.w800, color: AppColors.textDark)),
-                TextSpan(text: 'New Password', style: TextStyle(fontSize: 24, fontWeight: FontWeight.w800, color: AppColors.primary)),
+                TextSpan(
+                  text: 'Create ',
+                  style: TextStyle(
+                    fontSize: 24,
+                    fontWeight: FontWeight.w800,
+                    color: AppColors.textDark,
+                  ),
+                ),
+                TextSpan(
+                  text: 'New Password',
+                  style: TextStyle(
+                    fontSize: 24,
+                    fontWeight: FontWeight.w800,
+                    color: AppColors.primary,
+                  ),
+                ),
               ],
             ),
           ),
@@ -30,7 +44,11 @@ class ResetPasswordScreen extends StatelessWidget {
           const Text(
             AppStrings.createNewPasswordSubtitle,
             textAlign: TextAlign.center,
-            style: TextStyle(fontSize: 13, color: AppColors.textSecondary, height: 1.4),
+            style: TextStyle(
+              fontSize: 13,
+              color: AppColors.textSecondary,
+              height: 1.4,
+            ),
           ),
           const SizedBox(height: 24),
           const CustomTextField(
@@ -58,8 +76,15 @@ class ResetPasswordScreen extends StatelessWidget {
               children: [
                 Container(
                   padding: const EdgeInsets.all(8),
-                  decoration: const BoxDecoration(shape: BoxShape.circle, color: AppColors.white),
-                  child: const Icon(Icons.shield_outlined, color: AppColors.primary, size: 20),
+                  decoration: const BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: AppColors.white,
+                  ),
+                  child: const Icon(
+                    Icons.shield_outlined,
+                    color: AppColors.primary,
+                    size: 20,
+                  ),
                 ),
                 const SizedBox(width: 12),
                 Expanded(
@@ -68,20 +93,32 @@ class ResetPasswordScreen extends StatelessWidget {
                     children: [
                       const Text(
                         AppStrings.passwordMustContain,
-                        style: TextStyle(fontSize: 13, fontWeight: FontWeight.w700, color: AppColors.textDark),
+                        style: TextStyle(
+                          fontSize: 13,
+                          fontWeight: FontWeight.w700,
+                          color: AppColors.textDark,
+                        ),
                       ),
                       const SizedBox(height: 10),
                       Row(
                         children: const [
-                          Expanded(child: _RequirementItem(AppStrings.req8Chars)),
-                          Expanded(child: _RequirementItem(AppStrings.reqUppercase)),
+                          Expanded(
+                            child: _RequirementItem(AppStrings.req8Chars),
+                          ),
+                          Expanded(
+                            child: _RequirementItem(AppStrings.reqUppercase),
+                          ),
                         ],
                       ),
                       const SizedBox(height: 8),
                       Row(
                         children: const [
-                          Expanded(child: _RequirementItem(AppStrings.reqNumber)),
-                          Expanded(child: _RequirementItem(AppStrings.reqSpecialChar)),
+                          Expanded(
+                            child: _RequirementItem(AppStrings.reqNumber),
+                          ),
+                          Expanded(
+                            child: _RequirementItem(AppStrings.reqSpecialChar),
+                          ),
                         ],
                       ),
                     ],
@@ -103,8 +140,15 @@ class ResetPasswordScreen extends StatelessWidget {
               children: [
                 Container(
                   padding: const EdgeInsets.all(8),
-                  decoration: const BoxDecoration(shape: BoxShape.circle, color: AppColors.primarySoft),
-                  child: const Icon(Icons.lock_outline, color: AppColors.primary, size: 20),
+                  decoration: const BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: AppColors.primarySoft,
+                  ),
+                  child: const Icon(
+                    Icons.lock_outline,
+                    color: AppColors.primary,
+                    size: 20,
+                  ),
                 ),
                 const SizedBox(width: 12),
                 const Expanded(
@@ -113,12 +157,20 @@ class ResetPasswordScreen extends StatelessWidget {
                     children: [
                       Text(
                         AppStrings.keepAccountSecureTitle,
-                        style: TextStyle(fontSize: 13, fontWeight: FontWeight.w700, color: AppColors.textDark),
+                        style: TextStyle(
+                          fontSize: 13,
+                          fontWeight: FontWeight.w700,
+                          color: AppColors.textDark,
+                        ),
                       ),
                       SizedBox(height: 2),
                       Text(
                         AppStrings.keepAccountSecureDesc,
-                        style: TextStyle(fontSize: 12, color: AppColors.textSecondary, height: 1.4),
+                        style: TextStyle(
+                          fontSize: 12,
+                          color: AppColors.textSecondary,
+                          height: 1.4,
+                        ),
                       ),
                     ],
                   ),
@@ -135,6 +187,7 @@ class ResetPasswordScreen extends StatelessWidget {
 
 class _RequirementItem extends StatelessWidget {
   final String text;
+
   const _RequirementItem(this.text);
 
   @override
@@ -147,7 +200,10 @@ class _RequirementItem extends StatelessWidget {
           const Icon(Icons.check_circle, size: 15, color: AppColors.primary),
           const SizedBox(width: 6),
           Expanded(
-            child: Text(text, style: const TextStyle(fontSize: 11.5, color: AppColors.textDark)),
+            child: Text(
+              text,
+              style: const TextStyle(fontSize: 11.5, color: AppColors.textDark),
+            ),
           ),
         ],
       ),
