@@ -52,6 +52,8 @@ dependencies:
   confetti: ^0.7.0
   # Utils
   shared_preferences: ^2.2.2
+  connectivity_plus: ^6.0.3
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
