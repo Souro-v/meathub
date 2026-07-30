@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:meathub/app.dart';
 import 'package:meathub/core/constants/app_assets.dart';
+import 'package:meathub/core/constants/app_colors.dart';
+import 'package:meathub/core/constants/app_strings.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -30,19 +32,15 @@ class _SplashScreenState extends State<SplashScreen> {
       body: Stack(
         fit: StackFit.expand,
         children: [
-          // Background image
           Image.asset(
             AppAssets.splashBg,
             fit: BoxFit.cover,
           ),
-
-          // Foreground content
           SafeArea(
             child: Column(
               children: [
                 const Spacer(flex: 4),
 
-                // Logo
                 Image.asset(
                   AppAssets.appLogo,
                   width: 150,
@@ -50,24 +48,23 @@ class _SplashScreenState extends State<SplashScreen> {
                 ),
                 const SizedBox(height: 16),
 
-                // App name
                 RichText(
-                  text: const TextSpan(
+                  text: TextSpan(
                     children: [
                       TextSpan(
-                        text: 'Meat',
-                        style: TextStyle(
+                        text: AppStrings.appNamePart1,
+                        style: const TextStyle(
                           fontSize: 34,
                           fontWeight: FontWeight.w900,
-                          color: Color(0xFFB71C1C),
+                          color: AppColors.primary,
                         ),
                       ),
                       TextSpan(
-                        text: 'Hub',
-                        style: TextStyle(
+                        text: AppStrings.appNamePart2,
+                        style: const TextStyle(
                           fontSize: 34,
                           fontWeight: FontWeight.w900,
-                          color: Color(0xFF2B2B2B),
+                          color: AppColors.textDark,
                         ),
                       ),
                     ],
@@ -75,67 +72,64 @@ class _SplashScreenState extends State<SplashScreen> {
                 ),
                 const SizedBox(height: 6),
 
-                // Tagline
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Container(width: 24, height: 1.2, color: const Color(0xFFB71C1C)),
+                    Container(width: 24, height: 1.2, color: AppColors.primary),
                     const SizedBox(width: 8),
-                    const Text(
-                      'FRESH MEAT, TRUSTED TO YOU',
-                      style: TextStyle(
+                    Text(
+                      AppStrings.splashTagline,
+                      style: const TextStyle(
                         fontSize: 12,
                         letterSpacing: 1.2,
                         fontWeight: FontWeight.w600,
-                        color: Color(0xFF4A4A4A),
+                        color: AppColors.textSecondary,
                       ),
                     ),
                     const SizedBox(width: 8),
-                    Container(width: 24, height: 1.2, color: const Color(0xFFB71C1C)),
+                    Container(width: 24, height: 1.2, color: AppColors.primary),
                   ],
                 ),
 
                 const Spacer(flex: 3),
 
-                // Feature row
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     _FeatureItem(
                       image: AppAssets.premiumQualityIcon,
-                      label: 'Premium\nQuality Meat',
+                      label: AppStrings.featurePremiumQuality,
                     ),
-                    _Divider(),
+                    const _Divider(),
                     _FeatureItem(
                       image: AppAssets.fastDeliveryIcon,
-                      label: 'Fast\nDelivery',
+                      label: AppStrings.featureFastDelivery,
                     ),
-                    _Divider(),
+                    const _Divider(),
                     _FeatureItem(
                       image: AppAssets.trustedIcon,
-                      label: '100%\nTrusted',
+                      label: AppStrings.featureTrusted,
                     ),
                   ],
                 ),
 
                 const Spacer(flex: 4),
 
-                // Loading indicator
                 const SizedBox(
                   width: 26,
                   height: 26,
                   child: CircularProgressIndicator(
                     strokeWidth: 2.5,
-                    valueColor: AlwaysStoppedAnimation<Color>(Color(0xFFB71C1C)),
+                    valueColor: AlwaysStoppedAnimation<Color>(AppColors.primary),
                   ),
                 ),
                 const SizedBox(height: 8),
-                const Text(
-                  'Loading...',
-                  style: TextStyle(
+                Text(
+                  AppStrings.loading,
+                  style: const TextStyle(
                     fontSize: 13,
-                    color: Color(0xFF4A4A4A),
+                    color: AppColors.textSecondary,
                   ),
                 ),
                 const SizedBox(height: 40),
@@ -168,7 +162,7 @@ class _FeatureItem extends StatelessWidget {
             style: const TextStyle(
               fontSize: 12,
               fontWeight: FontWeight.w600,
-              color: Color(0xFF2B2B2B),
+              color: AppColors.textDark,
             ),
           ),
         ],
@@ -178,12 +172,14 @@ class _FeatureItem extends StatelessWidget {
 }
 
 class _Divider extends StatelessWidget {
+  const _Divider();
+
   @override
   Widget build(BuildContext context) {
     return Container(
       width: 1,
       height: 40,
-      color: Colors.grey.shade400,
+      color: AppColors.divider,
     );
   }
 }
