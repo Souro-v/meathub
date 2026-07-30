@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:meathub/app.dart';
+import 'package:meathub/core/constants/app_assets.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -31,7 +32,7 @@ class _SplashScreenState extends State<SplashScreen> {
         children: [
           // Background image
           Image.asset(
-            'assets/images/splashbg.png',
+            AppAssets.splashBg,
             fit: BoxFit.cover,
           ),
 
@@ -43,7 +44,7 @@ class _SplashScreenState extends State<SplashScreen> {
 
                 // Logo
                 Image.asset(
-                  'assets/images/app_logo.png',
+                  AppAssets.appLogo,
                   width: 150,
                   height: 150,
                 ),
@@ -102,17 +103,17 @@ class _SplashScreenState extends State<SplashScreen> {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     _FeatureItem(
-                      image: 'assets/images/logo1.png',
+                      image: AppAssets.premiumQualityIcon,
                       label: 'Premium\nQuality Meat',
                     ),
                     _Divider(),
                     _FeatureItem(
-                      image: 'assets/images/logo2.png',
+                      image: AppAssets.fastDeliveryIcon,
                       label: 'Fast\nDelivery',
                     ),
                     _Divider(),
                     _FeatureItem(
-                      image: 'assets/images/logo3.png',
+                      image: AppAssets.trustedIcon,
                       label: '100%\nTrusted',
                     ),
                   ],
