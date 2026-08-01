@@ -15,4 +15,50 @@ class AppStrings {
   static const String skip = 'Skip';
   static const String next = 'Next';
   static const String getStarted = 'Get Started';
+  // Auth — shared
+  static const String tagline = 'Fresh Meat, Trusted to You';
+  static const String orDivider = 'or';
+  static const String continueWithGoogle = 'Continue with Google';
+  static const String continueWithFacebook = 'Continue with Facebook';
+  static const String mobileNumberHint = 'Mobile Number';
+  static const String enterMobileNumberHint = 'Enter your mobile number';
+  static const String emailAddressHint = 'Email Address';
+  static const String passwordHint = 'Password';
+  static const String confirmPasswordHint = 'Confirm Password';
+
+  // Sign In
+  static const String signIn = 'Sign In';
+  static const String loginSubtitle = 'Sign in to continue your fresh meat shopping experience.';
+  static const String rememberMe = 'Remember Me';
+  static const String forgotPasswordLink = 'Forgot Password?';
+  static const String dontHaveAccount = "Don't have an account?";
+
+  // Sign Up
+  static const String signUp = 'Sign Up';
+  static const String signupSubtitle = 'Join MeatHub and get fresh meat delivered to your doorstep.';
+  static const String fullNameHint = 'Full Name';
+  static const String alreadyHaveAccount = 'Already have an account?';
+
+  // Forgot Password
+  static const String forgotPasswordTitle = 'Forgot Password?';
+  static const String forgotPasswordSubtitle = "Don't worry! Enter your registered mobile number or email and we'll send you a reset link.";
+  static const String sendResetLink = 'Send Reset Link';
+  static const String resetLinkInfo = 'We will send a password reset link to your registered mobile number.';
+  static const String mobileTab = 'Mobile Number';
+  static const String emailTab = 'Email Address';
+
+  // Reset / Create New Password
+  static const String createNewPasswordSubtitle = 'Enter your new password below to secure your account.';
+  static const String newPasswordLabel = 'New Password';
+  static const String confirmNewPasswordLabel = 'Confirm New Password';
+  static const String newPasswordHint = 'Enter your new password';
+  static const String confirmNewPasswordHint = 'Confirm your new password';
+  static const String resetPassword = 'Reset Password';
+  static const String passwordMustContain = 'Password must contain:';
+  static const String req8Chars = 'At least 8 characters';
+  static const String reqUppercase = 'One uppercase letter';
+  static const String reqNumber = 'One number';
+  static const String reqSpecialChar = 'One special character';
+  static const String keepAccountSecureTitle = 'Keep your account secure';
+  static const String keepAccountSecureDesc = "Don't use old passwords or something easy to guess.";
 }
