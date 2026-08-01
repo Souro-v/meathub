@@ -12,4 +12,8 @@ class AppAssets {
   static const String premiumQualityIcon = '$_icons/logo1.png';
   static const String fastDeliveryIcon = '$_icons/logo2.png';
   static const String trustedIcon = '$_icons/logo3.png';
+  // Onboarding
+  static const String onboarding1 = '$_images/onboarding1.png';
+  static const String onboarding2 = '$_images/onboarding2.png';
+  static const String onboarding3 = '$_images/onboarding3.png';
 }

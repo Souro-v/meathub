@@ -11,4 +11,8 @@ class AppStrings {
   static const String featurePremiumQuality = 'Premium\nQuality Meat';
   static const String featureFastDelivery = 'Fast\nDelivery';
   static const String featureTrusted = '100%\nTrusted';
+  // Onboarding
+  static const String skip = 'Skip';
+  static const String next = 'Next';
+  static const String getStarted = 'Get Started';
 }
