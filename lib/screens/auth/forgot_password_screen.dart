@@ -29,8 +29,22 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
             textAlign: TextAlign.center,
             text: const TextSpan(
               children: [
-                TextSpan(text: 'Forgot ', style: TextStyle(fontSize: 24, fontWeight: FontWeight.w800, color: AppColors.textDark)),
-                TextSpan(text: 'Password?', style: TextStyle(fontSize: 24, fontWeight: FontWeight.w800, color: AppColors.primary)),
+                TextSpan(
+                  text: 'Forgot ',
+                  style: TextStyle(
+                    fontSize: 24,
+                    fontWeight: FontWeight.w800,
+                    color: AppColors.textDark,
+                  ),
+                ),
+                TextSpan(
+                  text: 'Password?',
+                  style: TextStyle(
+                    fontSize: 24,
+                    fontWeight: FontWeight.w800,
+                    color: AppColors.primary,
+                  ),
+                ),
               ],
             ),
           ),
@@ -38,7 +52,11 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
           const Text(
             AppStrings.forgotPasswordSubtitle,
             textAlign: TextAlign.center,
-            style: TextStyle(fontSize: 13, color: AppColors.textSecondary, height: 1.4),
+            style: TextStyle(
+              fontSize: 13,
+              color: AppColors.textSecondary,
+              height: 1.4,
+            ),
           ),
           const SizedBox(height: 24),
           Container(
@@ -96,14 +114,25 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
               children: [
                 Container(
                   padding: const EdgeInsets.all(8),
-                  decoration: const BoxDecoration(shape: BoxShape.circle, color: AppColors.white),
-                  child: const Icon(Icons.verified_user_outlined, color: AppColors.primary, size: 20),
+                  decoration: const BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: AppColors.white,
+                  ),
+                  child: const Icon(
+                    Icons.verified_user_outlined,
+                    color: AppColors.primary,
+                    size: 20,
+                  ),
                 ),
                 const SizedBox(width: 12),
                 const Expanded(
                   child: Text(
                     AppStrings.resetLinkInfo,
-                    style: TextStyle(fontSize: 12.5, color: AppColors.textSecondary, height: 1.4),
+                    style: TextStyle(
+                      fontSize: 12.5,
+                      color: AppColors.textSecondary,
+                      height: 1.4,
+                    ),
                   ),
                 ),
               ],
@@ -143,7 +172,11 @@ class _TabButton extends StatelessWidget {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(icon, size: 16, color: selected ? AppColors.white : AppColors.textDark),
+            Icon(
+              icon,
+              size: 16,
+              color: selected ? AppColors.white : AppColors.textDark,
+            ),
             const SizedBox(width: 6),
             Text(
               label,

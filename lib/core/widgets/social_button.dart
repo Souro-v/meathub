@@ -23,7 +23,9 @@ class SocialButton extends StatelessWidget {
           foregroundColor: AppColors.textDark,
           side: const BorderSide(color: AppColors.divider),
           minimumSize: const Size(0, 50),
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(14),
+          ),
         ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -33,7 +35,10 @@ class SocialButton extends StatelessWidget {
             Flexible(
               child: Text(
                 label,
-                style: const TextStyle(fontSize: 13, fontWeight: FontWeight.w600),
+                style: const TextStyle(
+                  fontSize: 13,
+                  fontWeight: FontWeight.w600,
+                ),
                 overflow: TextOverflow.ellipsis,
               ),
             ),
