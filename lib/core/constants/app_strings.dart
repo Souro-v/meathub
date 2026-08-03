@@ -61,4 +61,17 @@ class AppStrings {
   static const String reqSpecialChar = 'One special character';
   static const String keepAccountSecureTitle = 'Keep your account secure';
   static const String keepAccountSecureDesc = "Don't use old passwords or something easy to guess.";
+  // Home
+  static const String deliverTo = 'Deliver to';
+  static const String searchHint = 'Search for fresh meat...';
+  static const String categories = 'Categories';
+  static const String seeAll = 'See All';
+  static const String popularToday = 'Popular Today';
+  static const String todaysFreshPicks = "Today's Fresh Picks";
+
+  static const String categoryBeefLabel = 'Beef';
+  static const String categoryMuttonLabel = 'Mutton';
+  static const String categoryChickenLabel = 'Chicken';
+  static const String categoryFishLabel = 'Fish';
+  static const String categoryEggLabel = 'Egg';
 }
