@@ -18,9 +18,7 @@ class AppAssets {
   static const String onboarding3 = '$_images/onboarding3.png';
   // Auth
   static const String authBg = '$_images/authbg.png';
-
-  static const String _icons = 'assets/icons';
-
+  
   // Home - Banners
   static const String banner1 = '$_images/banner1.jpg';
   static const String banner2 = '$_images/banner2.jpg';
