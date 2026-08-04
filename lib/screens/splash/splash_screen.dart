@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:meathub/app.dart';
 import 'package:meathub/core/constants/app_assets.dart';
 import 'package:meathub/core/constants/app_colors.dart';
 import 'package:meathub/core/constants/app_strings.dart';
+import 'package:meathub/screens/onboarding/onboarding_screen.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -22,7 +22,7 @@ class _SplashScreenState extends State<SplashScreen> {
     await Future.delayed(const Duration(seconds: 3));
     if (!mounted) return;
     Navigator.of(context).pushReplacement(
-      MaterialPageRoute(builder: (_) => const HomePlaceholder()),
+      MaterialPageRoute(builder: (_) => const OnboardingScreen()),
     );
   }
 
