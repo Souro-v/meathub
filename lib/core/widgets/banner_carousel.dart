@@ -4,6 +4,7 @@ import 'package:meathub/core/constants/app_colors.dart';
 
 class BannerCarousel extends StatefulWidget {
   final List<String> banners;
+
   const BannerCarousel({super.key, required this.banners});
 
   @override
@@ -21,7 +22,11 @@ class _BannerCarouselState extends State<BannerCarousel> {
     _timer = Timer.periodic(const Duration(seconds: 4), (_) {
       if (!mounted) return;
       final next = (_current + 1) % widget.banners.length;
-      _controller.animateToPage(next, duration: const Duration(milliseconds: 400), curve: Curves.easeInOut);
+      _controller.animateToPage(
+        next,
+        duration: const Duration(milliseconds: 400),
+        curve: Curves.easeInOut,
+      );
     });
   }
 
@@ -44,7 +49,11 @@ class _BannerCarouselState extends State<BannerCarousel> {
             onPageChanged: (i) => setState(() => _current = i),
             itemBuilder: (context, index) => ClipRRect(
               borderRadius: BorderRadius.circular(18),
-              child: Image.asset(widget.banners[index], fit: BoxFit.cover, width: double.infinity),
+              child: Image.asset(
+                widget.banners[index],
+                fit: BoxFit.cover,
+                width: double.infinity,
+              ),
             ),
           ),
         ),

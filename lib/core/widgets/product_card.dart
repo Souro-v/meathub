@@ -25,7 +25,11 @@ class ProductCard extends StatelessWidget {
           children: [
             AspectRatio(
               aspectRatio: 1.1,
-              child: Image.asset(product.image, fit: BoxFit.cover, width: double.infinity),
+              child: Image.asset(
+                product.image,
+                fit: BoxFit.cover,
+                width: double.infinity,
+              ),
             ),
             Padding(
               padding: const EdgeInsets.fromLTRB(10, 8, 10, 10),
@@ -36,25 +40,46 @@ class ProductCard extends StatelessWidget {
                     product.name,
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
-                    style: const TextStyle(fontSize: 13.5, fontWeight: FontWeight.w600, color: AppColors.textDark),
+                    style: const TextStyle(
+                      fontSize: 13.5,
+                      fontWeight: FontWeight.w600,
+                      color: AppColors.textDark,
+                    ),
                   ),
                   const SizedBox(height: 2),
-                  Text(product.unit, style: const TextStyle(fontSize: 11.5, color: AppColors.textHint)),
+                  Text(
+                    product.unit,
+                    style: const TextStyle(
+                      fontSize: 11.5,
+                      color: AppColors.textHint,
+                    ),
+                  ),
                   const SizedBox(height: 6),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
                         '৳${product.price}',
-                        style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w800, color: AppColors.primary),
+                        style: const TextStyle(
+                          fontSize: 14,
+                          fontWeight: FontWeight.w800,
+                          color: AppColors.primary,
+                        ),
                       ),
                       InkWell(
                         onTap: onAdd,
                         borderRadius: BorderRadius.circular(20),
                         child: Container(
                           padding: const EdgeInsets.all(6),
-                          decoration: const BoxDecoration(shape: BoxShape.circle, color: AppColors.primary),
-                          child: const Icon(Icons.add, size: 16, color: AppColors.white),
+                          decoration: const BoxDecoration(
+                            shape: BoxShape.circle,
+                            color: AppColors.primary,
+                          ),
+                          child: const Icon(
+                            Icons.add,
+                            size: 16,
+                            color: AppColors.white,
+                          ),
                         ),
                       ),
                     ],
