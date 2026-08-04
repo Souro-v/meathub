@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:meathub/core/constants/app_assets.dart';
 import 'package:meathub/core/constants/app_colors.dart';
 import 'package:meathub/core/constants/app_strings.dart';
-import 'package:meathub/screens/onboarding/onboarding_screen.dart';
+import '../../core/routes/app_routes.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -21,9 +21,7 @@ class _SplashScreenState extends State<SplashScreen> {
   Future<void> _navigateToNext() async {
     await Future.delayed(const Duration(seconds: 3));
     if (!mounted) return;
-    Navigator.of(context).pushReplacement(
-      MaterialPageRoute(builder: (_) => const OnboardingScreen()),
-    );
+    Navigator.of(context).pushReplacementNamed(AppRoutes.onboarding);
   }
 
   @override

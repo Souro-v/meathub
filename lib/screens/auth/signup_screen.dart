@@ -7,8 +7,7 @@ import 'package:meathub/core/widgets/country_code_chip.dart';
 import 'package:meathub/core/widgets/custom_button.dart';
 import 'package:meathub/core/widgets/or_divider.dart';
 import 'package:meathub/core/widgets/social_button.dart';
-import 'package:meathub/screens/auth/login_screen.dart';
-
+import '../../core/routes/app_routes.dart';
 import '../../core/widgets/custom_textfield.dart';
 
 class SignupScreen extends StatefulWidget {
@@ -33,9 +32,30 @@ class _SignupScreenState extends State<SignupScreen> {
             textAlign: TextAlign.center,
             text: const TextSpan(
               children: [
-                TextSpan(text: 'Create ', style: TextStyle(fontSize: 24, fontWeight: FontWeight.w800, color: AppColors.textDark)),
-                TextSpan(text: 'Your ', style: TextStyle(fontSize: 24, fontWeight: FontWeight.w800, color: AppColors.primary)),
-                TextSpan(text: 'Account', style: TextStyle(fontSize: 24, fontWeight: FontWeight.w800, color: AppColors.textDark)),
+                TextSpan(
+                  text: 'Create ',
+                  style: TextStyle(
+                    fontSize: 24,
+                    fontWeight: FontWeight.w800,
+                    color: AppColors.textDark,
+                  ),
+                ),
+                TextSpan(
+                  text: 'Your ',
+                  style: TextStyle(
+                    fontSize: 24,
+                    fontWeight: FontWeight.w800,
+                    color: AppColors.primary,
+                  ),
+                ),
+                TextSpan(
+                  text: 'Account',
+                  style: TextStyle(
+                    fontSize: 24,
+                    fontWeight: FontWeight.w800,
+                    color: AppColors.textDark,
+                  ),
+                ),
               ],
             ),
           ),
@@ -43,10 +63,17 @@ class _SignupScreenState extends State<SignupScreen> {
           const Text(
             AppStrings.signupSubtitle,
             textAlign: TextAlign.center,
-            style: TextStyle(fontSize: 13, color: AppColors.textSecondary, height: 1.4),
+            style: TextStyle(
+              fontSize: 13,
+              color: AppColors.textSecondary,
+              height: 1.4,
+            ),
           ),
           const SizedBox(height: 24),
-          const CustomTextField(icon: Icons.person_outline, hint: AppStrings.fullNameHint),
+          const CustomTextField(
+            icon: Icons.person_outline,
+            hint: AppStrings.fullNameHint,
+          ),
           const SizedBox(height: 14),
           CustomTextField(
             icon: Icons.call_outlined,
@@ -61,13 +88,13 @@ class _SignupScreenState extends State<SignupScreen> {
             keyboardType: TextInputType.emailAddress,
           ),
           const SizedBox(height: 14),
-           CustomTextField(
+          CustomTextField(
             icon: Icons.lock_outline,
             hint: AppStrings.passwordHint,
             isPassword: true,
           ),
           const SizedBox(height: 14),
-           CustomTextField(
+          CustomTextField(
             icon: Icons.lock_outline,
             hint: AppStrings.confirmPasswordHint,
             isPassword: true,
@@ -91,12 +118,28 @@ class _SignupScreenState extends State<SignupScreen> {
                   padding: const EdgeInsets.only(top: 4),
                   child: RichText(
                     text: const TextSpan(
-                      style: TextStyle(fontSize: 12.5, color: AppColors.textDark, height: 1.4),
+                      style: TextStyle(
+                        fontSize: 12.5,
+                        color: AppColors.textDark,
+                        height: 1.4,
+                      ),
                       children: [
                         TextSpan(text: 'I agree to the '),
-                        TextSpan(text: 'Terms & Conditions', style: TextStyle(color: AppColors.primary, fontWeight: FontWeight.w600)),
+                        TextSpan(
+                          text: 'Terms & Conditions',
+                          style: TextStyle(
+                            color: AppColors.primary,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
                         TextSpan(text: ' and '),
-                        TextSpan(text: 'Privacy Policy', style: TextStyle(color: AppColors.primary, fontWeight: FontWeight.w600)),
+                        TextSpan(
+                          text: 'Privacy Policy',
+                          style: TextStyle(
+                            color: AppColors.primary,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
                       ],
                     ),
                   ),
@@ -114,7 +157,11 @@ class _SignupScreenState extends State<SignupScreen> {
               Expanded(
                 child: SocialButton(
                   label: AppStrings.continueWithGoogle,
-                  icon: const Icon(Icons.g_mobiledata, size: 24, color: Color(0xFF4285F4)),
+                  icon: const Icon(
+                    Icons.g_mobiledata,
+                    size: 24,
+                    color: Color(0xFF4285F4),
+                  ),
                   onPressed: () {},
                 ),
               ),
@@ -122,7 +169,11 @@ class _SignupScreenState extends State<SignupScreen> {
               Expanded(
                 child: SocialButton(
                   label: AppStrings.continueWithFacebook,
-                  icon: const Icon(Icons.facebook, size: 20, color: Color(0xFF1877F2)),
+                  icon: const Icon(
+                    Icons.facebook,
+                    size: 20,
+                    color: Color(0xFF1877F2),
+                  ),
                   onPressed: () {},
                 ),
               ),
@@ -133,11 +184,17 @@ class _SignupScreenState extends State<SignupScreen> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                const Text(AppStrings.alreadyHaveAccount, style: TextStyle(fontSize: 13, color: AppColors.textSecondary)),
-                TextButton(
-                  onPressed: () => Navigator.of(context).pushReplacement(
-                    MaterialPageRoute(builder: (_) => const LoginScreen()),
+                const Text(
+                  AppStrings.alreadyHaveAccount,
+                  style: TextStyle(
+                    fontSize: 13,
+                    color: AppColors.textSecondary,
                   ),
+                ),
+                TextButton(
+                  onPressed: () => Navigator.of(
+                    context,
+                  ).pushReplacementNamed(AppRoutes.login),
                   style: TextButton.styleFrom(
                     padding: EdgeInsets.zero,
                     minimumSize: const Size(0, 0),
@@ -145,7 +202,14 @@ class _SignupScreenState extends State<SignupScreen> {
                   ),
                   child: const Padding(
                     padding: EdgeInsets.only(left: 4),
-                    child: Text(AppStrings.signIn, style: TextStyle(fontSize: 13, color: AppColors.primary, fontWeight: FontWeight.w700)),
+                    child: Text(
+                      AppStrings.signIn,
+                      style: TextStyle(
+                        fontSize: 13,
+                        color: AppColors.primary,
+                        fontWeight: FontWeight.w700,
+                      ),
+                    ),
                   ),
                 ),
               ],
