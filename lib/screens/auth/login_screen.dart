@@ -7,10 +7,8 @@ import 'package:meathub/core/widgets/country_code_chip.dart';
 import 'package:meathub/core/widgets/custom_button.dart';
 import 'package:meathub/core/widgets/or_divider.dart';
 import 'package:meathub/core/widgets/social_button.dart';
-import 'package:meathub/screens/auth/signup_screen.dart';
-
+import '../../core/routes/app_routes.dart';
 import '../../core/widgets/custom_textfield.dart';
-import 'forgot_password_screen.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -95,11 +93,8 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
               const Spacer(),
               TextButton(
-                onPressed: () => Navigator.of(context).push(
-                  MaterialPageRoute(
-                    builder: (_) => const ForgotPasswordScreen(),
-                  ),
-                ),
+                onPressed: () =>
+                    Navigator.of(context).pushNamed(AppRoutes.forgotPassword),
                 style: TextButton.styleFrom(
                   padding: EdgeInsets.zero,
                   minimumSize: const Size(0, 0),
@@ -153,9 +148,9 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                 ),
                 TextButton(
-                  onPressed: () => Navigator.of(context).pushReplacement(
-                    MaterialPageRoute(builder: (_) => const SignupScreen()),
-                  ),
+                  onPressed: () => Navigator.of(
+                    context,
+                  ).pushReplacementNamed(AppRoutes.signup),
                   style: TextButton.styleFrom(
                     padding: EdgeInsets.zero,
                     minimumSize: const Size(0, 0),

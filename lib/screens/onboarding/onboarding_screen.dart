@@ -2,8 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:meathub/core/constants/app_assets.dart';
 import 'package:meathub/core/constants/app_colors.dart';
 import 'package:meathub/core/constants/app_strings.dart';
-
-import '../main/main_screen.dart';
+import '../../core/routes/app_routes.dart';
 
 class OnboardingScreen extends StatefulWidget {
   const OnboardingScreen({super.key});
@@ -38,9 +37,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   }
 
   void _finishOnboarding() {
-    Navigator.of(context).pushReplacement(
-      MaterialPageRoute(builder: (_) => const MainScreen()),
-    );
+    Navigator.of(context).pushReplacementNamed(AppRoutes.main);
   }
 
   @override
