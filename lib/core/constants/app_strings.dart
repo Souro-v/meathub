@@ -80,4 +80,19 @@ class AppStrings {
   static const String all = 'All';
   static const String promotions = 'Promotions';
   static const String today = 'Today';
+  // Address Selection
+  static const String selectDeliveryLocation = 'Select Delivery Location';
+  static const String currentLocationTitle = 'Current Location';
+  static const String currentLocationSubtitle = 'Detect your current location';
+  static const String accuracyHigh = 'Accuracy: High';
+  static const String useCurrentLocation = 'Use Current Location';
+  static const String searchAreaHint = 'Search area, road or landmark...';
+  static const String recentAddresses = 'Recent Addresses';
+  static const String savedAddresses = 'Saved Addresses';
+  static const String manage = 'Manage';
+  static const String addNewAddress = 'Add New Address';
+  static const String nearbyOnMap = 'Nearby on Map';
+  static const String confirmDeliveryAddress = 'Confirm Delivery Address';
+  static const String defaultLabel = 'Default';
+
 }
