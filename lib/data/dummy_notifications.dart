@@ -11,7 +11,7 @@ class DummyNotifications {
       iconBg: Color(0xFFFCE4E4),
       title: 'Your order is confirmed!',
       description:
-      "We've received your order #MH1256. We'll notify you when it's on the way.",
+          "We've received your order #MH1256. We'll notify you when it's on the way.",
       time: '10:30 AM',
       isUnread: true,
     ),
@@ -20,7 +20,8 @@ class DummyNotifications {
       iconColor: Color(0xFF2E7D32),
       iconBg: Color(0xFFE1F5E4),
       title: 'Order is on the way',
-      description: 'Rider is on the way to deliver your order #MH1256. Get ready!',
+      description:
+          'Rider is on the way to deliver your order #MH1256. Get ready!',
       time: '09:15 AM',
       isUnread: true,
     ),

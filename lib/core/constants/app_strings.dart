@@ -74,4 +74,10 @@ class AppStrings {
   static const String categoryChickenLabel = 'Chicken';
   static const String categoryFishLabel = 'Fish';
   static const String categoryEggLabel = 'Egg';
+  // Notifications
+  static const String notifications = 'Notifications';
+  static const String markAllAsRead = 'Mark all as read';
+  static const String all = 'All';
+  static const String promotions = 'Promotions';
+  static const String today = 'Today';
 }
