@@ -24,7 +24,9 @@ class _NotificationScreenState extends State<NotificationScreen> {
 
   void _markAllAsRead() {
     setState(() {
-      _notifications = _notifications.map((n) => n.copyWith(isUnread: false)).toList();
+      _notifications = _notifications
+          .map((n) => n.copyWith(isUnread: false))
+          .toList();
     });
   }
 
@@ -45,10 +47,16 @@ class _NotificationScreenState extends State<NotificationScreen> {
                 children: [
                   const Text(
                     AppStrings.today,
-                    style: TextStyle(fontSize: 13, fontWeight: FontWeight.w600, color: AppColors.textHint),
+                    style: TextStyle(
+                      fontSize: 13,
+                      fontWeight: FontWeight.w600,
+                      color: AppColors.textHint,
+                    ),
                   ),
                   const SizedBox(height: 12),
-                  ..._notifications.map((n) => NotificationCard(notification: n)),
+                  ..._notifications.map(
+                    (n) => NotificationCard(notification: n),
+                  ),
                 ],
               ),
             ),
@@ -69,22 +77,37 @@ class _NotificationScreenState extends State<NotificationScreen> {
             child: Container(
               width: 40,
               height: 40,
-              decoration: BoxDecoration(shape: BoxShape.circle, border: Border.all(color: AppColors.divider)),
-              child: const Icon(Icons.arrow_back, size: 18, color: AppColors.primary),
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                border: Border.all(color: AppColors.divider),
+              ),
+              child: const Icon(
+                Icons.arrow_back,
+                size: 18,
+                color: AppColors.primary,
+              ),
             ),
           ),
           const Expanded(
             child: Text(
               AppStrings.notifications,
               textAlign: TextAlign.center,
-              style: TextStyle(fontSize: 19, fontWeight: FontWeight.w800, color: AppColors.textDark),
+              style: TextStyle(
+                fontSize: 19,
+                fontWeight: FontWeight.w800,
+                color: AppColors.textDark,
+              ),
             ),
           ),
           GestureDetector(
             onTap: _markAllAsRead,
             child: const Text(
               AppStrings.markAllAsRead,
-              style: TextStyle(fontSize: 12.5, fontWeight: FontWeight.w600, color: AppColors.primary),
+              style: TextStyle(
+                fontSize: 12.5,
+                fontWeight: FontWeight.w600,
+                color: AppColors.primary,
+              ),
             ),
           ),
         ],
@@ -143,12 +166,18 @@ class _TabChip extends StatelessWidget {
         decoration: BoxDecoration(
           color: selected ? AppColors.primarySoft : AppColors.white,
           borderRadius: BorderRadius.circular(24),
-          border: Border.all(color: selected ? AppColors.primarySoft : AppColors.divider),
+          border: Border.all(
+            color: selected ? AppColors.primarySoft : AppColors.divider,
+          ),
         ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(icon, size: 16, color: selected ? AppColors.primary : AppColors.textDark),
+            Icon(
+              icon,
+              size: 16,
+              color: selected ? AppColors.primary : AppColors.textDark,
+            ),
             const SizedBox(width: 6),
             Text(
               label,

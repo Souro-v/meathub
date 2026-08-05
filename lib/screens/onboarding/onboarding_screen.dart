@@ -60,10 +60,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
               return Container(
                 color: _pageBgColors[index],
                 child: SizedBox.expand(
-                  child: Image.asset(
-                    _pages[index],
-                    fit: BoxFit.cover,
-                  ),
+                  child: Image.asset(_pages[index], fit: BoxFit.cover),
                 ),
               );
             },
@@ -78,9 +75,12 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                 child: TextButton(
                   onPressed: _finishOnboarding,
                   style: TextButton.styleFrom(
-                    backgroundColor: Colors.black.withValues(alpha:0.15),
+                    backgroundColor: Colors.black.withValues(alpha: 0.15),
                     foregroundColor: AppColors.white,
-                    padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 8),
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 18,
+                      vertical: 8,
+                    ),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(20),
                     ),
