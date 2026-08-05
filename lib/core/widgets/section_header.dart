@@ -4,9 +4,15 @@ import 'package:meathub/core/constants/app_strings.dart';
 
 class SectionHeader extends StatelessWidget {
   final String title;
-  final VoidCallback? onSeeAll;
+  final String actionLabel;
+  final VoidCallback? onAction;
 
-  const SectionHeader({super.key, required this.title, this.onSeeAll});
+  const SectionHeader({
+    super.key,
+    required this.title,
+    this.actionLabel = AppStrings.seeAll,
+    this.onAction,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -15,10 +21,10 @@ class SectionHeader extends StatelessWidget {
       children: [
         Text(title, style: const TextStyle(fontSize: 17, fontWeight: FontWeight.w700, color: AppColors.textDark)),
         GestureDetector(
-          onTap: onSeeAll,
-          child: const Text(
-            AppStrings.seeAll,
-            style: TextStyle(fontSize: 13, fontWeight: FontWeight.w600, color: AppColors.primary),
+          onTap: onAction,
+          child: Text(
+            actionLabel,
+            style: const TextStyle(fontSize: 13, fontWeight: FontWeight.w600, color: AppColors.primary),
           ),
         ),
       ],
