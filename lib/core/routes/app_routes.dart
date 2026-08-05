@@ -7,6 +7,7 @@ import 'package:meathub/screens/auth/forgot_password_screen.dart';
 import 'package:meathub/screens/auth/reset_password_screen.dart';
 import 'package:meathub/screens/main/main_screen.dart';
 
+import '../../screens/address/address_selection_screen.dart';
 import '../../screens/notification/notification_screen.dart';
 
 class AppRoutes {
@@ -20,6 +21,7 @@ class AppRoutes {
   static const String resetPassword = '/reset-password';
   static const String main = '/main';
   static const String notification = '/notification';
+  static const String addressSelection = '/address-selection';
 
   static Map<String, WidgetBuilder> routes = {
     splash: (context) => const SplashScreen(),
@@ -30,5 +32,6 @@ class AppRoutes {
     resetPassword: (context) => const ResetPasswordScreen(),
     main: (context) => const MainScreen(),
     notification: (context) => const NotificationScreen(),
+    addressSelection: (context) => const AddressSelectionScreen(),
   };
 }

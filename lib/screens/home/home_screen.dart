@@ -44,31 +44,35 @@ class HomeScreen extends StatelessWidget {
           const Icon(Icons.location_on, color: AppColors.primary, size: 20),
           const SizedBox(width: 4),
           Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const Text(
-                  AppStrings.deliverTo,
-                  style: TextStyle(fontSize: 11, color: AppColors.textHint),
-                ),
-                Row(
-                  children: const [
-                    Text(
-                      'Dhaka, Bangladesh',
-                      style: TextStyle(
-                        fontSize: 14,
-                        fontWeight: FontWeight.w700,
+            child: GestureDetector(
+              onTap: () =>
+                  Navigator.of(context).pushNamed(AppRoutes.addressSelection),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const Text(
+                    AppStrings.deliverTo,
+                    style: TextStyle(fontSize: 11, color: AppColors.textHint),
+                  ),
+                  Row(
+                    children: const [
+                      Text(
+                        'Dhaka, Bangladesh',
+                        style: TextStyle(
+                          fontSize: 14,
+                          fontWeight: FontWeight.w700,
+                          color: AppColors.textDark,
+                        ),
+                      ),
+                      Icon(
+                        Icons.keyboard_arrow_down,
+                        size: 18,
                         color: AppColors.textDark,
                       ),
-                    ),
-                    Icon(
-                      Icons.keyboard_arrow_down,
-                      size: 18,
-                      color: AppColors.textDark,
-                    ),
-                  ],
-                ),
-              ],
+                    ],
+                  ),
+                ],
+              ),
             ),
           ),
           Stack(
