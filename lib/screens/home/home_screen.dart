@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:meathub/core/constants/app_colors.dart';
 import 'package:meathub/core/constants/app_strings.dart';
+import 'package:meathub/core/routes/app_routes.dart';
 import 'package:meathub/core/widgets/banner_carousel.dart';
 import 'package:meathub/core/widgets/category_item.dart';
 import 'package:meathub/core/widgets/product_card.dart';
@@ -17,7 +18,7 @@ class HomeScreen extends StatelessWidget {
       body: SafeArea(
         child: CustomScrollView(
           slivers: [
-            SliverToBoxAdapter(child: _buildHeader()),
+            SliverToBoxAdapter(child: _buildHeader(context)),
             SliverToBoxAdapter(child: _buildSearchBar()),
             SliverToBoxAdapter(
               child: Padding(
@@ -35,7 +36,7 @@ class HomeScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildHeader() {
+  Widget _buildHeader(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.fromLTRB(16, 12, 16, 0),
       child: Row(
@@ -46,12 +47,25 @@ class HomeScreen extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Text(AppStrings.deliverTo, style: TextStyle(fontSize: 11, color: AppColors.textHint)),
+                const Text(
+                  AppStrings.deliverTo,
+                  style: TextStyle(fontSize: 11, color: AppColors.textHint),
+                ),
                 Row(
                   children: const [
-                    Text('Dhaka, Bangladesh',
-                        style: TextStyle(fontSize: 14, fontWeight: FontWeight.w700, color: AppColors.textDark)),
-                    Icon(Icons.keyboard_arrow_down, size: 18, color: AppColors.textDark),
+                    Text(
+                      'Dhaka, Bangladesh',
+                      style: TextStyle(
+                        fontSize: 14,
+                        fontWeight: FontWeight.w700,
+                        color: AppColors.textDark,
+                      ),
+                    ),
+                    Icon(
+                      Icons.keyboard_arrow_down,
+                      size: 18,
+                      color: AppColors.textDark,
+                    ),
                   ],
                 ),
               ],
@@ -60,11 +74,23 @@ class HomeScreen extends StatelessWidget {
           Stack(
             clipBehavior: Clip.none,
             children: [
-              Container(
-                width: 42,
-                height: 42,
-                decoration: const BoxDecoration(shape: BoxShape.circle, color: AppColors.surface),
-                child: const Icon(Icons.notifications_outlined, color: AppColors.textDark, size: 20),
+              InkWell(
+                onTap: () =>
+                    Navigator.of(context).pushNamed(AppRoutes.notification),
+                borderRadius: BorderRadius.circular(21),
+                child: Container(
+                  width: 42,
+                  height: 42,
+                  decoration: const BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: AppColors.surface,
+                  ),
+                  child: const Icon(
+                    Icons.notifications_outlined,
+                    color: AppColors.textDark,
+                    size: 20,
+                  ),
+                ),
               ),
               Positioned(
                 top: 8,
@@ -72,7 +98,10 @@ class HomeScreen extends StatelessWidget {
                 child: Container(
                   width: 8,
                   height: 8,
-                  decoration: const BoxDecoration(shape: BoxShape.circle, color: AppColors.error),
+                  decoration: const BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: AppColors.error,
+                  ),
                 ),
               ),
             ],
@@ -87,7 +116,10 @@ class HomeScreen extends StatelessWidget {
       padding: const EdgeInsets.fromLTRB(16, 16, 16, 0),
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 14),
-        decoration: BoxDecoration(color: AppColors.surface, borderRadius: BorderRadius.circular(14)),
+        decoration: BoxDecoration(
+          color: AppColors.surface,
+          borderRadius: BorderRadius.circular(14),
+        ),
         child: Row(
           children: [
             const Icon(Icons.search, color: AppColors.textHint, size: 20),
@@ -96,7 +128,10 @@ class HomeScreen extends StatelessWidget {
               child: TextField(
                 decoration: InputDecoration(
                   hintText: AppStrings.searchHint,
-                  hintStyle: TextStyle(color: AppColors.textHint, fontSize: 13.5),
+                  hintStyle: TextStyle(
+                    color: AppColors.textHint,
+                    fontSize: 13.5,
+                  ),
                   border: InputBorder.none,
                   isDense: true,
                   contentPadding: EdgeInsets.symmetric(vertical: 14),
@@ -105,7 +140,10 @@ class HomeScreen extends StatelessWidget {
             ),
             Container(
               padding: const EdgeInsets.all(8),
-              decoration: BoxDecoration(color: AppColors.primary, borderRadius: BorderRadius.circular(10)),
+              decoration: BoxDecoration(
+                color: AppColors.primary,
+                borderRadius: BorderRadius.circular(10),
+              ),
               child: const Icon(Icons.tune, color: AppColors.white, size: 16),
             ),
           ],
@@ -127,8 +165,9 @@ class HomeScreen extends StatelessWidget {
             child: ListView.separated(
               scrollDirection: Axis.horizontal,
               itemCount: DummyData.categories.length,
-              separatorBuilder: (_, __) => const SizedBox(width: 14),
-              itemBuilder: (context, index) => CategoryItem(category: DummyData.categories[index]),
+              separatorBuilder: (_, _) => const SizedBox(width: 14),
+              itemBuilder: (context, index) =>
+                  CategoryItem(category: DummyData.categories[index]),
             ),
           ),
         ],
@@ -149,7 +188,7 @@ class HomeScreen extends StatelessWidget {
             child: ListView.separated(
               scrollDirection: Axis.horizontal,
               itemCount: DummyData.popularToday.length,
-              separatorBuilder: (_, __) => const SizedBox(width: 12),
+              separatorBuilder: (_, _) => const SizedBox(width: 12),
               itemBuilder: (context, index) => SizedBox(
                 width: 150,
                 child: ProductCard(product: DummyData.popularToday[index]),
@@ -179,7 +218,8 @@ class HomeScreen extends StatelessWidget {
               crossAxisSpacing: 12,
               childAspectRatio: 0.72,
             ),
-            itemBuilder: (context, index) => ProductCard(product: DummyData.todaysFreshPicks[index]),
+            itemBuilder: (context, index) =>
+                ProductCard(product: DummyData.todaysFreshPicks[index]),
           ),
         ],
       ),
