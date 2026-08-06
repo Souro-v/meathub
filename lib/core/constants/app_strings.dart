@@ -94,6 +94,14 @@ class AppStrings {
   static const String nearbyOnMap = 'Nearby on Map';
   static const String confirmDeliveryAddress = 'Confirm Delivery Address';
   static const String defaultLabel = 'Default';
+  // Use Current Location Sheet
+  static const String useCurrentLocationTitle = 'Use Current Location';
+  static const String useCurrentLocationSubtitle = "We'll detect your current location to deliver fresh meat accurately.";
+  static const String locationPermissionRequired = 'Location Permission Required';
+  static const String locationPermissionDesc = 'We need your permission to access your location.';
+  static const String allowLocationAccess = 'Allow Location Access';
+  static const String chooseAddressManually = 'Choose Address Manually';
+  static const String locationPrivacyNote = 'Your location is used only for delivery and is never shared.';
   // Recent Addresses (full list)
   static const String recentlyUsed = 'Recently Used';
   static const String searchRecentAddressHint = 'Search recent address...';
