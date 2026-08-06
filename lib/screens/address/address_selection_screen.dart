@@ -47,9 +47,12 @@ class _AddressSelectionScreenState extends State<AddressSelectionScreen> {
                     const SizedBox(height: 10),
                     _buildRecentAddressesCard(),
                     const SizedBox(height: 22),
-                    const SectionHeader(
+                    SectionHeader(
                       title: AppStrings.savedAddresses,
                       actionLabel: AppStrings.manage,
+                      onAction: () => Navigator.of(
+                        context,
+                      ).pushNamed(AppRoutes.manageAddresses),
                     ),
                     const SizedBox(height: 10),
                     ...DummyAddresses.saved.map(
