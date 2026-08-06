@@ -8,6 +8,8 @@ import 'package:meathub/core/widgets/saved_address_card.dart';
 import 'package:meathub/core/widgets/section_header.dart';
 import 'package:meathub/data/dummy_addresses.dart';
 
+import '../../core/routes/app_routes.dart';
+
 class AddressSelectionScreen extends StatefulWidget {
   const AddressSelectionScreen({super.key});
 
@@ -36,18 +38,35 @@ class _AddressSelectionScreenState extends State<AddressSelectionScreen> {
                     const SizedBox(height: 16),
                     _buildSearchBar(),
                     const SizedBox(height: 22),
-                    const SectionHeader(title: AppStrings.recentAddresses),
+                    SectionHeader(
+                      title: AppStrings.recentAddresses,
+                      onAction: () => Navigator.of(
+                        context,
+                      ).pushNamed(AppRoutes.recentAddressesFull),
+                    ),
                     const SizedBox(height: 10),
                     _buildRecentAddressesCard(),
                     const SizedBox(height: 22),
-                    const SectionHeader(title: AppStrings.savedAddresses, actionLabel: AppStrings.manage),
+                    const SectionHeader(
+                      title: AppStrings.savedAddresses,
+                      actionLabel: AppStrings.manage,
+                    ),
                     const SizedBox(height: 10),
-                    ...DummyAddresses.saved.map((a) => SavedAddressCard(data: a, onEdit: () {})),
-                    DashedAddButton(label: AppStrings.addNewAddress, onTap: () {}),
+                    ...DummyAddresses.saved.map(
+                      (a) => SavedAddressCard(data: a, onEdit: () {}),
+                    ),
+                    DashedAddButton(
+                      label: AppStrings.addNewAddress,
+                      onTap: () {},
+                    ),
                     const SizedBox(height: 22),
                     const Text(
                       AppStrings.nearbyOnMap,
-                      style: TextStyle(fontSize: 15, fontWeight: FontWeight.w700, color: AppColors.textDark),
+                      style: TextStyle(
+                        fontSize: 15,
+                        fontWeight: FontWeight.w700,
+                        color: AppColors.textDark,
+                      ),
                     ),
                     const SizedBox(height: 10),
                     _buildMapPreview(),
@@ -79,16 +98,27 @@ class _AddressSelectionScreenState extends State<AddressSelectionScreen> {
             child: InkWell(
               onTap: () => Navigator.of(context).maybePop(),
               borderRadius: BorderRadius.circular(20),
-              child: const Icon(Icons.arrow_back, size: 22, color: AppColors.textDark),
+              child: const Icon(
+                Icons.arrow_back,
+                size: 22,
+                color: AppColors.textDark,
+              ),
             ),
           ),
           const Column(
             children: [
-              Text(AppStrings.deliverTo, style: TextStyle(fontSize: 12, color: AppColors.textHint)),
+              Text(
+                AppStrings.deliverTo,
+                style: TextStyle(fontSize: 12, color: AppColors.textHint),
+              ),
               SizedBox(height: 2),
               Text(
                 AppStrings.selectDeliveryLocation,
-                style: TextStyle(fontSize: 17, fontWeight: FontWeight.w800, color: AppColors.textDark),
+                style: TextStyle(
+                  fontSize: 17,
+                  fontWeight: FontWeight.w800,
+                  color: AppColors.textDark,
+                ),
               ),
             ],
           ),
@@ -110,25 +140,53 @@ class _AddressSelectionScreenState extends State<AddressSelectionScreen> {
           Container(
             width: 46,
             height: 46,
-            decoration: const BoxDecoration(color: AppColors.primarySoft, shape: BoxShape.circle),
-            child: const Icon(Icons.my_location, color: AppColors.primary, size: 20),
+            decoration: const BoxDecoration(
+              color: AppColors.primarySoft,
+              shape: BoxShape.circle,
+            ),
+            child: const Icon(
+              Icons.my_location,
+              color: AppColors.primary,
+              size: 20,
+            ),
           ),
           const SizedBox(width: 12),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Text(AppStrings.currentLocationTitle,
-                    style: TextStyle(fontSize: 14, fontWeight: FontWeight.w700, color: AppColors.textDark)),
+                const Text(
+                  AppStrings.currentLocationTitle,
+                  style: TextStyle(
+                    fontSize: 14,
+                    fontWeight: FontWeight.w700,
+                    color: AppColors.textDark,
+                  ),
+                ),
                 const SizedBox(height: 2),
-                const Text(AppStrings.currentLocationSubtitle,
-                    style: TextStyle(fontSize: 12, color: AppColors.textSecondary)),
+                const Text(
+                  AppStrings.currentLocationSubtitle,
+                  style: TextStyle(
+                    fontSize: 12,
+                    color: AppColors.textSecondary,
+                  ),
+                ),
                 const SizedBox(height: 4),
                 Row(
                   children: [
-                    Container(width: 6, height: 6, decoration: const BoxDecoration(shape: BoxShape.circle, color: AppColors.success)),
+                    Container(
+                      width: 6,
+                      height: 6,
+                      decoration: const BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: AppColors.success,
+                      ),
+                    ),
                     const SizedBox(width: 4),
-                    const Text(AppStrings.accuracyHigh, style: TextStyle(fontSize: 11, color: AppColors.textHint)),
+                    const Text(
+                      AppStrings.accuracyHigh,
+                      style: TextStyle(fontSize: 11, color: AppColors.textHint),
+                    ),
                   ],
                 ),
               ],
@@ -143,8 +201,13 @@ class _AddressSelectionScreenState extends State<AddressSelectionScreen> {
               backgroundColor: AppColors.primary,
               foregroundColor: AppColors.white,
               padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
-              textStyle: const TextStyle(fontSize: 11.5, fontWeight: FontWeight.w700),
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+              textStyle: const TextStyle(
+                fontSize: 11.5,
+                fontWeight: FontWeight.w700,
+              ),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10),
+              ),
             ),
           ),
         ],
@@ -155,7 +218,10 @@ class _AddressSelectionScreenState extends State<AddressSelectionScreen> {
   Widget _buildSearchBar() {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 14),
-      decoration: BoxDecoration(color: AppColors.surface, borderRadius: BorderRadius.circular(14)),
+      decoration: BoxDecoration(
+        color: AppColors.surface,
+        borderRadius: BorderRadius.circular(14),
+      ),
       child: const Row(
         children: [
           Icon(Icons.search, color: AppColors.textHint, size: 20),
@@ -189,7 +255,9 @@ class _AddressSelectionScreenState extends State<AddressSelectionScreen> {
           final isLast = index == DummyAddresses.recent.length - 1;
           return Container(
             decoration: BoxDecoration(
-              border: isLast ? null : const Border(bottom: BorderSide(color: AppColors.divider)),
+              border: isLast
+                  ? null
+                  : const Border(bottom: BorderSide(color: AppColors.divider)),
             ),
             child: RecentAddressTile(
               data: DummyAddresses.recent[index],
@@ -209,7 +277,10 @@ class _AddressSelectionScreenState extends State<AddressSelectionScreen> {
         Container(
           height: 190,
           width: double.infinity,
-          decoration: BoxDecoration(color: const Color(0xFFE9E9EA), borderRadius: BorderRadius.circular(16)),
+          decoration: BoxDecoration(
+            color: const Color(0xFFE9E9EA),
+            borderRadius: BorderRadius.circular(16),
+          ),
         ),
         Positioned(
           top: 36,
@@ -218,16 +289,38 @@ class _AddressSelectionScreenState extends State<AddressSelectionScreen> {
           child: Column(
             children: [
               Container(
-                padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 12,
+                  vertical: 8,
+                ),
                 decoration: BoxDecoration(
                   color: AppColors.white,
                   borderRadius: BorderRadius.circular(10),
-                  boxShadow: const [BoxShadow(color: Colors.black12, blurRadius: 6, offset: Offset(0, 2))],
+                  boxShadow: const [
+                    BoxShadow(
+                      color: Colors.black12,
+                      blurRadius: 6,
+                      offset: Offset(0, 2),
+                    ),
+                  ],
                 ),
                 child: Column(
                   children: [
-                    Text(selected.area, style: const TextStyle(fontSize: 12.5, fontWeight: FontWeight.w700, color: AppColors.textDark)),
-                    Text(selected.note, style: const TextStyle(fontSize: 11, color: AppColors.textSecondary)),
+                    Text(
+                      selected.area,
+                      style: const TextStyle(
+                        fontSize: 12.5,
+                        fontWeight: FontWeight.w700,
+                        color: AppColors.textDark,
+                      ),
+                    ),
+                    Text(
+                      selected.note,
+                      style: const TextStyle(
+                        fontSize: 11,
+                        color: AppColors.textSecondary,
+                      ),
+                    ),
                   ],
                 ),
               ),
@@ -247,7 +340,11 @@ class _AddressSelectionScreenState extends State<AddressSelectionScreen> {
               color: AppColors.white,
               boxShadow: [BoxShadow(color: Colors.black12, blurRadius: 4)],
             ),
-            child: const Icon(Icons.my_location, size: 17, color: AppColors.textDark),
+            child: const Icon(
+              Icons.my_location,
+              size: 17,
+              color: AppColors.textDark,
+            ),
           ),
         ),
       ],
