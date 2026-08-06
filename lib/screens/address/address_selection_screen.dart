@@ -7,6 +7,7 @@ import 'package:meathub/core/widgets/recent_address_tile.dart';
 import 'package:meathub/core/widgets/saved_address_card.dart';
 import 'package:meathub/core/widgets/section_header.dart';
 import 'package:meathub/data/dummy_addresses.dart';
+import 'package:meathub/screens/address/use_current_location_sheet.dart';
 
 import '../../core/routes/app_routes.dart';
 
@@ -197,7 +198,12 @@ class _AddressSelectionScreenState extends State<AddressSelectionScreen> {
           ),
           const SizedBox(width: 8),
           ElevatedButton.icon(
-            onPressed: () {},
+            onPressed: () => showModalBottomSheet(
+              context: context,
+              isScrollControlled: true,
+              backgroundColor: Colors.transparent,
+              builder: (_) => const UseCurrentLocationSheet(),
+            ),
             icon: const Icon(Icons.navigation_outlined, size: 15),
             label: const Text(AppStrings.useCurrentLocation),
             style: ElevatedButton.styleFrom(

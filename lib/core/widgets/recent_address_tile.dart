@@ -25,7 +25,10 @@ class RecentAddressTile extends StatelessWidget {
             Container(
               width: 44,
               height: 44,
-              decoration: const BoxDecoration(color: AppColors.primarySoft, shape: BoxShape.circle),
+              decoration: const BoxDecoration(
+                color: AppColors.primarySoft,
+                shape: BoxShape.circle,
+              ),
               child: Icon(data.icon, color: AppColors.primary, size: 20),
             ),
             const SizedBox(width: 12),
@@ -33,11 +36,30 @@ class RecentAddressTile extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(data.title, style: const TextStyle(fontSize: 14.5, fontWeight: FontWeight.w700, color: AppColors.textDark)),
+                  Text(
+                    data.title,
+                    style: const TextStyle(
+                      fontSize: 14.5,
+                      fontWeight: FontWeight.w700,
+                      color: AppColors.textDark,
+                    ),
+                  ),
                   const SizedBox(height: 2),
-                  Text(data.area, style: const TextStyle(fontSize: 13, color: AppColors.textDark)),
+                  Text(
+                    data.area,
+                    style: const TextStyle(
+                      fontSize: 13,
+                      color: AppColors.textDark,
+                    ),
+                  ),
                   const SizedBox(height: 2),
-                  Text(data.note, style: const TextStyle(fontSize: 12, color: AppColors.textHint)),
+                  Text(
+                    data.note,
+                    style: const TextStyle(
+                      fontSize: 12,
+                      color: AppColors.textHint,
+                    ),
+                  ),
                 ],
               ),
             ),

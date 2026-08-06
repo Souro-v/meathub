@@ -25,7 +25,9 @@ class RecentAddressFullCard extends StatelessWidget {
         decoration: BoxDecoration(
           color: selected ? AppColors.primarySoft : AppColors.white,
           borderRadius: BorderRadius.circular(16),
-          border: Border.all(color: selected ? AppColors.primary : AppColors.divider),
+          border: Border.all(
+            color: selected ? AppColors.primary : AppColors.divider,
+          ),
         ),
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -33,8 +35,15 @@ class RecentAddressFullCard extends StatelessWidget {
             Container(
               width: 42,
               height: 42,
-              decoration: const BoxDecoration(color: AppColors.primarySoft, shape: BoxShape.circle),
-              child: const Icon(Icons.location_on, color: AppColors.primary, size: 20),
+              decoration: const BoxDecoration(
+                color: AppColors.primarySoft,
+                shape: BoxShape.circle,
+              ),
+              child: const Icon(
+                Icons.location_on,
+                color: AppColors.primary,
+                size: 20,
+              ),
             ),
             const SizedBox(width: 12),
             Expanded(
@@ -50,13 +59,30 @@ class RecentAddressFullCard extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(height: 4),
-                  Text(data.address, style: const TextStyle(fontSize: 12.5, color: AppColors.textSecondary, height: 1.4)),
+                  Text(
+                    data.address,
+                    style: const TextStyle(
+                      fontSize: 12.5,
+                      color: AppColors.textSecondary,
+                      height: 1.4,
+                    ),
+                  ),
                   const SizedBox(height: 6),
                   Row(
                     children: [
-                      const Icon(Icons.access_time, size: 12, color: AppColors.textHint),
+                      const Icon(
+                        Icons.access_time,
+                        size: 12,
+                        color: AppColors.textHint,
+                      ),
                       const SizedBox(width: 4),
-                      Text(data.timeLabel, style: const TextStyle(fontSize: 11.5, color: AppColors.textHint)),
+                      Text(
+                        data.timeLabel,
+                        style: const TextStyle(
+                          fontSize: 11.5,
+                          color: AppColors.textHint,
+                        ),
+                      ),
                     ],
                   ),
                 ],
