@@ -13,6 +13,17 @@ class RecentAddressModel {
     required this.note,
   });
 }
+class RecentAddressFullModel {
+  final String title;
+  final String address;
+  final String timeLabel;
+
+  const RecentAddressFullModel({
+    required this.title,
+    required this.address,
+    required this.timeLabel,
+  });
+}
 
 class SavedAddressModel {
   final String title;

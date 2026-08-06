@@ -94,5 +94,9 @@ class AppStrings {
   static const String nearbyOnMap = 'Nearby on Map';
   static const String confirmDeliveryAddress = 'Confirm Delivery Address';
   static const String defaultLabel = 'Default';
+  // Recent Addresses (full list)
+  static const String recentlyUsed = 'Recently Used';
+  static const String searchRecentAddressHint = 'Search recent address...';
+  static const String deliverHere = 'Deliver Here';
 
 }
