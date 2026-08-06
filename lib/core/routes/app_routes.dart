@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:meathub/screens/address/add_new_address_sheet.dart';
 import 'package:meathub/screens/splash/splash_screen.dart';
 import 'package:meathub/screens/onboarding/onboarding_screen.dart';
 import 'package:meathub/screens/auth/login_screen.dart';
@@ -8,6 +9,7 @@ import 'package:meathub/screens/auth/reset_password_screen.dart';
 import 'package:meathub/screens/main/main_screen.dart';
 
 import '../../screens/address/address_selection_screen.dart';
+import '../../screens/address/manage_addresses_screen.dart';
 import '../../screens/address/recent_addresses_screen.dart';
 import '../../screens/notification/notification_screen.dart';
 
@@ -24,6 +26,8 @@ class AppRoutes {
   static const String notification = '/notification';
   static const String addressSelection = '/address-selection';
   static const String recentAddressesFull = '/recent-addresses';
+  static const String addNewAddressSheet = '/addNew-AddressSheet';
+  static const String manageAddresses = '/manage-addresses';
 
   static Map<String, WidgetBuilder> routes = {
     splash: (context) => const SplashScreen(),
@@ -36,5 +40,7 @@ class AppRoutes {
     notification: (context) => const NotificationScreen(),
     addressSelection: (context) => const AddressSelectionScreen(),
     recentAddressesFull: (context) => const RecentAddressesScreen(),
+    addNewAddressSheet: (context) => const AddNewAddressSheet(),
+    manageAddresses: (context) => const ManageAddressesScreen(),
   };
 }
