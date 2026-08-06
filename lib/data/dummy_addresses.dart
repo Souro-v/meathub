@@ -32,4 +32,16 @@ class DummyAddresses {
       phone: '016XXXXXXXX',
     ),
   ];
+  static const List<RecentAddressFullModel> allRecent = [
+    RecentAddressFullModel(title: 'Home', address: '123 Green Road, Dhanmondi, Dhaka 1205, Bangladesh', timeLabel: 'Today'),
+    RecentAddressFullModel(title: 'Office', address: '45 Gulshan Avenue, Gulshan 1, Dhaka 1212, Bangladesh', timeLabel: 'Today'),
+    RecentAddressFullModel(title: 'Parents Home', address: '32 Old Airport Road, Banani, Dhaka 1213, Bangladesh', timeLabel: 'Yesterday'),
+    RecentAddressFullModel(title: 'Village Home', address: 'Vill: Chandpur, P.O: Chandpur Bazar, P.S: Hajiganj, Chandpur', timeLabel: '2 days ago'),
+    RecentAddressFullModel(title: "Friend's House", address: 'House 7, Road 12, Block A, Mirpur 10, Dhaka 1216, Bangladesh', timeLabel: '2 days ago'),
+    RecentAddressFullModel(title: 'Shop', address: 'Shop 15, New Market City Complex, New Market, Dhaka 1205, Bangladesh', timeLabel: 'Last week'),
+    RecentAddressFullModel(title: 'University', address: 'North South University, Bashundhara R/A, Dhaka 1229, Bangladesh', timeLabel: 'Last week'),
+    RecentAddressFullModel(title: 'Apartment', address: 'Apt 5B, House 27, Road 8, Dhanmondi R/A, Dhaka 1209, Bangladesh', timeLabel: 'Last week'),
+    RecentAddressFullModel(title: 'Relative', address: 'House 12, Road 3, Sector 6, Uttara, Dhaka 1230, Bangladesh', timeLabel: 'Last week'),
+    RecentAddressFullModel(title: 'Other', address: 'House 9, Road 18, Nikunja 2, Khilkhet, Dhaka 1229, Bangladesh', timeLabel: 'Last week'),
+  ];
 }
