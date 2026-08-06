@@ -98,5 +98,25 @@ class AppStrings {
   static const String recentlyUsed = 'Recently Used';
   static const String searchRecentAddressHint = 'Search recent address...';
   static const String deliverHere = 'Deliver Here';
+  // Manage Addresses
+  static const String manageAddresses = 'Manage Addresses';
+  static const String manageAddressesSubtitle = 'Manage your saved delivery addresses.';
+  static const String defaultAddressChip = 'Default Address';
+
+  // Add New Address (bottom sheet)
+  static const String addNewAddressSubtitle = 'Save a delivery address for faster checkout.';
+  static const String houseFlatHint = 'House / Flat No.';
+  static const String roadStreetHint = 'Road / Street';
+  static const String areaHint = 'Area';
+  static const String landmarkOptionalHint = 'Landmark (Optional)';
+  static const String addressType = 'Address Type';
+  static const String addressTypeHome = 'Home';
+  static const String addressTypeOffice = 'Office';
+  static const String addressTypeOther = 'Other';
+  static const String mapPreview = 'Map Preview';
+  static const String pinMyLocation = 'Pin My Location';
+  static const String makeDefaultCheckbox = 'Make this my default delivery address';
+  static const String saveAddress = 'Save Address';
+  static const String cancel = 'Cancel';
 
 }

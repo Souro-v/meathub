@@ -38,3 +38,37 @@ class SavedAddressModel {
     this.isDefault = false,
   });
 }
+class ManagedAddressModel {
+  final String label;
+  final IconData labelIcon;
+  final Color labelColor;
+  final Color labelBg;
+  final String name;
+  final String phone;
+  final String address;
+  final bool isDefault;
+
+  const ManagedAddressModel({
+    required this.label,
+    required this.labelIcon,
+    required this.labelColor,
+    required this.labelBg,
+    required this.name,
+    required this.phone,
+    required this.address,
+    this.isDefault = false,
+  });
+
+  ManagedAddressModel copyWith({bool? isDefault}) {
+    return ManagedAddressModel(
+      label: label,
+      labelIcon: labelIcon,
+      labelColor: labelColor,
+      labelBg: labelBg,
+      name: name,
+      phone: phone,
+      address: address,
+      isDefault: isDefault ?? this.isDefault,
+    );
+  }
+}
