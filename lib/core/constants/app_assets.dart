@@ -52,4 +52,5 @@ class AppAssets {
   static const String chickenDrumStick = '$_images/chickenDrumStick.jpg';
   static const String muttonLeg = '$_images/muttonLeg.jpg';
   static const String muttonCurryCut = '$_images/muttonCurryCut.jpg';
+
 }
