@@ -127,4 +127,16 @@ class AppStrings {
   static const String saveAddress = 'Save Address';
   static const String cancel = 'Cancel';
 
+  // Wishlist
+  static const String wishlist = 'Wishlist';
+  static const String wishlistSubtitle = 'Your favorite fresh meat products';
+  static const String itemsSaved = 'Items Saved';
+  static const String searchWishlistHint = 'Search your wishlist...';
+  static const String moveToCart = 'Move to Cart';
+  static const String moveAllToCart = 'Move All to Cart';
+  static const String itemsLabel = 'Items';
+  static const String estimatedTotal = 'Estimated Total';
+  static const String wishlistEmptyTitle = 'Your wishlist is empty';
+  static const String wishlistEmptyDesc = 'Tap the heart icon on any product to save it here.';
+
 }

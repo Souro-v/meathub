@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:meathub/core/constants/app_colors.dart';
 import 'package:meathub/models/product_model.dart';
+import 'package:meathub/providers/wishlist_provider.dart';
 
 class ProductCard extends StatelessWidget {
   final ProductModel product;
@@ -11,6 +13,10 @@ class ProductCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isWishlisted = context.watch<WishlistProvider>().isWishlisted(
+      product.id,
+    );
+
     return GestureDetector(
       onTap: onTap,
       child: Container(
@@ -23,13 +29,38 @@ class ProductCard extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            AspectRatio(
-              aspectRatio: 1.1,
-              child: Image.asset(
-                product.image,
-                fit: BoxFit.cover,
-                width: double.infinity,
-              ),
+            Stack(
+              children: [
+                AspectRatio(
+                  aspectRatio: 1.1,
+                  child: Image.asset(
+                    product.image,
+                    fit: BoxFit.cover,
+                    width: double.infinity,
+                  ),
+                ),
+                Positioned(
+                  top: 8,
+                  right: 8,
+                  child: InkWell(
+                    onTap: () =>
+                        context.read<WishlistProvider>().toggle(product),
+                    borderRadius: BorderRadius.circular(20),
+                    child: Container(
+                      padding: const EdgeInsets.all(6),
+                      decoration: const BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: AppColors.white,
+                      ),
+                      child: Icon(
+                        isWishlisted ? Icons.favorite : Icons.favorite_border,
+                        size: 16,
+                        color: AppColors.primary,
+                      ),
+                    ),
+                  ),
+                ),
+              ],
             ),
             Padding(
               padding: const EdgeInsets.fromLTRB(10, 8, 10, 10),
