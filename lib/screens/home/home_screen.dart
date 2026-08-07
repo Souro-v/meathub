@@ -75,6 +75,24 @@ class HomeScreen extends StatelessWidget {
               ),
             ),
           ),
+          InkWell(
+            onTap: () => Navigator.of(context).pushNamed(AppRoutes.wishlist),
+            borderRadius: BorderRadius.circular(21),
+            child: Container(
+              width: 42,
+              height: 42,
+              margin: const EdgeInsets.only(right: 10),
+              decoration: const BoxDecoration(
+                shape: BoxShape.circle,
+                color: AppColors.surface,
+              ),
+              child: const Icon(
+                Icons.favorite_border,
+                color: AppColors.textDark,
+                size: 20,
+              ),
+            ),
+          ),
           Stack(
             clipBehavior: Clip.none,
             children: [
