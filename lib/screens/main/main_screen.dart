@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:meathub/core/constants/app_colors.dart';
+import 'package:meathub/providers/cart_provider.dart';
+import 'package:meathub/screens/cart/cart_screen.dart';
 import 'package:meathub/screens/home/home_screen.dart';
 
 class MainScreen extends StatefulWidget {
@@ -15,13 +18,15 @@ class _MainScreenState extends State<MainScreen> {
   final List<Widget> _tabs = const [
     HomeScreen(),
     _ComingSoonTab(label: 'Categories'),
-    _ComingSoonTab(label: 'Cart'),
+    CartScreen(),
     _ComingSoonTab(label: 'Orders'),
     _ComingSoonTab(label: 'Profile'),
   ];
 
   @override
   Widget build(BuildContext context) {
+    final cartCount = context.watch<CartProvider>().lineItemCount;
+
     return Scaffold(
       body: IndexedStack(index: _selectedIndex, children: _tabs),
       bottomNavigationBar: BottomNavigationBar(
@@ -31,37 +36,28 @@ class _MainScreenState extends State<MainScreen> {
         selectedItemColor: AppColors.primary,
         unselectedItemColor: AppColors.textHint,
         showUnselectedLabels: true,
-        selectedLabelStyle: const TextStyle(
-          fontSize: 11,
-          fontWeight: FontWeight.w600,
-        ),
+        selectedLabelStyle: const TextStyle(fontSize: 11, fontWeight: FontWeight.w600),
         unselectedLabelStyle: const TextStyle(fontSize: 11),
-        items: const [
+        items: [
+          const BottomNavigationBarItem(icon: Icon(Icons.home_outlined), activeIcon: Icon(Icons.home), label: 'Home'),
+          const BottomNavigationBarItem(icon: Icon(Icons.category_outlined), activeIcon: Icon(Icons.category), label: 'Categories'),
           BottomNavigationBarItem(
-            icon: Icon(Icons.home_outlined),
-            activeIcon: Icon(Icons.home),
-            label: 'Home',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.category_outlined),
-            activeIcon: Icon(Icons.category),
-            label: 'Categories',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.shopping_cart_outlined),
-            activeIcon: Icon(Icons.shopping_cart),
+            icon: Badge(
+              label: Text('$cartCount'),
+              isLabelVisible: cartCount > 0,
+              backgroundColor: AppColors.primary,
+              child: const Icon(Icons.shopping_cart_outlined),
+            ),
+            activeIcon: Badge(
+              label: Text('$cartCount'),
+              isLabelVisible: cartCount > 0,
+              backgroundColor: AppColors.primary,
+              child: const Icon(Icons.shopping_cart),
+            ),
             label: 'Cart',
           ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.receipt_long_outlined),
-            activeIcon: Icon(Icons.receipt_long),
-            label: 'Orders',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.person_outline),
-            activeIcon: Icon(Icons.person),
-            label: 'Profile',
-          ),
+          const BottomNavigationBarItem(icon: Icon(Icons.receipt_long_outlined), activeIcon: Icon(Icons.receipt_long), label: 'Orders'),
+          const BottomNavigationBarItem(icon: Icon(Icons.person_outline), activeIcon: Icon(Icons.person), label: 'Profile'),
         ],
       ),
     );
@@ -70,17 +66,13 @@ class _MainScreenState extends State<MainScreen> {
 
 class _ComingSoonTab extends StatelessWidget {
   final String label;
-
   const _ComingSoonTab({required this.label});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
-        child: Text(
-          '$label — Coming soon',
-          style: const TextStyle(fontSize: 15, color: AppColors.textHint),
-        ),
+        child: Text('$label — Coming soon', style: const TextStyle(fontSize: 15, color: AppColors.textHint)),
       ),
     );
   }
