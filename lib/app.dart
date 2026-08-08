@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:meathub/core/constants/app_theme.dart';
 import 'package:meathub/core/routes/app_routes.dart';
+import 'package:meathub/providers/cart_provider.dart';
 import 'package:meathub/providers/wishlist_provider.dart';
 
 class MyApp extends StatelessWidget {
@@ -9,8 +10,11 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (_) => WishlistProvider(),
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (_) => WishlistProvider()),
+        ChangeNotifierProvider(create: (_) => CartProvider()),
+      ],
       child: MaterialApp(
         title: 'MeatHub',
         debugShowCheckedModeBanner: false,

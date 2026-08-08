@@ -178,4 +178,19 @@ class AppStrings {
   static const String freshToday = 'Fresh Today';
   static const String reviews = 'Reviews';
   static const String custom = 'Custom';
+  // Cart
+  static const String yourCart = 'Your Cart';
+  static const String reviewCartSubtitle = 'Review your items and proceed to checkout';
+  static const String subtotal = 'Subtotal';
+  static const String deliveryFee = 'Delivery Fee';
+  static const String platformFee = 'Platform Fee';
+  static const String total = 'Total';
+  static const String addOrderNote = 'Add Order Note';
+  static const String orderNoteSubtitle = 'Any special instructions?';
+  static const String safeSecureTitle = '100% Safe & Secure';
+  static const String safeSecureDesc = 'Your payment is protected';
+  static const String proceedToCheckout = 'Proceed to Checkout';
+  static const String cartEmptyTitle = 'Your cart is empty';
+  static const String cartEmptyDesc = 'Add fresh meat products to get started.';
+
 }

@@ -25,5 +25,6 @@ class AppColors {
   static const Color primarySoft = Color(0xFFFBE8E8); // light pink info-card bg
   static const Color white = Colors.white;
   static const Color black = Colors.black;
+  static const Color successSoft = Color(0xFFE1F5E4);
 
 }
