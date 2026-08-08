@@ -8,6 +8,10 @@ class ProductModel {
   final String unit;
   final double rating;
   final int reviewCount;
+  final List<String>? gallery;
+  final String? description;
+  final bool inStock;
+  final bool isFreshToday;
 
   const ProductModel({
     required this.id,
@@ -19,7 +23,26 @@ class ProductModel {
     required this.unit,
     required this.rating,
     required this.reviewCount,
+    this.gallery,
+    this.description,
+    this.inStock = true,
+    this.isFreshToday = true,
   });
 
   bool get hasDiscount => originalPrice != price;
+
+  int get discountPercent {
+    final orig = double.tryParse(originalPrice) ?? 0;
+    final curr = double.tryParse(price) ?? 0;
+    if (orig <= 0 || curr >= orig) return 0;
+    return (((orig - curr) / orig) * 100).round();
+  }
+
+  List<String> get images => (gallery != null && gallery!.isNotEmpty) ? gallery! : [image];
+
+  String get fullDescription =>
+      description ??
+          'Premium halal $category sourced from trusted farms. Freshly cut after order '
+              'confirmation. Hygienically packed and delivered in insulated packaging to '
+              'ensure maximum freshness.';
 }

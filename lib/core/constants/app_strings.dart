@@ -11,10 +11,12 @@ class AppStrings {
   static const String featurePremiumQuality = 'Premium\nQuality Meat';
   static const String featureFastDelivery = 'Fast\nDelivery';
   static const String featureTrusted = '100%\nTrusted';
+
   // Onboarding
   static const String skip = 'Skip';
   static const String next = 'Next';
   static const String getStarted = 'Get Started';
+
   // Auth — shared
   static const String tagline = 'Fresh Meat, Trusted to You';
   static const String orDivider = 'or';
@@ -28,27 +30,32 @@ class AppStrings {
 
   // Sign In
   static const String signIn = 'Sign In';
-  static const String loginSubtitle = 'Sign in to continue your fresh meat shopping experience.';
+  static const String loginSubtitle =
+      'Sign in to continue your fresh meat shopping experience.';
   static const String rememberMe = 'Remember Me';
   static const String forgotPasswordLink = 'Forgot Password?';
   static const String dontHaveAccount = "Don't have an account?";
 
   // Sign Up
   static const String signUp = 'Sign Up';
-  static const String signupSubtitle = 'Join MeatHub and get fresh meat delivered to your doorstep.';
+  static const String signupSubtitle =
+      'Join MeatHub and get fresh meat delivered to your doorstep.';
   static const String fullNameHint = 'Full Name';
   static const String alreadyHaveAccount = 'Already have an account?';
 
   // Forgot Password
   static const String forgotPasswordTitle = 'Forgot Password?';
-  static const String forgotPasswordSubtitle = "Don't worry! Enter your registered mobile number or email and we'll send you a reset link.";
+  static const String forgotPasswordSubtitle =
+      "Don't worry! Enter your registered mobile number or email and we'll send you a reset link.";
   static const String sendResetLink = 'Send Reset Link';
-  static const String resetLinkInfo = 'We will send a password reset link to your registered mobile number.';
+  static const String resetLinkInfo =
+      'We will send a password reset link to your registered mobile number.';
   static const String mobileTab = 'Mobile Number';
   static const String emailTab = 'Email Address';
 
   // Reset / Create New Password
-  static const String createNewPasswordSubtitle = 'Enter your new password below to secure your account.';
+  static const String createNewPasswordSubtitle =
+      'Enter your new password below to secure your account.';
   static const String newPasswordLabel = 'New Password';
   static const String confirmNewPasswordLabel = 'Confirm New Password';
   static const String newPasswordHint = 'Enter your new password';
@@ -60,7 +67,9 @@ class AppStrings {
   static const String reqNumber = 'One number';
   static const String reqSpecialChar = 'One special character';
   static const String keepAccountSecureTitle = 'Keep your account secure';
-  static const String keepAccountSecureDesc = "Don't use old passwords or something easy to guess.";
+  static const String keepAccountSecureDesc =
+      "Don't use old passwords or something easy to guess.";
+
   // Home
   static const String deliverTo = 'Deliver to';
   static const String searchHint = 'Search for fresh meat...';
@@ -74,12 +83,14 @@ class AppStrings {
   static const String categoryChickenLabel = 'Chicken';
   static const String categoryFishLabel = 'Fish';
   static const String categoryEggLabel = 'Egg';
+
   // Notifications
   static const String notifications = 'Notifications';
   static const String markAllAsRead = 'Mark all as read';
   static const String all = 'All';
   static const String promotions = 'Promotions';
   static const String today = 'Today';
+
   // Address Selection
   static const String selectDeliveryLocation = 'Select Delivery Location';
   static const String currentLocationTitle = 'Current Location';
@@ -94,25 +105,34 @@ class AppStrings {
   static const String nearbyOnMap = 'Nearby on Map';
   static const String confirmDeliveryAddress = 'Confirm Delivery Address';
   static const String defaultLabel = 'Default';
+
   // Use Current Location Sheet
   static const String useCurrentLocationTitle = 'Use Current Location';
-  static const String useCurrentLocationSubtitle = "We'll detect your current location to deliver fresh meat accurately.";
-  static const String locationPermissionRequired = 'Location Permission Required';
-  static const String locationPermissionDesc = 'We need your permission to access your location.';
+  static const String useCurrentLocationSubtitle =
+      "We'll detect your current location to deliver fresh meat accurately.";
+  static const String locationPermissionRequired =
+      'Location Permission Required';
+  static const String locationPermissionDesc =
+      'We need your permission to access your location.';
   static const String allowLocationAccess = 'Allow Location Access';
   static const String chooseAddressManually = 'Choose Address Manually';
-  static const String locationPrivacyNote = 'Your location is used only for delivery and is never shared.';
+  static const String locationPrivacyNote =
+      'Your location is used only for delivery and is never shared.';
+
   // Recent Addresses (full list)
   static const String recentlyUsed = 'Recently Used';
   static const String searchRecentAddressHint = 'Search recent address...';
   static const String deliverHere = 'Deliver Here';
+
   // Manage Addresses
   static const String manageAddresses = 'Manage Addresses';
-  static const String manageAddressesSubtitle = 'Manage your saved delivery addresses.';
+  static const String manageAddressesSubtitle =
+      'Manage your saved delivery addresses.';
   static const String defaultAddressChip = 'Default Address';
 
   // Add New Address (bottom sheet)
-  static const String addNewAddressSubtitle = 'Save a delivery address for faster checkout.';
+  static const String addNewAddressSubtitle =
+      'Save a delivery address for faster checkout.';
   static const String houseFlatHint = 'House / Flat No.';
   static const String roadStreetHint = 'Road / Street';
   static const String areaHint = 'Area';
@@ -123,7 +143,8 @@ class AppStrings {
   static const String addressTypeOther = 'Other';
   static const String mapPreview = 'Map Preview';
   static const String pinMyLocation = 'Pin My Location';
-  static const String makeDefaultCheckbox = 'Make this my default delivery address';
+  static const String makeDefaultCheckbox =
+      'Make this my default delivery address';
   static const String saveAddress = 'Save Address';
   static const String cancel = 'Cancel';
 
@@ -137,6 +158,24 @@ class AppStrings {
   static const String itemsLabel = 'Items';
   static const String estimatedTotal = 'Estimated Total';
   static const String wishlistEmptyTitle = 'Your wishlist is empty';
-  static const String wishlistEmptyDesc = 'Tap the heart icon on any product to save it here.';
+  static const String wishlistEmptyDesc =
+      'Tap the heart icon on any product to save it here.';
 
+  // Product Details
+  static const String productDetails = 'Product Details';
+  static const String chooseWeight = 'Choose Weight';
+  static const String howMuchDoINeed = 'How much do I need?';
+  static const String quantity = 'Quantity';
+  static const String productDescription = 'Product Description';
+  static const String readMore = 'Read More';
+  static const String showLess = 'Show Less';
+  static const String youMayAlsoLike = 'You May Also Like';
+  static const String addToCart = 'Add to Cart';
+  static const String buyNow = 'Buy Now';
+  static const String totalPrice = 'Total Price';
+  static const String inStockLabel = 'In Stock';
+  static const String outOfStockLabel = 'Out of Stock';
+  static const String freshToday = 'Fresh Today';
+  static const String reviews = 'Reviews';
+  static const String custom = 'Custom';
 }
