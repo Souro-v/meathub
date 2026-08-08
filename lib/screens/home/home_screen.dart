@@ -213,7 +213,14 @@ class HomeScreen extends StatelessWidget {
               separatorBuilder: (_, _) => const SizedBox(width: 12),
               itemBuilder: (context, index) => SizedBox(
                 width: 150,
-                child: ProductCard(product: DummyData.popularToday[index]),
+                child: ProductCard(
+                  product: DummyData.popularToday[index],
+                  onTap: () => Navigator.of(context).push(
+                    AppRoutes.productDetailsRoute(
+                      DummyData.popularToday[index],
+                    ),
+                  ),
+                ),
               ),
             ),
           ),
@@ -240,8 +247,14 @@ class HomeScreen extends StatelessWidget {
               crossAxisSpacing: 12,
               childAspectRatio: 0.72,
             ),
-            itemBuilder: (context, index) =>
-                ProductCard(product: DummyData.todaysFreshPicks[index]),
+            itemBuilder: (context, index) => ProductCard(
+              product: DummyData.todaysFreshPicks[index],
+              onTap: () => Navigator.of(context).push(
+                AppRoutes.productDetailsRoute(
+                  DummyData.todaysFreshPicks[index],
+                ),
+              ),
+            ),
           ),
         ],
       ),
