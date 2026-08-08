@@ -8,10 +8,12 @@ import 'package:meathub/screens/auth/forgot_password_screen.dart';
 import 'package:meathub/screens/auth/reset_password_screen.dart';
 import 'package:meathub/screens/main/main_screen.dart';
 
+import '../../models/product_model.dart';
 import '../../screens/address/address_selection_screen.dart';
 import '../../screens/address/manage_addresses_screen.dart';
 import '../../screens/address/recent_addresses_screen.dart';
 import '../../screens/notification/notification_screen.dart';
+import '../../screens/product/product_details_screen.dart';
 import '../../screens/wishlist/wishlist_screen.dart';
 
 class AppRoutes {
@@ -46,4 +48,10 @@ class AppRoutes {
     manageAddresses: (context) => const ManageAddressesScreen(),
     wishlist: (context) => const WishlistScreen(),
   };
+
+  static Route<dynamic> productDetailsRoute(ProductModel product) {
+    return MaterialPageRoute(
+      builder: (_) => ProductDetailsScreen(product: product),
+    );
+  }
 }
