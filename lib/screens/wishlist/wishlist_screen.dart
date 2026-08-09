@@ -5,6 +5,9 @@ import 'package:meathub/core/constants/app_strings.dart';
 import 'package:meathub/screens/wishlist/wishlist_card.dart';
 import 'package:meathub/providers/wishlist_provider.dart';
 
+import '../../core/utils/pricing_utils.dart';
+import '../../providers/cart_provider.dart';
+
 class WishlistScreen extends StatefulWidget {
   const WishlistScreen({super.key});
 
@@ -35,8 +38,13 @@ class _WishlistScreenState extends State<WishlistScreen> {
     final wishlist = context.watch<WishlistProvider>();
     final items = _query.isEmpty
         ? wishlist.items
-        : wishlist.items.where((p) => p.name.toLowerCase().contains(_query)).toList();
-    final totalPrice = wishlist.items.fold<int>(0, (sum, p) => sum + int.parse(p.price));
+        : wishlist.items
+              .where((p) => p.name.toLowerCase().contains(_query))
+              .toList();
+    final totalPrice = wishlist.items.fold<int>(
+      0,
+      (sum, p) => sum + int.parse(p.price),
+    );
 
     return Scaffold(
       backgroundColor: AppColors.background,
@@ -50,14 +58,32 @@ class _WishlistScreenState extends State<WishlistScreen> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Text(AppStrings.wishlistSubtitle, style: TextStyle(fontSize: 12.5, color: AppColors.textSecondary)),
+                  const Text(
+                    AppStrings.wishlistSubtitle,
+                    style: TextStyle(
+                      fontSize: 12.5,
+                      color: AppColors.textSecondary,
+                    ),
+                  ),
                   const SizedBox(height: 6),
                   Row(
                     children: [
-                      Text('${wishlist.count} ',
-                          style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w800, color: AppColors.primary)),
-                      const Text(AppStrings.itemsSaved,
-                          style: TextStyle(fontSize: 14, fontWeight: FontWeight.w700, color: AppColors.textDark)),
+                      Text(
+                        '${wishlist.count} ',
+                        style: const TextStyle(
+                          fontSize: 14,
+                          fontWeight: FontWeight.w800,
+                          color: AppColors.primary,
+                        ),
+                      ),
+                      const Text(
+                        AppStrings.itemsSaved,
+                        style: TextStyle(
+                          fontSize: 14,
+                          fontWeight: FontWeight.w700,
+                          color: AppColors.textDark,
+                        ),
+                      ),
                     ],
                   ),
                 ],
@@ -74,12 +100,14 @@ class _WishlistScreenState extends State<WishlistScreen> {
               child: wishlist.count == 0
                   ? _buildEmptyState()
                   : ListView.builder(
-                padding: const EdgeInsets.fromLTRB(16, 0, 16, 8),
-                itemCount: items.length,
-                itemBuilder: (context, index) => WishlistCard(product: items[index]),
-              ),
+                      padding: const EdgeInsets.fromLTRB(16, 0, 16, 8),
+                      itemCount: items.length,
+                      itemBuilder: (context, index) =>
+                          WishlistCard(product: items[index]),
+                    ),
             ),
-            if (wishlist.count > 0) _buildBottomBar(context, wishlist, totalPrice),
+            if (wishlist.count > 0)
+              _buildBottomBar(context, wishlist, totalPrice),
           ],
         ),
       ),
@@ -96,13 +124,28 @@ class _WishlistScreenState extends State<WishlistScreen> {
             borderRadius: BorderRadius.circular(20),
             child: const Padding(
               padding: EdgeInsets.all(8),
-              child: Icon(Icons.arrow_back, size: 22, color: AppColors.textDark),
+              child: Icon(
+                Icons.arrow_back,
+                size: 22,
+                color: AppColors.textDark,
+              ),
             ),
           ),
           const Expanded(
-            child: Text(AppStrings.wishlist, style: TextStyle(fontSize: 20, fontWeight: FontWeight.w800, color: AppColors.textDark)),
+            child: Text(
+              AppStrings.wishlist,
+              style: TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.w800,
+                color: AppColors.textDark,
+              ),
+            ),
           ),
-          const Icon(Icons.shopping_cart_outlined, size: 24, color: AppColors.textDark),
+          const Icon(
+            Icons.shopping_cart_outlined,
+            size: 24,
+            color: AppColors.textDark,
+          ),
           const SizedBox(width: 4),
         ],
       ),
@@ -148,22 +191,42 @@ class _WishlistScreenState extends State<WishlistScreen> {
             Container(
               width: 90,
               height: 90,
-              decoration: const BoxDecoration(shape: BoxShape.circle, color: AppColors.primarySoft),
-              child: const Icon(Icons.favorite_border, size: 40, color: AppColors.primary),
+              decoration: const BoxDecoration(
+                shape: BoxShape.circle,
+                color: AppColors.primarySoft,
+              ),
+              child: const Icon(
+                Icons.favorite_border,
+                size: 40,
+                color: AppColors.primary,
+              ),
             ),
             const SizedBox(height: 16),
-            const Text(AppStrings.wishlistEmptyTitle,
-                style: TextStyle(fontSize: 16, fontWeight: FontWeight.w700, color: AppColors.textDark)),
+            const Text(
+              AppStrings.wishlistEmptyTitle,
+              style: TextStyle(
+                fontSize: 16,
+                fontWeight: FontWeight.w700,
+                color: AppColors.textDark,
+              ),
+            ),
             const SizedBox(height: 6),
-            const Text(AppStrings.wishlistEmptyDesc,
-                textAlign: TextAlign.center, style: TextStyle(fontSize: 13, color: AppColors.textSecondary)),
+            const Text(
+              AppStrings.wishlistEmptyDesc,
+              textAlign: TextAlign.center,
+              style: TextStyle(fontSize: 13, color: AppColors.textSecondary),
+            ),
           ],
         ),
       ),
     );
   }
 
-  Widget _buildBottomBar(BuildContext context, WishlistProvider wishlist, int total) {
+  Widget _buildBottomBar(
+    BuildContext context,
+    WishlistProvider wishlist,
+    int total,
+  ) {
     return Container(
       padding: const EdgeInsets.fromLTRB(16, 14, 16, 16),
       decoration: const BoxDecoration(
@@ -176,36 +239,78 @@ class _WishlistScreenState extends State<WishlistScreen> {
           Container(
             width: 44,
             height: 44,
-            decoration: const BoxDecoration(color: AppColors.primarySoft, shape: BoxShape.circle),
-            child: const Icon(Icons.shopping_bag_outlined, color: AppColors.primary, size: 20),
+            decoration: const BoxDecoration(
+              color: AppColors.primarySoft,
+              shape: BoxShape.circle,
+            ),
+            child: const Icon(
+              Icons.shopping_bag_outlined,
+              color: AppColors.primary,
+              size: 20,
+            ),
           ),
           const SizedBox(width: 10),
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Text(AppStrings.itemsLabel, style: TextStyle(fontSize: 11.5, color: AppColors.textHint)),
-              Text('${wishlist.count}', style: const TextStyle(fontSize: 15, fontWeight: FontWeight.w800, color: AppColors.textDark)),
+              const Text(
+                AppStrings.itemsLabel,
+                style: TextStyle(fontSize: 11.5, color: AppColors.textHint),
+              ),
+              Text(
+                '${wishlist.count}',
+                style: const TextStyle(
+                  fontSize: 15,
+                  fontWeight: FontWeight.w800,
+                  color: AppColors.textDark,
+                ),
+              ),
             ],
           ),
           const SizedBox(width: 18),
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Text(AppStrings.estimatedTotal, style: TextStyle(fontSize: 11.5, color: AppColors.textHint)),
-              Text('৳$total', style: const TextStyle(fontSize: 15, fontWeight: FontWeight.w800, color: AppColors.primary)),
+              const Text(
+                AppStrings.estimatedTotal,
+                style: TextStyle(fontSize: 11.5, color: AppColors.textHint),
+              ),
+              Text(
+                '৳$total',
+                style: const TextStyle(
+                  fontSize: 15,
+                  fontWeight: FontWeight.w800,
+                  color: AppColors.primary,
+                ),
+              ),
             ],
           ),
           const Spacer(),
           ElevatedButton.icon(
-            onPressed: () => wishlist.clear(),
+            onPressed: () {
+              final cartProvider = context.read<CartProvider>();
+              for (final product in wishlist.items) {
+                cartProvider.addItem(
+                  product,
+                  PricingUtils.unitToGrams(product.unit),
+                  1,
+                );
+              }
+              wishlist.clear();
+            },
             icon: const Icon(Icons.shopping_cart, size: 16),
             label: const Text(AppStrings.moveAllToCart),
             style: ElevatedButton.styleFrom(
               backgroundColor: AppColors.primary,
               foregroundColor: AppColors.white,
               padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
-              textStyle: const TextStyle(fontSize: 12.5, fontWeight: FontWeight.w700),
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+              textStyle: const TextStyle(
+                fontSize: 12.5,
+                fontWeight: FontWeight.w700,
+              ),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(12),
+              ),
             ),
           ),
         ],

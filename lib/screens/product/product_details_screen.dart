@@ -14,6 +14,9 @@ import 'package:meathub/data/dummy_data.dart';
 import 'package:meathub/models/product_model.dart';
 import 'package:meathub/providers/wishlist_provider.dart';
 
+import '../../core/routes/app_routes.dart';
+import '../../providers/cart_provider.dart';
+
 class ProductDetailsScreen extends StatefulWidget {
   final ProductModel product;
 
@@ -455,7 +458,20 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
           const SizedBox(width: 14),
           Expanded(
             child: ElevatedButton.icon(
-              onPressed: () {},
+              onPressed: () {
+                context.read<CartProvider>().addItem(
+                  widget.product,
+                  _selectedGrams,
+                  _quantity,
+                );
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                    content: Text('${widget.product.name} added to cart'),
+                    backgroundColor: AppColors.primary,
+                    duration: const Duration(seconds: 2),
+                  ),
+                );
+              },
               icon: const Icon(Icons.shopping_cart_outlined, size: 16),
               label: const Text(AppStrings.addToCart),
               style: ElevatedButton.styleFrom(
@@ -475,7 +491,14 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
           const SizedBox(width: 10),
           Expanded(
             child: OutlinedButton(
-              onPressed: () {},
+              onPressed: () {
+                context.read<CartProvider>().addItem(
+                  widget.product,
+                  _selectedGrams,
+                  _quantity,
+                );
+                Navigator.of(context).pushNamed(AppRoutes.cart);
+              },
               style: OutlinedButton.styleFrom(
                 foregroundColor: AppColors.primary,
                 side: const BorderSide(color: AppColors.primary),
