@@ -192,5 +192,24 @@ class AppStrings {
   static const String proceedToCheckout = 'Proceed to Checkout';
   static const String cartEmptyTitle = 'Your cart is empty';
   static const String cartEmptyDesc = 'Add fresh meat products to get started.';
-
+  // Checkout
+  static const String checkout = 'Checkout';
+  static const String checkoutSubtitle = 'Review your order and place';
+  static const String secureCheckout = 'Secure Checkout';
+  static const String stepAddress = 'Address';
+  static const String stepPayment = 'Payment';
+  static const String stepPlaceOrder = 'Place Order';
+  static const String deliverToLabel = 'Deliver to';
+  static const String currentBadge = 'Current';
+  static const String change = 'Change';
+  static const String deliverToCurrentLocation = 'Deliver to Current Location';
+  static const String deliveryOptions = 'Delivery Options';
+  static const String orderSummary = 'Order Summary';
+  static const String priceDetails = 'Price Details';
+  static const String totalAmount = 'Total Amount';
+  static const String continueToPayment = 'Continue to Payment';
+  static const String freeLabel = 'Free';
+  static const String qtyLabel = 'Qty';
+  static const String addOrderNoteOptional = 'Add Order Note (Optional)';
+  static const String orderNoteExample = 'E.g. No bones, please cut small pieces';
 }
