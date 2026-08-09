@@ -7,12 +7,13 @@ import 'package:meathub/screens/auth/signup_screen.dart';
 import 'package:meathub/screens/auth/forgot_password_screen.dart';
 import 'package:meathub/screens/auth/reset_password_screen.dart';
 import 'package:meathub/screens/main/main_screen.dart';
-
+import '../../models/cart_item_model.dart';
 import '../../models/product_model.dart';
 import '../../screens/address/address_selection_screen.dart';
 import '../../screens/address/manage_addresses_screen.dart';
 import '../../screens/address/recent_addresses_screen.dart';
 import '../../screens/cart/cart_screen.dart';
+import '../../screens/checkout/checkout_screen.dart';
 import '../../screens/notification/notification_screen.dart';
 import '../../screens/product/product_details_screen.dart';
 import '../../screens/wishlist/wishlist_screen.dart';
@@ -56,5 +57,9 @@ class AppRoutes {
     return MaterialPageRoute(
       builder: (_) => ProductDetailsScreen(product: product),
     );
+  }
+
+  static Route<dynamic> checkoutRoute(List<CartItemModel> items) {
+    return MaterialPageRoute(builder: (_) => CheckoutScreen(items: items));
   }
 }

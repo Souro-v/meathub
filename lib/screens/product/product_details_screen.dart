@@ -15,6 +15,7 @@ import 'package:meathub/models/product_model.dart';
 import 'package:meathub/providers/wishlist_provider.dart';
 
 import '../../core/routes/app_routes.dart';
+import '../../models/cart_item_model.dart';
 import '../../providers/cart_provider.dart';
 
 class ProductDetailsScreen extends StatefulWidget {
@@ -492,12 +493,12 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
           Expanded(
             child: OutlinedButton(
               onPressed: () {
-                context.read<CartProvider>().addItem(
-                  widget.product,
-                  _selectedGrams,
-                  _quantity,
+                final item = CartItemModel(
+                  product: widget.product,
+                  weightGrams: _selectedGrams,
+                  quantity: _quantity,
                 );
-                Navigator.of(context).pushNamed(AppRoutes.cart);
+                Navigator.of(context).push(AppRoutes.checkoutRoute([item]));
               },
               style: OutlinedButton.styleFrom(
                 foregroundColor: AppColors.primary,

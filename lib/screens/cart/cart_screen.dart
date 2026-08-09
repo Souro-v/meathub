@@ -385,7 +385,9 @@ class CartScreen extends StatelessWidget {
                 SizedBox(
                   width: double.infinity,
                   child: ElevatedButton(
-                    onPressed: () {},
+                    onPressed: () => Navigator.of(
+                      context,
+                    ).push(AppRoutes.checkoutRoute(cart.items)),
                     style: ElevatedButton.styleFrom(
                       backgroundColor: AppColors.primary,
                       foregroundColor: AppColors.white,
