@@ -1,7 +1,10 @@
+import 'package:flutter/material.dart';
 import 'package:meathub/core/constants/app_assets.dart';
 import 'package:meathub/core/constants/app_strings.dart';
 import 'package:meathub/models/category_model.dart';
 import 'package:meathub/models/product_model.dart';
+
+import '../models/delivery_option_model.dart';
 
 class DummyData {
   DummyData._();
@@ -15,11 +18,26 @@ class DummyData {
   ];
 
   static const List<CategoryModel> categories = [
-    CategoryModel(name: AppStrings.categoryBeefLabel, icon: AppAssets.categoryBeef),
-    CategoryModel(name: AppStrings.categoryMuttonLabel, icon: AppAssets.categoryMutton),
-    CategoryModel(name: AppStrings.categoryChickenLabel, icon: AppAssets.categoryChicken),
-    CategoryModel(name: AppStrings.categoryFishLabel, icon: AppAssets.categoryFish),
-    CategoryModel(name: AppStrings.categoryEggLabel, icon: AppAssets.categoryEgg),
+    CategoryModel(
+      name: AppStrings.categoryBeefLabel,
+      icon: AppAssets.categoryBeef,
+    ),
+    CategoryModel(
+      name: AppStrings.categoryMuttonLabel,
+      icon: AppAssets.categoryMutton,
+    ),
+    CategoryModel(
+      name: AppStrings.categoryChickenLabel,
+      icon: AppAssets.categoryChicken,
+    ),
+    CategoryModel(
+      name: AppStrings.categoryFishLabel,
+      icon: AppAssets.categoryFish,
+    ),
+    CategoryModel(
+      name: AppStrings.categoryEggLabel,
+      icon: AppAssets.categoryEgg,
+    ),
   ];
 
   static const List<ProductModel> popularToday = [
@@ -179,6 +197,22 @@ class DummyData {
       unit: '500 g',
       rating: 4.4,
       reviewCount: 51,
+    ),
+  ];
+  static const List<DeliveryOptionModel> deliveryOptions = [
+    DeliveryOptionModel(
+      id: 'standard',
+      icon: Icons.two_wheeler,
+      title: 'Standard Delivery',
+      subtitle: '45-60 mins',
+      fee: 0,
+    ),
+    DeliveryOptionModel(
+      id: 'express',
+      icon: Icons.timer_outlined,
+      title: 'Express Delivery',
+      subtitle: '20-30 mins',
+      fee: 60,
     ),
   ];
 }
