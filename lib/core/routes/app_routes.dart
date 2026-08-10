@@ -17,6 +17,7 @@ import '../../screens/address/manage_addresses_screen.dart';
 import '../../screens/address/recent_addresses_screen.dart';
 import '../../screens/cart/cart_screen.dart';
 import '../../screens/checkout/checkout_screen.dart';
+import '../../screens/checkout/order_success_screen.dart';
 import '../../screens/checkout/payment_screen.dart';
 import '../../screens/checkout/place_order_screen.dart';
 import '../../screens/notification/notification_screen.dart';
@@ -48,7 +49,9 @@ class AppRoutes {
     signup: (context) => const SignupScreen(),
     forgotPassword: (context) => const ForgotPasswordScreen(),
     resetPassword: (context) => const ResetPasswordScreen(),
-    main: (context) => const MainScreen(),
+    main: (context) => MainScreen(
+      initialIndex: (ModalRoute.of(context)?.settings.arguments as int?) ?? 0,
+    ),
     notification: (context) => const NotificationScreen(),
     addressSelection: (context) => const AddressSelectionScreen(),
     recentAddressesFull: (context) => const RecentAddressesScreen(),
@@ -93,6 +96,24 @@ class AppRoutes {
   }) {
     return MaterialPageRoute(
       builder: (_) => PlaceOrderScreen(
+        items: items,
+        deliveryOption: deliveryOption,
+        address: address,
+        platformFee: platformFee,
+        paymentMethod: paymentMethod,
+      ),
+    );
+  }
+
+  static Route<dynamic> orderSuccessRoute({
+    required List<CartItemModel> items,
+    required DeliveryOptionModel deliveryOption,
+    required ManagedAddressModel address,
+    required double platformFee,
+    required PaymentMethodModel paymentMethod,
+  }) {
+    return MaterialPageRoute(
+      builder: (_) => OrderSuccessScreen(
         items: items,
         deliveryOption: deliveryOption,
         address: address,
