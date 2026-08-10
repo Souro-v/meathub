@@ -4,7 +4,9 @@ import 'package:meathub/core/constants/app_strings.dart';
 import 'package:meathub/models/category_model.dart';
 import 'package:meathub/models/product_model.dart';
 
+import '../core/constants/app_colors.dart';
 import '../models/delivery_option_model.dart';
+import '../models/payment_method_model.dart';
 
 class DummyData {
   DummyData._();
@@ -213,6 +215,50 @@ class DummyData {
       title: 'Express Delivery',
       subtitle: '20-30 mins',
       fee: 60,
+    ),
+  ];
+  static const List<PaymentMethodModel> paymentMethods = [
+    PaymentMethodModel(
+      id: 'cod',
+      icon: Icons.payments_outlined,
+      iconColor: AppColors.primary,
+      iconBg: AppColors.primarySoft,
+      title: 'Cash on Delivery',
+      subtitle: 'Pay in cash when your order is delivered',
+      isRecommended: true,
+    ),
+    PaymentMethodModel(
+      id: 'bkash',
+      icon: Icons.account_balance_wallet_outlined,
+      iconColor: Color(0xFFE2136E),
+      iconBg: Color(0xFFFCE4EF),
+      title: 'bKash',
+      subtitle: 'Pay easily with bKash',
+    ),
+    PaymentMethodModel(
+      id: 'nagad',
+      icon: Icons.account_balance_wallet_outlined,
+      iconColor: Color(0xFFF7941D),
+      iconBg: Color(0xFFFEF0E0),
+      title: 'Nagad',
+      subtitle: 'Pay easily with Nagad',
+    ),
+    PaymentMethodModel(
+      id: 'card',
+      icon: Icons.credit_card,
+      iconColor: AppColors.textDark,
+      iconBg: AppColors.surface,
+      title: 'Credit / Debit Card',
+      subtitle: 'Visa, MasterCard, AMEX',
+      showCardBrands: true,
+    ),
+    PaymentMethodModel(
+      id: 'bank',
+      icon: Icons.account_balance_outlined,
+      iconColor: AppColors.textDark,
+      iconBg: AppColors.surface,
+      title: 'Bank Transfer',
+      subtitle: 'Transfer from any bank',
     ),
   ];
 }
