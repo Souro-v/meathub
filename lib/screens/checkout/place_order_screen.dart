@@ -568,67 +568,15 @@ class _PlaceOrderScreenState extends State<PlaceOrderScreen> {
       cart.removeItem(item.cartId);
     }
 
-    showDialog(
-      context: context,
-      barrierDismissible: false,
-      builder: (dialogContext) => AlertDialog(
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(18)),
-        content: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Container(
-              width: 64,
-              height: 64,
-              decoration: const BoxDecoration(
-                shape: BoxShape.circle,
-                color: AppColors.successSoft,
-              ),
-              child: const Icon(
-                Icons.check_circle,
-                color: AppColors.success,
-                size: 36,
-              ),
-            ),
-            const SizedBox(height: 16),
-            const Text(
-              AppStrings.orderPlacedTitle,
-              style: TextStyle(
-                fontSize: 17,
-                fontWeight: FontWeight.w800,
-                color: AppColors.textDark,
-              ),
-            ),
-            const SizedBox(height: 8),
-            const Text(
-              AppStrings.orderPlacedDesc,
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                fontSize: 13,
-                color: AppColors.textSecondary,
-                height: 1.4,
-              ),
-            ),
-            const SizedBox(height: 18),
-            SizedBox(
-              width: double.infinity,
-              child: ElevatedButton(
-                onPressed: () => Navigator.of(
-                  dialogContext,
-                ).pushNamedAndRemoveUntil(AppRoutes.main, (route) => false),
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: AppColors.primary,
-                  foregroundColor: AppColors.white,
-                  minimumSize: const Size(0, 48),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                ),
-                child: const Text(AppStrings.continueShopping),
-              ),
-            ),
-          ],
-        ),
+    Navigator.of(context).pushAndRemoveUntil(
+      AppRoutes.orderSuccessRoute(
+        items: widget.items,
+        deliveryOption: widget.deliveryOption,
+        address: widget.address,
+        platformFee: widget.platformFee,
+        paymentMethod: widget.paymentMethod,
       ),
+          (route) => false,
     );
   }
 }
