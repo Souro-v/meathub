@@ -245,4 +245,18 @@ class AppStrings {
   static const String orderPlacedTitle = 'Order Placed!';
   static const String orderPlacedDesc = "Your order has been placed successfully. We'll notify you once it's on the way.";
   static const String continueShopping = 'Continue Shopping';
+  // Order Success
+  static const String orderPlacedSuccessTitle = 'Order Placed Successfully!';
+  static const String orderPlacedSuccessSubtitle = 'Thank you for shopping with MeatHub. Your order is confirmed.';
+  static const String yourOrderConfirmedTitle = 'Your Order is Confirmed';
+  static const String yourOrderConfirmedDesc = "We've received your order and are preparing it for fast delivery.";
+  static const String estimatedDelivery = 'Estimated Delivery';
+  static const String trackOrder = 'Track Order';
+  static const String orderDetails = 'Order Details';
+  static const String orderIdLabel = 'Order ID';
+  static const String thanksForBeingWithMeatHub = 'Thanks for being with MeatHub!';
+  static const String pointsEarnedSuffix = 'MeatHub Points';
+  static const String pointsWillBeAdded = 'Points will be added to your account after delivery.';
+  static const String backToHome = 'Back to Home';
+  static const String viewMyOrders = 'View My Orders';
 }
