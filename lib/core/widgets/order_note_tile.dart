@@ -7,11 +7,13 @@ import 'package:meathub/providers/cart_provider.dart';
 class OrderNoteTile extends StatelessWidget {
   final String title;
   final String placeholder;
+  final bool showChangeLabel;
 
   const OrderNoteTile({
     super.key,
     this.title = AppStrings.addOrderNote,
     this.placeholder = AppStrings.orderNoteSubtitle,
+    this.showChangeLabel = false,
   });
 
   @override
@@ -32,26 +34,66 @@ class OrderNoteTile extends StatelessWidget {
             Container(
               width: 40,
               height: 40,
-              decoration: const BoxDecoration(color: AppColors.primarySoft, shape: BoxShape.circle),
-              child: const Icon(Icons.description_outlined, color: AppColors.primary, size: 18),
+              decoration: const BoxDecoration(
+                color: AppColors.primarySoft,
+                shape: BoxShape.circle,
+              ),
+              child: const Icon(
+                Icons.description_outlined,
+                color: AppColors.primary,
+                size: 18,
+              ),
             ),
             const SizedBox(width: 12),
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(title, style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w700, color: AppColors.textDark)),
+                  Text(
+                    title,
+                    style: const TextStyle(
+                      fontSize: 14,
+                      fontWeight: FontWeight.w700,
+                      color: AppColors.textDark,
+                    ),
+                  ),
                   const SizedBox(height: 2),
                   Text(
                     cart.orderNote.isEmpty ? placeholder : cart.orderNote,
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
-                    style: const TextStyle(fontSize: 12, color: AppColors.textHint),
+                    style: const TextStyle(
+                      fontSize: 12,
+                      color: AppColors.textHint,
+                    ),
                   ),
                 ],
               ),
             ),
-            const Icon(Icons.chevron_right, size: 20, color: AppColors.textHint),
+            showChangeLabel
+                ? Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: const [
+                      Text(
+                        AppStrings.change,
+                        style: TextStyle(
+                          fontSize: 12.5,
+                          fontWeight: FontWeight.w700,
+                          color: AppColors.primary,
+                        ),
+                      ),
+                      Icon(
+                        Icons.chevron_right,
+                        size: 16,
+                        color: AppColors.primary,
+                      ),
+                    ],
+                  )
+                : const Icon(
+                    Icons.chevron_right,
+                    size: 20,
+                    color: AppColors.textHint,
+                  ),
           ],
         ),
       ),
@@ -71,7 +113,10 @@ class OrderNoteTile extends StatelessWidget {
           decoration: InputDecoration(hintText: placeholder),
         ),
         actions: [
-          TextButton(onPressed: () => Navigator.pop(dialogContext), child: const Text(AppStrings.cancel)),
+          TextButton(
+            onPressed: () => Navigator.pop(dialogContext),
+            child: const Text(AppStrings.cancel),
+          ),
           TextButton(
             onPressed: () {
               cart.setOrderNote(controller.text.trim());
