@@ -212,4 +212,36 @@ class AppStrings {
   static const String qtyLabel = 'Qty';
   static const String addOrderNoteOptional = 'Add Order Note (Optional)';
   static const String orderNoteExample = 'E.g. No bones, please cut small pieces';
+  // Payment
+  static const String choosePaymentMethodSubtitle = 'Choose your payment method';
+  static const String securePayment = 'Secure Payment';
+  static const String paymentMethodsSectionTitle = 'Payment Methods';
+  static const String cashOnDelivery = 'Cash on Delivery';
+  static const String codSubtitle = 'Pay in cash when your order is delivered';
+  static const String recommended = 'Recommended';
+  static const String bkashLabel = 'bKash';
+  static const String bkashSubtitle = 'Pay easily with bKash';
+  static const String nagadLabel = 'Nagad';
+  static const String nagadSubtitle = 'Pay easily with Nagad';
+  static const String creditDebitCard = 'Credit / Debit Card';
+  static const String cardSubtitle = 'Visa, MasterCard, AMEX';
+  static const String bankTransfer = 'Bank Transfer';
+  static const String bankSubtitle = 'Transfer from any bank';
+  static const String viewDetails = 'View Details';
+  static const String hideDetails = 'Hide Details';
+  static const String paymentProtectedDesc = 'Your payment information is protected with industry-standard encryption.';
+
+  // Place Order
+  static const String placeOrderTitle = 'Place Order';
+  static const String placeOrderSubtitle = 'Confirm and place your order';
+  static const String deliveryTypeLabel = 'Delivery Type';
+  static const String paymentMethodLabel = 'Payment Method';
+  static const String noteToRiderTitle = 'Note to Rider (Optional)';
+  static const String noteToRiderPlaceholder = 'E.g. Please call me before delivery';
+  static const String weProtectInfoDesc = 'We protect your personal information and payment details.';
+  static const String agreeToThe = 'I agree to the ';
+  static const String termsConditions = 'Terms & Conditions';
+  static const String orderPlacedTitle = 'Order Placed!';
+  static const String orderPlacedDesc = "Your order has been placed successfully. We'll notify you once it's on the way.";
+  static const String continueShopping = 'Continue Shopping';
 }
