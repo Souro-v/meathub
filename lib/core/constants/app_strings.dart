@@ -232,6 +232,7 @@ class AppStrings {
   static const String paymentProtectedDesc = 'Your payment information is protected with industry-standard encryption.';
 
   // Place Order
+  static const String placeOrder = 'Place Order';
   static const String placeOrderTitle = 'Place Order';
   static const String placeOrderSubtitle = 'Confirm and place your order';
   static const String deliveryTypeLabel = 'Delivery Type';
