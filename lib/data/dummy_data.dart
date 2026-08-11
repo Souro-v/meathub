@@ -6,6 +6,7 @@ import 'package:meathub/models/product_model.dart';
 
 import '../core/constants/app_colors.dart';
 import '../models/delivery_option_model.dart';
+import '../models/delivery_rider_model.dart';
 import '../models/payment_method_model.dart';
 
 class DummyData {
@@ -261,4 +262,10 @@ class DummyData {
       subtitle: 'Transfer from any bank',
     ),
   ];
+  static const DeliveryRiderModel demoRider = DeliveryRiderModel(
+    name: 'Rahim Hossain',
+    rating: 4.9,
+    orderCount: 128,
+    phone: '+880 1812 345678',
+  );
 }
