@@ -21,6 +21,7 @@ import '../../screens/checkout/order_success_screen.dart';
 import '../../screens/checkout/payment_screen.dart';
 import '../../screens/checkout/place_order_screen.dart';
 import '../../screens/notification/notification_screen.dart';
+import '../../screens/orders/track_order_screen.dart';
 import '../../screens/product/product_details_screen.dart';
 import '../../screens/wishlist/wishlist_screen.dart';
 
@@ -119,6 +120,28 @@ class AppRoutes {
         address: address,
         platformFee: platformFee,
         paymentMethod: paymentMethod,
+      ),
+    );
+  }
+
+  static Route<dynamic> trackOrderRoute({
+    required String orderId,
+    required DateTime placedAt,
+    required List<CartItemModel> items,
+    required ManagedAddressModel address,
+    required DeliveryOptionModel deliveryOption,
+    required PaymentMethodModel paymentMethod,
+    required double platformFee,
+  }) {
+    return MaterialPageRoute(
+      builder: (_) => TrackOrderScreen(
+        orderId: orderId,
+        placedAt: placedAt,
+        items: items,
+        address: address,
+        deliveryOption: deliveryOption,
+        paymentMethod: paymentMethod,
+        platformFee: platformFee,
       ),
     );
   }

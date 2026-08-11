@@ -4,6 +4,7 @@ import 'package:meathub/models/notification_model.dart';
 
 class NotificationCard extends StatelessWidget {
   final NotificationModel notification;
+
   const NotificationCard({super.key, required this.notification});
 
   @override
@@ -22,8 +23,15 @@ class NotificationCard extends StatelessWidget {
           Container(
             width: 46,
             height: 46,
-            decoration: BoxDecoration(color: notification.iconBg, shape: BoxShape.circle),
-            child: Icon(notification.icon, color: notification.iconColor, size: 22),
+            decoration: BoxDecoration(
+              color: notification.iconBg,
+              shape: BoxShape.circle,
+            ),
+            child: Icon(
+              notification.icon,
+              color: notification.iconColor,
+              size: 22,
+            ),
           ),
           const SizedBox(width: 12),
           Expanded(
@@ -32,15 +40,29 @@ class NotificationCard extends StatelessWidget {
               children: [
                 Text(
                   notification.title,
-                  style: const TextStyle(fontSize: 14.5, fontWeight: FontWeight.w700, color: AppColors.textDark),
+                  style: const TextStyle(
+                    fontSize: 14.5,
+                    fontWeight: FontWeight.w700,
+                    color: AppColors.textDark,
+                  ),
                 ),
                 const SizedBox(height: 4),
                 Text(
                   notification.description,
-                  style: const TextStyle(fontSize: 13, color: AppColors.textSecondary, height: 1.4),
+                  style: const TextStyle(
+                    fontSize: 13,
+                    color: AppColors.textSecondary,
+                    height: 1.4,
+                  ),
                 ),
                 const SizedBox(height: 8),
-                Text(notification.time, style: const TextStyle(fontSize: 11.5, color: AppColors.textHint)),
+                Text(
+                  notification.time,
+                  style: const TextStyle(
+                    fontSize: 11.5,
+                    color: AppColors.textHint,
+                  ),
+                ),
               ],
             ),
           ),
@@ -50,7 +72,10 @@ class NotificationCard extends StatelessWidget {
               child: Container(
                 width: 8,
                 height: 8,
-                decoration: const BoxDecoration(shape: BoxShape.circle, color: AppColors.primary),
+                decoration: const BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: AppColors.primary,
+                ),
               ),
             ),
         ],

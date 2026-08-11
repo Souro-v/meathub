@@ -33,6 +33,7 @@ class OrderSuccessScreen extends StatefulWidget {
 class _OrderSuccessScreenState extends State<OrderSuccessScreen> {
   late final ConfettiController _confettiController;
   late final String _orderId;
+  late final DateTime _placedAt;
   late final String _deliveryWindow;
 
   double get _subtotal =>
@@ -48,6 +49,7 @@ class _OrderSuccessScreenState extends State<OrderSuccessScreen> {
       duration: const Duration(seconds: 2),
     );
     _orderId = OrderUtils.generateOrderId();
+    _placedAt = DateTime.now();
     _deliveryWindow = OrderUtils.estimatedDeliveryWindow(
       widget.deliveryOption.subtitle,
     );
@@ -295,7 +297,17 @@ class _OrderSuccessScreenState extends State<OrderSuccessScreen> {
             ),
           ),
           ElevatedButton.icon(
-            onPressed: () => _goToMain(tabIndex: 3),
+            onPressed: () => Navigator.of(context).push(
+              AppRoutes.trackOrderRoute(
+                orderId: _orderId,
+                placedAt: _placedAt,
+                items: widget.items,
+                address: widget.address,
+                deliveryOption: widget.deliveryOption,
+                paymentMethod: widget.paymentMethod,
+                platformFee: widget.platformFee,
+              ),
+            ),
             icon: const Icon(Icons.arrow_forward, size: 14),
             label: const Text(AppStrings.trackOrder),
             style: ElevatedButton.styleFrom(
