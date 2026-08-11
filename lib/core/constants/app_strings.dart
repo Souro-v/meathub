@@ -259,4 +259,24 @@ class AppStrings {
   static const String pointsWillBeAdded = 'Points will be added to your account after delivery.';
   static const String backToHome = 'Back to Home';
   static const String viewMyOrders = 'View My Orders';
+  // Track Order
+  static const String trackOrderTitle = 'Track Order';
+  static const String help = 'Help';
+  static const String onTimeBadge = 'On Time';
+  static const String orderStatusTitle = 'Order Status';
+  static const String stepOrderPlaced = 'Order Placed';
+  static const String stepOrderConfirmed = 'Order Confirmed';
+  static const String stepPreparingOrder = 'Preparing Your Order';
+  static const String stepOutForDelivery = 'Out for Delivery';
+  static const String stepOutForDeliveryDesc = 'Rider is on the way to deliver your order';
+  static const String stepDelivered = 'Delivered';
+  static const String stepOrderCompleted = 'Order Completed';
+  static const String stepOrderCompletedDesc = 'Thank you for shopping with MeatHub!';
+  static const String completedLabel = 'Completed';
+  static const String liveLabel = 'Live';
+  static const String deliveryPartner = 'Delivery Partner';
+  static const String ordersCountSuffix = 'Orders';
+  static const String notificationDeliveredNote = 'You will receive a notification when your order is delivered.';
+  static const String needHelpChat = 'Need Help? Chat with us';
+  static const String deliveryAddressLabel = 'Delivery Address';
 }
