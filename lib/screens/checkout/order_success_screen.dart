@@ -11,6 +11,8 @@ import 'package:meathub/models/delivery_option_model.dart';
 import 'package:meathub/models/payment_method_model.dart';
 
 class OrderSuccessScreen extends StatefulWidget {
+  final String orderId;
+  final DateTime placedAt;
   final List<CartItemModel> items;
   final DeliveryOptionModel deliveryOption;
   final ManagedAddressModel address;
@@ -19,6 +21,8 @@ class OrderSuccessScreen extends StatefulWidget {
 
   const OrderSuccessScreen({
     super.key,
+    required this.orderId,
+    required this.placedAt,
     required this.items,
     required this.deliveryOption,
     required this.address,
@@ -32,8 +36,6 @@ class OrderSuccessScreen extends StatefulWidget {
 
 class _OrderSuccessScreenState extends State<OrderSuccessScreen> {
   late final ConfettiController _confettiController;
-  late final String _orderId;
-  late final DateTime _placedAt;
   late final String _deliveryWindow;
 
   double get _subtotal =>
@@ -48,8 +50,7 @@ class _OrderSuccessScreenState extends State<OrderSuccessScreen> {
     _confettiController = ConfettiController(
       duration: const Duration(seconds: 2),
     );
-    _orderId = OrderUtils.generateOrderId();
-    _placedAt = DateTime.now();
+
     _deliveryWindow = OrderUtils.estimatedDeliveryWindow(
       widget.deliveryOption.subtitle,
     );
@@ -113,7 +114,7 @@ class _OrderSuccessScreenState extends State<OrderSuccessScreen> {
                     _buildEstimatedDeliveryCard(),
                     const SizedBox(height: 18),
                     OrderSuccessDetailsCard(
-                      orderId: _orderId,
+                      orderId: widget.orderId,
                       items: widget.items,
                       subtotal: _subtotal,
                       deliveryFee: widget.deliveryOption.fee,
@@ -299,8 +300,8 @@ class _OrderSuccessScreenState extends State<OrderSuccessScreen> {
           ElevatedButton.icon(
             onPressed: () => Navigator.of(context).push(
               AppRoutes.trackOrderRoute(
-                orderId: _orderId,
-                placedAt: _placedAt,
+                orderId: widget.orderId,
+                placedAt: widget.placedAt,
                 items: widget.items,
                 address: widget.address,
                 deliveryOption: widget.deliveryOption,

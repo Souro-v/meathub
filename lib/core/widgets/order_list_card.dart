@@ -30,7 +30,11 @@ class OrderListCard extends StatelessWidget {
     return Container(
       margin: const EdgeInsets.only(bottom: 16),
       padding: const EdgeInsets.all(14),
-      decoration: BoxDecoration(color: AppColors.white, borderRadius: BorderRadius.circular(16), border: Border.all(color: AppColors.divider)),
+      decoration: BoxDecoration(
+        color: AppColors.white,
+        borderRadius: BorderRadius.circular(16),
+        border: Border.all(color: AppColors.divider),
+      ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -41,15 +45,32 @@ class OrderListCard extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text('${AppStrings.orderIdLabel}: ${order.orderId}', style: const TextStyle(fontSize: 13.5, fontWeight: FontWeight.w700, color: AppColors.textDark)),
+                    Text(
+                      '${AppStrings.orderIdLabel}: ${order.orderId}',
+                      style: const TextStyle(
+                        fontSize: 13.5,
+                        fontWeight: FontWeight.w700,
+                        color: AppColors.textDark,
+                      ),
+                    ),
                     const SizedBox(height: 2),
-                    Text(_formatDate(order.placedAt), style: const TextStyle(fontSize: 11.5, color: AppColors.textHint)),
+                    Text(
+                      _formatDate(order.placedAt),
+                      style: const TextStyle(
+                        fontSize: 11.5,
+                        color: AppColors.textHint,
+                      ),
+                    ),
                   ],
                 ),
               ),
               OrderStatusBadge(status: order.status),
               const SizedBox(width: 4),
-              const Icon(Icons.chevron_right, size: 18, color: AppColors.textHint),
+              const Icon(
+                Icons.chevron_right,
+                size: 18,
+                color: AppColors.textHint,
+              ),
             ],
           ),
           const SizedBox(height: 12),
@@ -58,22 +79,53 @@ class OrderListCard extends StatelessWidget {
             children: [
               ClipRRect(
                 borderRadius: BorderRadius.circular(12),
-                child: Image.asset(firstItem.product.image, width: 76, height: 76, fit: BoxFit.cover),
+                child: Image.asset(
+                  firstItem.product.image,
+                  width: 76,
+                  height: 76,
+                  fit: BoxFit.cover,
+                ),
               ),
               const SizedBox(width: 12),
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(firstItem.product.name, style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w700, color: AppColors.textDark)),
+                    Text(
+                      firstItem.product.name,
+                      style: const TextStyle(
+                        fontSize: 14,
+                        fontWeight: FontWeight.w700,
+                        color: AppColors.textDark,
+                      ),
+                    ),
                     const SizedBox(height: 2),
-                    Text('${firstItem.weightLabel} • ${AppStrings.qtyLabel}: ${firstItem.quantity}', style: const TextStyle(fontSize: 12, color: AppColors.textHint)),
+                    Text(
+                      '${firstItem.weightLabel} • ${AppStrings.qtyLabel}: ${firstItem.quantity}',
+                      style: const TextStyle(
+                        fontSize: 12,
+                        color: AppColors.textHint,
+                      ),
+                    ),
                     if (extraCount > 0) ...[
                       const SizedBox(height: 2),
-                      Text('+$extraCount more item${extraCount > 1 ? 's' : ''}', style: const TextStyle(fontSize: 11.5, color: AppColors.textHint)),
+                      Text(
+                        '+$extraCount more item${extraCount > 1 ? 's' : ''}',
+                        style: const TextStyle(
+                          fontSize: 11.5,
+                          color: AppColors.textHint,
+                        ),
+                      ),
                     ],
                     const SizedBox(height: 4),
-                    Text('৳${order.total.toStringAsFixed(0)}', style: const TextStyle(fontSize: 15, fontWeight: FontWeight.w800, color: AppColors.primary)),
+                    Text(
+                      '৳${order.total.toStringAsFixed(0)}',
+                      style: const TextStyle(
+                        fontSize: 15,
+                        fontWeight: FontWeight.w800,
+                        color: AppColors.primary,
+                      ),
+                    ),
                   ],
                 ),
               ),
@@ -81,11 +133,26 @@ class OrderListCard extends StatelessWidget {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
-                  Text(_rightLabel(), style: const TextStyle(fontSize: 10.5, color: AppColors.textHint), textAlign: TextAlign.right),
+                  Text(
+                    _rightLabel(),
+                    style: const TextStyle(
+                      fontSize: 10.5,
+                      color: AppColors.textHint,
+                    ),
+                    textAlign: TextAlign.right,
+                  ),
                   const SizedBox(height: 3),
                   SizedBox(
                     width: 100,
-                    child: Text(_rightValue(), style: const TextStyle(fontSize: 11.5, fontWeight: FontWeight.w700, color: AppColors.textDark), textAlign: TextAlign.right),
+                    child: Text(
+                      _rightValue(),
+                      style: const TextStyle(
+                        fontSize: 11.5,
+                        fontWeight: FontWeight.w700,
+                        color: AppColors.textDark,
+                      ),
+                      textAlign: TextAlign.right,
+                    ),
                   ),
                 ],
               ),
@@ -103,7 +170,20 @@ class OrderListCard extends StatelessWidget {
   }
 
   String _formatDate(DateTime date) {
-    const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+    const months = [
+      'Jan',
+      'Feb',
+      'Mar',
+      'Apr',
+      'May',
+      'Jun',
+      'Jul',
+      'Aug',
+      'Sep',
+      'Oct',
+      'Nov',
+      'Dec',
+    ];
     final hour12 = date.hour % 12 == 0 ? 12 : date.hour % 12;
     final minute = date.minute.toString().padLeft(2, '0');
     final period = date.hour >= 12 ? 'PM' : 'AM';
@@ -126,10 +206,14 @@ class OrderListCard extends StatelessWidget {
   String _rightValue() {
     switch (order.status) {
       case OrderStatus.delivered:
-        return order.deliveredAt != null ? _formatDate(order.deliveredAt!) : '-';
+        return order.deliveredAt != null
+            ? _formatDate(order.deliveredAt!)
+            : '-';
       case OrderStatus.cancelled:
       case OrderStatus.returned:
-        return order.cancelledAt != null ? _formatDate(order.cancelledAt!) : '-';
+        return order.cancelledAt != null
+            ? _formatDate(order.cancelledAt!)
+            : '-';
       default:
         return 'Today, ${OrderUtils.deliveryWindowLabel(order.placedAt)}';
     }
@@ -142,7 +226,9 @@ class OrderListCard extends StatelessWidget {
       case OrderStatus.confirmed:
         return Row(
           children: [
-            Expanded(child: _outlineButton(AppStrings.viewDetails, onViewDetails)),
+            Expanded(
+              child: _outlineButton(AppStrings.viewDetails, onViewDetails),
+            ),
             const SizedBox(width: 10),
             Expanded(child: _filledButton(AppStrings.trackOrder, onTrackOrder)),
           ],
@@ -150,7 +236,13 @@ class OrderListCard extends StatelessWidget {
       case OrderStatus.preparing:
         return Row(
           children: [
-            Expanded(child: _outlineButton(AppStrings.cancelOrder, onCancelOrder, icon: Icons.cancel_outlined)),
+            Expanded(
+              child: _outlineButton(
+                AppStrings.cancelOrder,
+                onCancelOrder,
+                icon: Icons.cancel_outlined,
+              ),
+            ),
             const SizedBox(width: 10),
             Expanded(child: _filledButton(AppStrings.trackOrder, onTrackOrder)),
           ],
@@ -160,9 +252,17 @@ class OrderListCard extends StatelessWidget {
       case OrderStatus.returned:
         return Row(
           children: [
-            Expanded(child: _outlineButton(AppStrings.orderAgain, onOrderAgain, icon: Icons.refresh)),
+            Expanded(
+              child: _outlineButton(
+                AppStrings.orderAgain,
+                onOrderAgain,
+                icon: Icons.refresh,
+              ),
+            ),
             const SizedBox(width: 10),
-            Expanded(child: _filledButton(AppStrings.viewDetails, onViewDetails)),
+            Expanded(
+              child: _filledButton(AppStrings.viewDetails, onViewDetails),
+            ),
           ],
         );
     }
@@ -189,7 +289,11 @@ class OrderListCard extends StatelessWidget {
     );
   }
 
-  Widget _filledButton(String label, VoidCallback onTap, {IconData icon = Icons.arrow_forward}) {
+  Widget _filledButton(
+    String label,
+    VoidCallback onTap, {
+    IconData icon = Icons.arrow_forward,
+  }) {
     return ElevatedButton(
       onPressed: onTap,
       style: ElevatedButton.styleFrom(
