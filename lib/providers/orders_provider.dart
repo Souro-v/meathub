@@ -23,7 +23,10 @@ class OrdersProvider extends ChangeNotifier {
   void cancelOrder(String orderId) {
     final index = _orders.indexWhere((o) => o.orderId == orderId);
     if (index == -1) return;
-    _orders[index] = _orders[index].copyWith(status: OrderStatus.cancelled, cancelledAt: DateTime.now());
+    _orders[index] = _orders[index].copyWith(
+      status: OrderStatus.cancelled,
+      cancelledAt: DateTime.now(),
+    );
     notifyListeners();
   }
 
@@ -83,7 +86,9 @@ class OrdersProvider extends ChangeNotifier {
         paymentMethod: payment,
         platformFee: 0,
         status: OrderStatus.delivered,
-        deliveredAt: now.subtract(const Duration(days: 2, hours: 1, minutes: 35)),
+        deliveredAt: now.subtract(
+          const Duration(days: 2, hours: 1, minutes: 35),
+        ),
       ),
       OrderModel(
         orderId: '#MH752118',
@@ -134,7 +139,9 @@ class OrdersProvider extends ChangeNotifier {
         paymentMethod: payment,
         platformFee: 0,
         status: OrderStatus.cancelled,
-        cancelledAt: now.subtract(const Duration(days: 9, hours: 3, minutes: 45)),
+        cancelledAt: now.subtract(
+          const Duration(days: 9, hours: 3, minutes: 45),
+        ),
       ),
     ]);
   }
