@@ -12,6 +12,10 @@ import 'package:meathub/models/delivery_option_model.dart';
 import 'package:meathub/models/payment_method_model.dart';
 import 'package:meathub/providers/cart_provider.dart';
 
+import '../../core/utils/order_utils.dart';
+import '../../models/order_model.dart';
+import '../../providers/orders_provider.dart';
+
 class PlaceOrderScreen extends StatefulWidget {
   final List<CartItemModel> items;
   final DeliveryOptionModel deliveryOption;
@@ -563,6 +567,21 @@ class _PlaceOrderScreenState extends State<PlaceOrderScreen> {
   }
 
   void _placeOrder(BuildContext context) {
+    final orderId = OrderUtils.generateOrderId();
+    final placedAt = DateTime.now();
+
+    final order = OrderModel(
+      orderId: orderId,
+      placedAt: placedAt,
+      items: widget.items,
+      address: widget.address,
+      deliveryOption: widget.deliveryOption,
+      paymentMethod: widget.paymentMethod,
+      platformFee: widget.platformFee,
+      status: OrderStatus.outForDelivery,
+    );
+    context.read<OrdersProvider>().placeOrder(order);
+
     final cart = context.read<CartProvider>();
     for (final item in widget.items) {
       cart.removeItem(item.cartId);
@@ -570,13 +589,15 @@ class _PlaceOrderScreenState extends State<PlaceOrderScreen> {
 
     Navigator.of(context).pushAndRemoveUntil(
       AppRoutes.orderSuccessRoute(
+        orderId: orderId,
+        placedAt: placedAt,
         items: widget.items,
         deliveryOption: widget.deliveryOption,
         address: widget.address,
         platformFee: widget.platformFee,
         paymentMethod: widget.paymentMethod,
       ),
-          (route) => false,
+      (route) => false,
     );
   }
 }

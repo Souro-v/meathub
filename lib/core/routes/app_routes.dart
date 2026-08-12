@@ -107,6 +107,8 @@ class AppRoutes {
   }
 
   static Route<dynamic> orderSuccessRoute({
+    required String orderId,
+    required DateTime placedAt,
     required List<CartItemModel> items,
     required DeliveryOptionModel deliveryOption,
     required ManagedAddressModel address,
@@ -115,6 +117,8 @@ class AppRoutes {
   }) {
     return MaterialPageRoute(
       builder: (_) => OrderSuccessScreen(
+        orderId: orderId,
+        placedAt: placedAt,
         items: items,
         deliveryOption: deliveryOption,
         address: address,
