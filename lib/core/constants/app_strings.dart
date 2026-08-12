@@ -279,4 +279,25 @@ class AppStrings {
   static const String notificationDeliveredNote = 'You will receive a notification when your order is delivered.';
   static const String needHelpChat = 'Need Help? Chat with us';
   static const String deliveryAddressLabel = 'Delivery Address';
+  // My Orders
+  static const String myOrders = 'My Orders';
+  static const String myOrdersSubtitle = 'Track, manage and reorder your orders';
+  static const String filter = 'Filter';
+  static const String searchOrdersHint = 'Search by order ID or item...';
+  static const String ordersTabAll = 'All Orders';
+  static const String ordersTabOngoing = 'Ongoing';
+  static const String ordersTabDelivered = 'Delivered';
+  static const String ordersTabCancelled = 'Cancelled';
+  static const String ordersTabReturned = 'Returned';
+  static const String noOrdersFoundTitle = 'No orders found';
+  static const String noOrdersFoundDesc = "You haven't placed any matching orders yet.";
+  static const String sortBy = 'Sort By';
+  static const String newestFirst = 'Newest First';
+  static const String oldestFirst = 'Oldest First';
+  static const String cancelOrder = 'Cancel Order';
+  static const String orderAgain = 'Order Again';
+  static const String cancelOrderConfirmTitle = 'Cancel this order?';
+  static const String cancelOrderConfirmDesc = 'This action cannot be undone.';
+  static const String no = 'No';
+  static const String yesCancel = 'Yes, Cancel';
 }
