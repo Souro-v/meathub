@@ -300,4 +300,37 @@ class AppStrings {
   static const String cancelOrderConfirmDesc = 'This action cannot be undone.';
   static const String no = 'No';
   static const String yesCancel = 'Yes, Cancel';
+  // Profile
+  static const String myProfile = 'My Profile';
+  static const String myProfileSubtitle = 'Manage your account and preferences';
+  static const String editProfile = 'Edit Profile';
+  static const String ordersLabel = 'Orders';
+  static const String wishlistLabel = 'Wishlist';
+  static const String addressesLabel = 'Addresses';
+  static const String meatHubPointsLabel = 'MeatHub Points';
+  static const String meatHubMember = 'MeatHub Member';
+  static const String meatHubMemberDesc = 'You are a valued member of MeatHub family.';
+  static const String viewBenefits = 'View Benefits';
+  static const String myOrdersMenuTitle = 'My Orders';
+  static const String myOrdersMenuDesc = 'Track, manage and reorder your orders';
+  static const String wishlistMenuDesc = 'Your favorite products';
+  static const String myAddressesMenuTitle = 'My Addresses';
+  static const String myAddressesMenuDesc = 'Manage your delivery addresses';
+  static const String paymentMethodsMenuTitle = 'Payment Methods';
+  static const String paymentMethodsMenuDesc = 'Manage your saved payment methods';
+  static const String couponsOffers = 'Coupons & Offers';
+  static const String couponsOffersDesc = 'View available offers and coupons';
+  static const String meatHubGuarantee = 'MeatHub Guarantee';
+  static const String meatHubGuaranteeDesc = 'Learn about our 100% fresh guarantee';
+  static const String helpSupport = 'Help & Support';
+  static const String helpSupportDesc = 'Get help and contact us';
+  static const String aboutMeatHub = 'About MeatHub';
+  static const String aboutMeatHubDesc = 'Learn more about us';
+  static const String logout = 'Logout';
+  static const String logoutDesc = 'Sign out from your account';
+  static const String logoutConfirmTitle = 'Log out?';
+  static const String logoutConfirmDesc = "You'll need to sign in again to access your account.";
+  static const String freshHalalTrustedTagline = '100% Fresh. 100% Halal. 100% Trusted.';
+  static const String thankYouChoosingMeatHub = 'Thank you for choosing MeatHub ❤️';
+  static const String comingSoon = 'Coming soon';
 }
