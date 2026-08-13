@@ -6,6 +6,8 @@ import 'package:meathub/providers/cart_provider.dart';
 import 'package:meathub/screens/cart/cart_screen.dart';
 import 'package:meathub/screens/home/home_screen.dart';
 
+import '../profile/profile_screen.dart';
+
 class MainScreen extends StatefulWidget {
   final int initialIndex;
 
@@ -29,7 +31,7 @@ class _MainScreenState extends State<MainScreen> {
     _ComingSoonTab(label: 'Categories'),
     CartScreen(),
     OrdersScreen(),
-    _ComingSoonTab(label: 'Profile'),
+    ProfileScreen(),
   ];
 
   @override

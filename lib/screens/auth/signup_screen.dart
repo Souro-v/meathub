@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:meathub/core/constants/app_colors.dart';
 import 'package:meathub/core/constants/app_strings.dart';
 import 'package:meathub/core/widgets/auth_header.dart';
@@ -7,7 +8,9 @@ import 'package:meathub/core/widgets/country_code_chip.dart';
 import 'package:meathub/core/widgets/custom_button.dart';
 import 'package:meathub/core/widgets/or_divider.dart';
 import 'package:meathub/core/widgets/social_button.dart';
-import '../../core/routes/app_routes.dart';
+import 'package:meathub/providers/user_provider.dart';
+import 'package:meathub/screens/auth/login_screen.dart';
+
 import '../../core/widgets/custom_textfield.dart';
 
 class SignupScreen extends StatefulWidget {
@@ -18,7 +21,60 @@ class SignupScreen extends StatefulWidget {
 }
 
 class _SignupScreenState extends State<SignupScreen> {
+  final _nameController = TextEditingController();
+  final _phoneController = TextEditingController();
+  final _emailController = TextEditingController();
+  final _passwordController = TextEditingController();
+  final _confirmPasswordController = TextEditingController();
+
   bool _agreeTerms = false;
+
+  @override
+  void dispose() {
+    _nameController.dispose();
+    _phoneController.dispose();
+    _emailController.dispose();
+    _passwordController.dispose();
+    _confirmPasswordController.dispose();
+    super.dispose();
+  }
+
+  void _handleSignUp() {
+    final name = _nameController.text.trim();
+
+    if (name.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Please enter your full name')),
+      );
+      return;
+    }
+    if (_passwordController.text != _confirmPasswordController.text) {
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(const SnackBar(content: Text('Passwords do not match')));
+      return;
+    }
+    if (!_agreeTerms) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Please agree to the Terms & Conditions')),
+      );
+      return;
+    }
+
+    context.read<UserProvider>().updateProfile(
+      name: name,
+      phone: _phoneController.text.trim().isEmpty
+          ? null
+          : _phoneController.text.trim(),
+      email: _emailController.text.trim().isEmpty
+          ? null
+          : _emailController.text.trim(),
+    );
+
+    Navigator.of(
+      context,
+    ).pushReplacement(MaterialPageRoute(builder: (_) => const LoginScreen()));
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -70,34 +126,39 @@ class _SignupScreenState extends State<SignupScreen> {
             ),
           ),
           const SizedBox(height: 24),
-          const CustomTextField(
+          CustomTextField(
             icon: Icons.person_outline,
             hint: AppStrings.fullNameHint,
+            controller: _nameController,
           ),
           const SizedBox(height: 14),
           CustomTextField(
             icon: Icons.call_outlined,
             hint: AppStrings.mobileNumberHint,
             keyboardType: TextInputType.phone,
+            controller: _phoneController,
             suffix: const CountryCodeChip(),
           ),
           const SizedBox(height: 14),
-          const CustomTextField(
+          CustomTextField(
             icon: Icons.mail_outline,
             hint: AppStrings.emailAddressHint,
             keyboardType: TextInputType.emailAddress,
+            controller: _emailController,
           ),
           const SizedBox(height: 14),
           CustomTextField(
             icon: Icons.lock_outline,
             hint: AppStrings.passwordHint,
             isPassword: true,
+            controller: _passwordController,
           ),
           const SizedBox(height: 14),
           CustomTextField(
             icon: Icons.lock_outline,
             hint: AppStrings.confirmPasswordHint,
             isPassword: true,
+            controller: _confirmPasswordController,
           ),
           const SizedBox(height: 14),
           Row(
@@ -148,7 +209,7 @@ class _SignupScreenState extends State<SignupScreen> {
             ],
           ),
           const SizedBox(height: 20),
-          CustomButton(label: AppStrings.signUp, onPressed: () {}),
+          CustomButton(label: AppStrings.signUp, onPressed: _handleSignUp),
           const SizedBox(height: 20),
           const OrDivider(),
           const SizedBox(height: 16),
@@ -192,9 +253,9 @@ class _SignupScreenState extends State<SignupScreen> {
                   ),
                 ),
                 TextButton(
-                  onPressed: () => Navigator.of(
-                    context,
-                  ).pushReplacementNamed(AppRoutes.login),
+                  onPressed: () => Navigator.of(context).pushReplacement(
+                    MaterialPageRoute(builder: (_) => const LoginScreen()),
+                  ),
                   style: TextButton.styleFrom(
                     padding: EdgeInsets.zero,
                     minimumSize: const Size(0, 0),

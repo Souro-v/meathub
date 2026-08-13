@@ -16,12 +16,19 @@ class ProfileScreen extends StatelessWidget {
   const ProfileScreen({super.key});
 
   void _goToMainTab(BuildContext context, int index) {
-    Navigator.of(context).pushNamedAndRemoveUntil(AppRoutes.main, (route) => false, arguments: index);
+    Navigator.of(context).pushNamedAndRemoveUntil(
+      AppRoutes.main,
+      (route) => false,
+      arguments: index,
+    );
   }
 
   void _showComingSoon(BuildContext context, String label) {
     ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text('$label — ${AppStrings.comingSoon}'), duration: const Duration(seconds: 2)),
+      SnackBar(
+        content: Text('$label — ${AppStrings.comingSoon}'),
+        duration: const Duration(seconds: 2),
+      ),
     );
   }
 
@@ -32,11 +39,18 @@ class ProfileScreen extends StatelessWidget {
         title: const Text(AppStrings.logoutConfirmTitle),
         content: const Text(AppStrings.logoutConfirmDesc),
         actions: [
-          TextButton(onPressed: () => Navigator.pop(dialogContext), child: const Text(AppStrings.no)),
           TextButton(
-            onPressed: () => Navigator.of(dialogContext)
-                .pushNamedAndRemoveUntil(AppRoutes.login, (route) => false),
-            child: const Text(AppStrings.logout, style: TextStyle(color: AppColors.error)),
+            onPressed: () => Navigator.pop(dialogContext),
+            child: const Text(AppStrings.no),
+          ),
+          TextButton(
+            onPressed: () => Navigator.of(
+              dialogContext,
+            ).pushNamedAndRemoveUntil(AppRoutes.login, (route) => false),
+            child: const Text(
+              AppStrings.logout,
+              style: TextStyle(color: AppColors.error),
+            ),
           ),
         ],
       ),
@@ -49,11 +63,13 @@ class ProfileScreen extends StatelessWidget {
     final ordersCount = context.watch<OrdersProvider>().orders.length;
     final wishlistCount = context.watch<WishlistProvider>().count;
     final addressesCount = DummyAddresses.managed.length;
-    final points = context
-        .watch<OrdersProvider>()
-        .orders
-        .fold<int>(0, (sum, order) => sum + OrderUtils.calculatePoints(order.total));
-    final unreadNotifications = DummyNotifications.today.where((n) => n.isUnread).length;
+    final points = context.watch<OrdersProvider>().orders.fold<int>(
+      0,
+      (sum, order) => sum + OrderUtils.calculatePoints(order.total),
+    );
+    final unreadNotifications = DummyNotifications.today
+        .where((n) => n.isUnread)
+        .length;
 
     return Scaffold(
       backgroundColor: AppColors.background,
@@ -67,7 +83,14 @@ class ProfileScreen extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    _buildProfileCard(context, user, ordersCount, wishlistCount, addressesCount, points),
+                    _buildProfileCard(
+                      context,
+                      user,
+                      ordersCount,
+                      wishlistCount,
+                      addressesCount,
+                      points,
+                    ),
                     const SizedBox(height: 16),
                     _buildMembershipBanner(context),
                     const SizedBox(height: 16),
@@ -94,9 +117,22 @@ class ProfileScreen extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(AppStrings.myProfile, style: TextStyle(fontSize: 24, fontWeight: FontWeight.w800, color: AppColors.textDark)),
+                Text(
+                  AppStrings.myProfile,
+                  style: TextStyle(
+                    fontSize: 24,
+                    fontWeight: FontWeight.w800,
+                    color: AppColors.textDark,
+                  ),
+                ),
                 SizedBox(height: 2),
-                Text(AppStrings.myProfileSubtitle, style: TextStyle(fontSize: 12.5, color: AppColors.textSecondary)),
+                Text(
+                  AppStrings.myProfileSubtitle,
+                  style: TextStyle(
+                    fontSize: 12.5,
+                    color: AppColors.textSecondary,
+                  ),
+                ),
               ],
             ),
           ),
@@ -105,12 +141,17 @@ class ProfileScreen extends StatelessWidget {
             borderRadius: BorderRadius.circular(20),
             child: const Padding(
               padding: EdgeInsets.all(6),
-              child: Icon(Icons.settings_outlined, size: 22, color: AppColors.textDark),
+              child: Icon(
+                Icons.settings_outlined,
+                size: 22,
+                color: AppColors.textDark,
+              ),
             ),
           ),
           const SizedBox(width: 4),
           InkWell(
-            onTap: () => Navigator.of(context).pushNamed(AppRoutes.notification),
+            onTap: () =>
+                Navigator.of(context).pushNamed(AppRoutes.notification),
             borderRadius: BorderRadius.circular(20),
             child: Padding(
               padding: const EdgeInsets.all(6),
@@ -118,7 +159,11 @@ class ProfileScreen extends StatelessWidget {
                 label: Text('$unreadCount'),
                 isLabelVisible: unreadCount > 0,
                 backgroundColor: AppColors.primary,
-                child: const Icon(Icons.notifications_outlined, size: 22, color: AppColors.textDark),
+                child: const Icon(
+                  Icons.notifications_outlined,
+                  size: 22,
+                  color: AppColors.textDark,
+                ),
               ),
             ),
           ),
@@ -128,16 +173,20 @@ class ProfileScreen extends StatelessWidget {
   }
 
   Widget _buildProfileCard(
-      BuildContext context,
-      UserProvider user,
-      int ordersCount,
-      int wishlistCount,
-      int addressesCount,
-      int points,
-      ) {
+    BuildContext context,
+    UserProvider user,
+    int ordersCount,
+    int wishlistCount,
+    int addressesCount,
+    int points,
+  ) {
     return Container(
       padding: const EdgeInsets.all(16),
-      decoration: BoxDecoration(color: AppColors.white, borderRadius: BorderRadius.circular(18), border: Border.all(color: AppColors.divider)),
+      decoration: BoxDecoration(
+        color: AppColors.white,
+        borderRadius: BorderRadius.circular(18),
+        border: Border.all(color: AppColors.divider),
+      ),
       child: Column(
         children: [
           Row(
@@ -148,7 +197,14 @@ class ProfileScreen extends StatelessWidget {
                   CircleAvatar(
                     radius: 34,
                     backgroundColor: AppColors.primary,
-                    child: Text(user.initials, style: const TextStyle(fontSize: 22, fontWeight: FontWeight.w800, color: AppColors.white)),
+                    child: Text(
+                      user.initials,
+                      style: const TextStyle(
+                        fontSize: 22,
+                        fontWeight: FontWeight.w800,
+                        color: AppColors.white,
+                      ),
+                    ),
                   ),
                   Positioned(
                     bottom: 0,
@@ -158,8 +214,16 @@ class ProfileScreen extends StatelessWidget {
                       borderRadius: BorderRadius.circular(14),
                       child: Container(
                         padding: const EdgeInsets.all(5),
-                        decoration: BoxDecoration(color: AppColors.white, shape: BoxShape.circle, border: Border.all(color: AppColors.divider)),
-                        child: const Icon(Icons.camera_alt_outlined, size: 13, color: AppColors.textDark),
+                        decoration: BoxDecoration(
+                          color: AppColors.white,
+                          shape: BoxShape.circle,
+                          border: Border.all(color: AppColors.divider),
+                        ),
+                        child: const Icon(
+                          Icons.camera_alt_outlined,
+                          size: 13,
+                          color: AppColors.textDark,
+                        ),
                       ),
                     ),
                   ),
@@ -170,10 +234,29 @@ class ProfileScreen extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(user.name, style: const TextStyle(fontSize: 17, fontWeight: FontWeight.w800, color: AppColors.textDark)),
+                    Text(
+                      user.name,
+                      style: const TextStyle(
+                        fontSize: 17,
+                        fontWeight: FontWeight.w800,
+                        color: AppColors.textDark,
+                      ),
+                    ),
                     const SizedBox(height: 4),
-                    Text(user.phone, style: const TextStyle(fontSize: 12.5, color: AppColors.textSecondary)),
-                    Text(user.email, style: const TextStyle(fontSize: 12.5, color: AppColors.textSecondary)),
+                    Text(
+                      user.phone,
+                      style: const TextStyle(
+                        fontSize: 12.5,
+                        color: AppColors.textSecondary,
+                      ),
+                    ),
+                    Text(
+                      user.email,
+                      style: const TextStyle(
+                        fontSize: 12.5,
+                        color: AppColors.textSecondary,
+                      ),
+                    ),
                   ],
                 ),
               ),
@@ -181,8 +264,19 @@ class ProfileScreen extends StatelessWidget {
                 onTap: () => _showComingSoon(context, AppStrings.editProfile),
                 child: Row(
                   children: const [
-                    Text(AppStrings.editProfile, style: TextStyle(fontSize: 12.5, fontWeight: FontWeight.w700, color: AppColors.primary)),
-                    Icon(Icons.chevron_right, size: 16, color: AppColors.primary),
+                    Text(
+                      AppStrings.editProfile,
+                      style: TextStyle(
+                        fontSize: 12.5,
+                        fontWeight: FontWeight.w700,
+                        color: AppColors.primary,
+                      ),
+                    ),
+                    Icon(
+                      Icons.chevron_right,
+                      size: 16,
+                      color: AppColors.primary,
+                    ),
                   ],
                 ),
               ),
@@ -206,7 +300,8 @@ class ProfileScreen extends StatelessWidget {
                   icon: Icons.favorite_border,
                   value: '$wishlistCount',
                   label: AppStrings.wishlistLabel,
-                  onTap: () => Navigator.of(context).pushNamed(AppRoutes.wishlist),
+                  onTap: () =>
+                      Navigator.of(context).pushNamed(AppRoutes.wishlist),
                 ),
               ),
               Expanded(
@@ -214,7 +309,9 @@ class ProfileScreen extends StatelessWidget {
                   icon: Icons.location_on_outlined,
                   value: '$addressesCount',
                   label: AppStrings.addressesLabel,
-                  onTap: () => Navigator.of(context).pushNamed(AppRoutes.manageAddresses),
+                  onTap: () => Navigator.of(
+                    context,
+                  ).pushNamed(AppRoutes.manageAddresses),
                 ),
               ),
               Expanded(
@@ -234,23 +331,47 @@ class ProfileScreen extends StatelessWidget {
   Widget _buildMembershipBanner(BuildContext context) {
     return Container(
       padding: const EdgeInsets.all(16),
-      decoration: BoxDecoration(color: AppColors.primary, borderRadius: BorderRadius.circular(18)),
+      decoration: BoxDecoration(
+        color: AppColors.primary,
+        borderRadius: BorderRadius.circular(18),
+      ),
       child: Row(
         children: [
           Container(
             width: 44,
             height: 44,
-            decoration: BoxDecoration(color: AppColors.white.withValues(alpha: 0.18), shape: BoxShape.circle),
-            child: const Icon(Icons.workspace_premium, color: AppColors.white, size: 22),
+            decoration: BoxDecoration(
+              color: AppColors.white.withValues(alpha: 0.18),
+              shape: BoxShape.circle,
+            ),
+            child: const Icon(
+              Icons.workspace_premium,
+              color: AppColors.white,
+              size: 22,
+            ),
           ),
           const SizedBox(width: 12),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: const [
-                Text(AppStrings.meatHubMember, style: TextStyle(fontSize: 14.5, fontWeight: FontWeight.w800, color: AppColors.white)),
+                Text(
+                  AppStrings.meatHubMember,
+                  style: TextStyle(
+                    fontSize: 14.5,
+                    fontWeight: FontWeight.w800,
+                    color: AppColors.white,
+                  ),
+                ),
                 SizedBox(height: 3),
-                Text(AppStrings.meatHubMemberDesc, style: TextStyle(fontSize: 12, color: AppColors.white, height: 1.3)),
+                Text(
+                  AppStrings.meatHubMemberDesc,
+                  style: TextStyle(
+                    fontSize: 12,
+                    color: AppColors.white,
+                    height: 1.3,
+                  ),
+                ),
               ],
             ),
           ),
@@ -261,8 +382,13 @@ class ProfileScreen extends StatelessWidget {
               backgroundColor: AppColors.white,
               foregroundColor: AppColors.primary,
               padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
-              textStyle: const TextStyle(fontSize: 12, fontWeight: FontWeight.w700),
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+              textStyle: const TextStyle(
+                fontSize: 12,
+                fontWeight: FontWeight.w700,
+              ),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10),
+              ),
             ),
             child: Row(
               mainAxisSize: MainAxisSize.min,
@@ -301,7 +427,8 @@ class ProfileScreen extends StatelessWidget {
         icon: Icons.credit_card,
         title: AppStrings.paymentMethodsMenuTitle,
         subtitle: AppStrings.paymentMethodsMenuDesc,
-        onTap: () => _showComingSoon(context, AppStrings.paymentMethodsMenuTitle),
+        onTap: () =>
+            _showComingSoon(context, AppStrings.paymentMethodsMenuTitle),
       ),
       ProfileMenuTile(
         icon: Icons.confirmation_num_outlined,
@@ -338,7 +465,11 @@ class ProfileScreen extends StatelessWidget {
 
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 16),
-      decoration: BoxDecoration(color: AppColors.white, borderRadius: BorderRadius.circular(18), border: Border.all(color: AppColors.divider)),
+      decoration: BoxDecoration(
+        color: AppColors.white,
+        borderRadius: BorderRadius.circular(18),
+        border: Border.all(color: AppColors.divider),
+      ),
       child: Column(
         children: List.generate(items.length, (index) {
           final isLast = index == items.length - 1;
@@ -356,23 +487,46 @@ class ProfileScreen extends StatelessWidget {
   Widget _buildFooterBanner() {
     return Container(
       padding: const EdgeInsets.all(16),
-      decoration: BoxDecoration(color: AppColors.successSoft, borderRadius: BorderRadius.circular(18)),
+      decoration: BoxDecoration(
+        color: AppColors.successSoft,
+        borderRadius: BorderRadius.circular(18),
+      ),
       child: Row(
         children: [
           Container(
             width: 40,
             height: 40,
-            decoration: const BoxDecoration(color: AppColors.white, shape: BoxShape.circle),
-            child: const Icon(Icons.eco_outlined, color: AppColors.success, size: 19),
+            decoration: const BoxDecoration(
+              color: AppColors.white,
+              shape: BoxShape.circle,
+            ),
+            child: const Icon(
+              Icons.eco_outlined,
+              color: AppColors.success,
+              size: 19,
+            ),
           ),
           const SizedBox(width: 12),
           const Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(AppStrings.freshHalalTrustedTagline, style: TextStyle(fontSize: 13, fontWeight: FontWeight.w800, color: AppColors.success)),
+                Text(
+                  AppStrings.freshHalalTrustedTagline,
+                  style: TextStyle(
+                    fontSize: 13,
+                    fontWeight: FontWeight.w800,
+                    color: AppColors.success,
+                  ),
+                ),
                 SizedBox(height: 3),
-                Text(AppStrings.thankYouChoosingMeatHub, style: TextStyle(fontSize: 12, color: AppColors.textSecondary)),
+                Text(
+                  AppStrings.thankYouChoosingMeatHub,
+                  style: TextStyle(
+                    fontSize: 12,
+                    color: AppColors.textSecondary,
+                  ),
+                ),
               ],
             ),
           ),
@@ -392,13 +546,34 @@ class _HalalSeal extends StatelessWidget {
     return Container(
       width: 50,
       height: 50,
-      decoration: const BoxDecoration(color: AppColors.white, shape: BoxShape.circle, border: Border.fromBorderSide(BorderSide(color: AppColors.primary, width: 1.4))),
+      decoration: const BoxDecoration(
+        color: AppColors.white,
+        shape: BoxShape.circle,
+        border: Border.fromBorderSide(
+          BorderSide(color: AppColors.primary, width: 1.4),
+        ),
+      ),
       alignment: Alignment.center,
       child: const Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Text('حلال', style: TextStyle(fontSize: 13, color: AppColors.primary, fontWeight: FontWeight.w700)),
-          Text('HALAL', style: TextStyle(fontSize: 7, color: AppColors.primary, fontWeight: FontWeight.w800, letterSpacing: 0.3)),
+          Text(
+            'حلال',
+            style: TextStyle(
+              fontSize: 13,
+              color: AppColors.primary,
+              fontWeight: FontWeight.w700,
+            ),
+          ),
+          Text(
+            'HALAL',
+            style: TextStyle(
+              fontSize: 7,
+              color: AppColors.primary,
+              fontWeight: FontWeight.w800,
+              letterSpacing: 0.3,
+            ),
+          ),
         ],
       ),
     );
