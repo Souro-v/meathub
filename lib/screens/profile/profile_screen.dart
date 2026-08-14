@@ -3,7 +3,6 @@ import 'package:provider/provider.dart';
 import 'package:meathub/core/constants/app_colors.dart';
 import 'package:meathub/core/constants/app_strings.dart';
 import 'package:meathub/core/routes/app_routes.dart';
-import 'package:meathub/core/utils/order_utils.dart';
 import 'package:meathub/core/widgets/profile_menu_tile.dart';
 import 'package:meathub/core/widgets/profile_stat_item.dart';
 import 'package:meathub/data/dummy_addresses.dart';
@@ -66,10 +65,7 @@ class ProfileScreen extends StatelessWidget {
     final ordersCount = context.watch<OrdersProvider>().orders.length;
     final wishlistCount = context.watch<WishlistProvider>().count;
     final addressesCount = DummyAddresses.managed.length;
-    final points = context.watch<OrdersProvider>().orders.fold<int>(
-      0,
-      (sum, order) => sum + OrderUtils.calculatePoints(order.total),
-    );
+    final points = context.watch<OrdersProvider>().totalPoints;
     final unreadNotifications = DummyNotifications.today
         .where((n) => n.isUnread)
         .length;

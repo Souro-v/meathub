@@ -6,6 +6,8 @@ import 'package:meathub/models/cart_item_model.dart';
 import 'package:meathub/models/order_model.dart';
 import 'package:meathub/models/product_model.dart';
 
+import '../core/utils/order_utils.dart';
+
 class OrdersProvider extends ChangeNotifier {
   final List<OrderModel> _orders = [];
 
@@ -14,6 +16,13 @@ class OrdersProvider extends ChangeNotifier {
   }
 
   List<OrderModel> get orders => List.unmodifiable(_orders);
+
+  int get totalPoints {
+    return _orders.fold<int>(
+      0,
+      (sum, order) => sum + OrderUtils.calculatePoints(order.total),
+    );
+  }
 
   void placeOrder(OrderModel order) {
     _orders.insert(0, order);
