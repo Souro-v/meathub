@@ -362,4 +362,27 @@ class AppStrings {
   static const String deleteAccountConfirmTitle = 'Delete your account?';
   static const String deleteAccountConfirmDesc = 'This will permanently delete your account and all associated data. This action cannot be undone.';
   static const String profileUpdated = 'Profile updated successfully';
+  // MeatHub Benefits
+  static const String meatHubBenefitsTitle = 'MeatHub Benefits';
+  static const String meatHubBenefitsSubtitle = 'Enjoy exclusive rewards and savings';
+  static const String howItWorks = 'How it works';
+  static const String meatHubMemberActive = 'Active';
+  static const String youAreValuedMember = "You're a valued member of the MeatHub family.";
+  static const String discountSuffix = 'Discount';
+  static const String nextReward = 'Next Reward';
+  static const String pointsToGo = 'points to go';
+  static const String memberBenefits = 'Member Benefits';
+  static const String availableOffers = 'Available Offers';
+  static const String viewAll = 'View All';
+  static const String useNow = 'Use Now';
+  static const String minOrderPrefix = 'Min. order';
+  static const String validTillPrefix = 'Valid till';
+  static const String pointsAndRewards = 'Points & Rewards';
+  static const String pointsAndRewardsDesc = 'View your points history, earned and redeemed details.';
+  static const String howToEarnPoints = 'How to Earn MeatHub Points';
+  static const String pointsDeliveryNote = 'Points will be added after order is delivered successfully.';
+  static const String howItWorksDialogDesc =
+      'Earn 5 points for every ৳100 you spend. Get bonus points for reviews, referrals, and on your birthday. '
+      'Every 500 points unlocks a discount voucher — redeem 10 points for ৳1 off your next order.';
+  static const String offerAppliedComingSoon = 'Applying offers at checkout';
 }
