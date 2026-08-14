@@ -333,4 +333,33 @@ class AppStrings {
   static const String freshHalalTrustedTagline = '100% Fresh. 100% Halal. 100% Trusted.';
   static const String thankYouChoosingMeatHub = 'Thank you for choosing MeatHub ❤️';
   static const String comingSoon = 'Coming soon';
+  // Edit Profile
+  static const String editProfileTitle = 'Edit Profile';
+  static const String editProfileSubtitle = 'Update your information';
+  static const String save = 'Save';
+  static const String profilePhoto = 'Profile Photo';
+  static const String photoRequirements = 'JPG, PNG or WEBP. Max size of 2MB.';
+  static const String changePhoto = 'Change Photo';
+  static const String personalInformation = 'Personal Information';
+  static const String fullNameLabel = 'Full Name';
+  static const String phoneNumberLabel = 'Phone Number';
+  static const String emailAddressLabel = 'Email Address';
+  static const String dateOfBirthLabel = 'Date of Birth';
+  static const String genderLabel = 'Gender';
+  static const String selectGender = 'Select Gender';
+  static const String genderMale = 'Male';
+  static const String genderFemale = 'Female';
+  static const String genderOther = 'Other';
+  static const String preferences = 'Preferences';
+  static const String defaultDeliveryAddress = 'Default Delivery Address';
+  static const String notificationPreferences = 'Notification Preferences';
+  static const String notificationPreferencesDesc = 'Manage how you receive updates from MeatHub';
+  static const String security = 'Security';
+  static const String changePassword = 'Change Password';
+  static const String changePasswordDesc = 'Update your password';
+  static const String deleteAccount = 'Delete Account';
+  static const String deleteAccountDesc = 'Permanently delete your account and all data';
+  static const String deleteAccountConfirmTitle = 'Delete your account?';
+  static const String deleteAccountConfirmDesc = 'This will permanently delete your account and all associated data. This action cannot be undone.';
+  static const String profileUpdated = 'Profile updated successfully';
 }
