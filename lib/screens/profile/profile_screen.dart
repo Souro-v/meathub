@@ -12,6 +12,9 @@ import 'package:meathub/providers/orders_provider.dart';
 import 'package:meathub/providers/user_provider.dart';
 import 'package:meathub/providers/wishlist_provider.dart';
 
+import '../../core/utils/image_picker_utils.dart';
+import '../../core/widgets/user_avatar.dart';
+
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({super.key});
 
@@ -194,23 +197,17 @@ class ProfileScreen extends StatelessWidget {
             children: [
               Stack(
                 children: [
-                  CircleAvatar(
-                    radius: 34,
-                    backgroundColor: AppColors.primary,
-                    child: Text(
-                      user.initials,
-                      style: const TextStyle(
-                        fontSize: 22,
-                        fontWeight: FontWeight.w800,
-                        color: AppColors.white,
-                      ),
-                    ),
-                  ),
+                  const UserAvatar(radius: 34),
                   Positioned(
                     bottom: 0,
                     right: 0,
                     child: InkWell(
-                      onTap: () => _showComingSoon(context, 'Change photo'),
+                      onTap: () async {
+                        final file = await ImagePickerUtils.pickFromGallery();
+                        if (file != null && context.mounted) {
+                          context.read<UserProvider>().updatePhoto(file);
+                        }
+                      },
                       borderRadius: BorderRadius.circular(14),
                       child: Container(
                         padding: const EdgeInsets.all(5),
@@ -261,7 +258,8 @@ class ProfileScreen extends StatelessWidget {
                 ),
               ),
               InkWell(
-                onTap: () => _showComingSoon(context, AppStrings.editProfile),
+                onTap: () =>
+                    Navigator.of(context).pushNamed(AppRoutes.editProfile),
                 child: Row(
                   children: const [
                     Text(
