@@ -23,6 +23,7 @@ import '../../screens/checkout/place_order_screen.dart';
 import '../../screens/notification/notification_screen.dart';
 import '../../screens/orders/track_order_screen.dart';
 import '../../screens/product/product_details_screen.dart';
+import '../../screens/profile/edit_profile_screen.dart';
 import '../../screens/wishlist/wishlist_screen.dart';
 
 class AppRoutes {
@@ -42,6 +43,7 @@ class AppRoutes {
   static const String manageAddresses = '/manage-addresses';
   static const String wishlist = '/wishlist';
   static const String cart = '/cart';
+  static const String editProfile = '/edit-profile';
 
   static Map<String, WidgetBuilder> routes = {
     splash: (context) => const SplashScreen(),
@@ -60,6 +62,7 @@ class AppRoutes {
     manageAddresses: (context) => const ManageAddressesScreen(),
     wishlist: (context) => const WishlistScreen(),
     cart: (context) => const CartScreen(),
+    editProfile: (context) => const EditProfileScreen(),
   };
 
   static Route<dynamic> productDetailsRoute(ProductModel product) {
