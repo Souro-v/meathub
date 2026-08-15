@@ -267,5 +267,7 @@ class DummyData {
     rating: 4.9,
     orderCount: 128,
     phone: '+880 1812 345678',
+
   );
+  
 }
