@@ -385,4 +385,27 @@ class AppStrings {
       'Earn 5 points for every ৳100 you spend. Get bonus points for reviews, referrals, and on your birthday. '
       'Every 500 points unlocks a discount voucher — redeem 10 points for ৳1 off your next order.';
   static const String offerAppliedComingSoon = 'Applying offers at checkout';
+  // Coupons & Offers
+  static const String couponsOffersTitle = 'Coupons & Offers';
+  static const String couponsOffersSubtitle = 'Save more on your favorite meat';
+  static const String myCoupons = 'My Coupons';
+  static const String allTab = 'All';
+  static const String availableTab = 'Available';
+  static const String usedExpiredTab = 'Used / Expired';
+  static const String haveACouponCode = 'Have a coupon code?';
+  static const String enterCodeToUnlock = 'Enter a code to unlock offers';
+  static const String enterCode = 'Enter Code';
+  static const String enterCouponCodeHint = 'Enter coupon code';
+  static const String apply = 'Apply';
+  static const String bestOffersForYou = 'Best Offers for You';
+  static const String availableCouponsSectionTitle = 'Available Coupons';
+  static const String couponTermsBody =
+      '• Coupons can be applied at checkout.\n'
+      '• Only one coupon can be used per order.\n'
+      '• Coupons cannot be combined with other offers.\n'
+      '• Offers are valid till the mentioned date only.';
+  static const String invalidCouponCode = 'Invalid or expired coupon code';
+  static const String remove = 'Remove';
+  static const String couponAppliedSuccessSuffix = 'coupon applied successfully';
+  static const String couponDiscountLabel = 'Coupon Discount';
 }
