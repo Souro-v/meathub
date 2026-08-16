@@ -428,7 +428,7 @@ class ProfileScreen extends StatelessWidget {
         icon: Icons.confirmation_num_outlined,
         title: AppStrings.couponsOffers,
         subtitle: AppStrings.couponsOffersDesc,
-        onTap: () => _showComingSoon(context, AppStrings.couponsOffers),
+        onTap: () => Navigator.of(context).pushNamed(AppRoutes.couponsOffers),
       ),
       ProfileMenuTile(
         icon: Icons.verified_user_outlined,

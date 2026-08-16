@@ -3,9 +3,14 @@ import 'package:provider/provider.dart';
 import 'package:meathub/core/constants/app_colors.dart';
 import 'package:meathub/core/constants/app_strings.dart';
 import 'package:meathub/core/routes/app_routes.dart';
+import 'package:meathub/core/utils/coupon_utils.dart';
 import 'package:meathub/core/widgets/cart_item_card.dart';
+import 'package:meathub/core/widgets/coupon_section.dart';
 import 'package:meathub/core/widgets/free_delivery_progress_card.dart';
+import 'package:meathub/core/widgets/order_note_tile.dart';
+import 'package:meathub/models/coupon_model.dart';
 import 'package:meathub/providers/cart_provider.dart';
+import 'package:meathub/providers/coupon_provider.dart';
 
 class CartScreen extends StatelessWidget {
   const CartScreen({super.key});
@@ -13,6 +18,18 @@ class CartScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final cart = context.watch<CartProvider>();
+    final couponProvider = context.watch<CouponProvider>();
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (couponProvider.consumeJustApplied() && couponProvider.appliedCoupon != null) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('✓ ${couponProvider.appliedCoupon!.title} ${AppStrings.couponAppliedSuccessSuffix}'),
+            backgroundColor: AppColors.success,
+          ),
+        );
+      }
+    });
 
     return Scaffold(
       backgroundColor: AppColors.background,
@@ -35,18 +52,13 @@ class CartScreen extends StatelessWidget {
                         qualifies: cart.qualifiesForFreeDelivery,
                       ),
                       const SizedBox(height: 16),
-                      ...cart.items.map(
-                        (item) => CartItemCard(
-                          item: item,
-                          onQuantityChanged: (q) => context
-                              .read<CartProvider>()
-                              .updateQuantity(item.cartId, q),
-                          onRemove: () => context
-                              .read<CartProvider>()
-                              .removeItem(item.cartId),
-                        ),
-                      ),
-                      _buildOrderNoteTile(context, cart),
+                      ...cart.items.map((item) => CartItemCard(
+                        item: item,
+                        onQuantityChanged: (q) => context.read<CartProvider>().updateQuantity(item.cartId, q),
+                        onRemove: () => context.read<CartProvider>().removeItem(item.cartId),
+                      )),
+                      CouponSection(items: cart.items, subtotal: cart.subtotal, originalDeliveryFee: cart.deliveryFee),
+                      const OrderNoteTile(),
                     ],
                   ),
                 ),
@@ -68,14 +80,7 @@ class CartScreen extends StatelessWidget {
           InkWell(
             onTap: () => Navigator.of(context).maybePop(),
             borderRadius: BorderRadius.circular(20),
-            child: const Padding(
-              padding: EdgeInsets.all(8),
-              child: Icon(
-                Icons.arrow_back,
-                size: 22,
-                color: AppColors.textDark,
-              ),
-            ),
+            child: const Padding(padding: EdgeInsets.all(8), child: Icon(Icons.arrow_back, size: 22, color: AppColors.textDark)),
           ),
           Expanded(
             child: Padding(
@@ -83,22 +88,9 @@ class CartScreen extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: const [
-                  Text(
-                    AppStrings.yourCart,
-                    style: TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.w800,
-                      color: AppColors.textDark,
-                    ),
-                  ),
+                  Text(AppStrings.yourCart, style: TextStyle(fontSize: 20, fontWeight: FontWeight.w800, color: AppColors.textDark)),
                   SizedBox(height: 2),
-                  Text(
-                    AppStrings.reviewCartSubtitle,
-                    style: TextStyle(
-                      fontSize: 12.5,
-                      color: AppColors.textSecondary,
-                    ),
-                  ),
+                  Text(AppStrings.reviewCartSubtitle, style: TextStyle(fontSize: 12.5, color: AppColors.textSecondary)),
                 ],
               ),
             ),
@@ -108,14 +100,7 @@ class CartScreen extends StatelessWidget {
             child: InkWell(
               onTap: () => Navigator.of(context).pushNamed(AppRoutes.wishlist),
               borderRadius: BorderRadius.circular(20),
-              child: const Padding(
-                padding: EdgeInsets.all(6),
-                child: Icon(
-                  Icons.favorite_border,
-                  size: 22,
-                  color: AppColors.textDark,
-                ),
-              ),
+              child: const Padding(padding: EdgeInsets.all(6), child: Icon(Icons.favorite_border, size: 22, color: AppColors.textDark)),
             ),
           ),
           Padding(
@@ -124,11 +109,7 @@ class CartScreen extends StatelessWidget {
               label: Text('${cart.lineItemCount}'),
               isLabelVisible: cart.lineItemCount > 0,
               backgroundColor: AppColors.primary,
-              child: const Icon(
-                Icons.shopping_bag_outlined,
-                size: 22,
-                color: AppColors.textDark,
-              ),
+              child: const Icon(Icons.shopping_bag_outlined, size: 22, color: AppColors.textDark),
             ),
           ),
         ],
@@ -146,134 +127,38 @@ class CartScreen extends StatelessWidget {
             Container(
               width: 90,
               height: 90,
-              decoration: const BoxDecoration(
-                shape: BoxShape.circle,
-                color: AppColors.primarySoft,
-              ),
-              child: const Icon(
-                Icons.shopping_cart_outlined,
-                size: 40,
-                color: AppColors.primary,
-              ),
+              decoration: const BoxDecoration(shape: BoxShape.circle, color: AppColors.primarySoft),
+              child: const Icon(Icons.shopping_cart_outlined, size: 40, color: AppColors.primary),
             ),
             const SizedBox(height: 16),
-            const Text(
-              AppStrings.cartEmptyTitle,
-              style: TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.w700,
-                color: AppColors.textDark,
-              ),
-            ),
+            const Text(AppStrings.cartEmptyTitle, style: TextStyle(fontSize: 16, fontWeight: FontWeight.w700, color: AppColors.textDark)),
             const SizedBox(height: 6),
-            const Text(
-              AppStrings.cartEmptyDesc,
-              textAlign: TextAlign.center,
-              style: TextStyle(fontSize: 13, color: AppColors.textSecondary),
-            ),
+            const Text(AppStrings.cartEmptyDesc, textAlign: TextAlign.center, style: TextStyle(fontSize: 13, color: AppColors.textSecondary)),
           ],
         ),
-      ),
-    );
-  }
-
-  Widget _buildOrderNoteTile(BuildContext context, CartProvider cart) {
-    return InkWell(
-      onTap: () => _showOrderNoteDialog(context, cart),
-      borderRadius: BorderRadius.circular(16),
-      child: Container(
-        margin: const EdgeInsets.only(top: 4, bottom: 4),
-        padding: const EdgeInsets.all(14),
-        decoration: BoxDecoration(
-          color: AppColors.white,
-          borderRadius: BorderRadius.circular(16),
-          border: Border.all(color: AppColors.divider),
-        ),
-        child: Row(
-          children: [
-            Container(
-              width: 40,
-              height: 40,
-              decoration: const BoxDecoration(
-                color: AppColors.primarySoft,
-                shape: BoxShape.circle,
-              ),
-              child: const Icon(
-                Icons.description_outlined,
-                color: AppColors.primary,
-                size: 18,
-              ),
-            ),
-            const SizedBox(width: 12),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const Text(
-                    AppStrings.addOrderNote,
-                    style: TextStyle(
-                      fontSize: 14,
-                      fontWeight: FontWeight.w700,
-                      color: AppColors.textDark,
-                    ),
-                  ),
-                  const SizedBox(height: 2),
-                  Text(
-                    cart.orderNote.isEmpty
-                        ? AppStrings.orderNoteSubtitle
-                        : cart.orderNote,
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                    style: const TextStyle(
-                      fontSize: 12,
-                      color: AppColors.textHint,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            const Icon(
-              Icons.chevron_right,
-              size: 20,
-              color: AppColors.textHint,
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-
-  void _showOrderNoteDialog(BuildContext context, CartProvider cart) {
-    final controller = TextEditingController(text: cart.orderNote);
-    showDialog(
-      context: context,
-      builder: (dialogContext) => AlertDialog(
-        title: const Text(AppStrings.addOrderNote),
-        content: TextField(
-          controller: controller,
-          maxLines: 3,
-          decoration: const InputDecoration(
-            hintText: AppStrings.orderNoteSubtitle,
-          ),
-        ),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(dialogContext),
-            child: const Text(AppStrings.cancel),
-          ),
-          TextButton(
-            onPressed: () {
-              context.read<CartProvider>().setOrderNote(controller.text.trim());
-              Navigator.pop(dialogContext);
-            },
-            child: const Text('Save'),
-          ),
-        ],
       ),
     );
   }
 
   Widget _buildOrderSummary(BuildContext context, CartProvider cart) {
+    final coupon = context.watch<CouponProvider>().appliedCoupon;
+    final subtotal = cart.subtotal;
+    double discount = 0;
+    double deliveryFee = cart.deliveryFee;
+
+    if (coupon != null) {
+      final error = CouponUtils.validate(coupon, cart.items, subtotal);
+      if (error.isEmpty) {
+        if (coupon.type == CouponType.freeDelivery) {
+          deliveryFee = 0;
+        } else {
+          discount = CouponUtils.calculateDiscount(coupon, cart.items, subtotal);
+        }
+      }
+    }
+
+    final total = subtotal - discount + deliveryFee + cart.platformFee;
+
     return Container(
       padding: const EdgeInsets.fromLTRB(16, 14, 16, 16),
       decoration: const BoxDecoration(
@@ -282,50 +167,28 @@ class CartScreen extends StatelessWidget {
         border: Border(top: BorderSide(color: AppColors.divider)),
       ),
       child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                _summaryRow(
-                  '${AppStrings.subtotal} (${cart.totalQuantity} ${AppStrings.itemsLabel})',
-                  '৳${cart.subtotal.toStringAsFixed(0)}',
-                ),
+                _summaryRow('${AppStrings.subtotal} (${cart.totalQuantity} ${AppStrings.itemsLabel})', '৳${subtotal.toStringAsFixed(0)}'),
+                if (discount > 0) ...[
+                  const SizedBox(height: 6),
+                  _summaryRow(AppStrings.couponDiscountLabel, '- ৳${discount.toStringAsFixed(0)}', valueColor: AppColors.success),
+                ],
                 const SizedBox(height: 6),
-                _summaryRow(
-                  AppStrings.deliveryFee,
-                  cart.deliveryFee == 0
-                      ? 'FREE'
-                      : '৳${cart.deliveryFee.toStringAsFixed(0)}',
-                ),
+                _summaryRow(AppStrings.deliveryFee, deliveryFee == 0 ? 'FREE' : '৳${deliveryFee.toStringAsFixed(0)}'),
                 const SizedBox(height: 6),
-                _summaryRow(
-                  AppStrings.platformFee,
-                  '৳${cart.platformFee.toStringAsFixed(0)}',
-                ),
+                _summaryRow(AppStrings.platformFee, '৳${cart.platformFee.toStringAsFixed(0)}'),
                 const SizedBox(height: 8),
                 const Divider(color: AppColors.divider),
                 const SizedBox(height: 6),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    const Text(
-                      AppStrings.total,
-                      style: TextStyle(
-                        fontSize: 15,
-                        fontWeight: FontWeight.w800,
-                        color: AppColors.textDark,
-                      ),
-                    ),
-                    Text(
-                      '৳${cart.total.toStringAsFixed(0)}',
-                      style: const TextStyle(
-                        fontSize: 17,
-                        fontWeight: FontWeight.w800,
-                        color: AppColors.primary,
-                      ),
-                    ),
+                    const Text(AppStrings.total, style: TextStyle(fontSize: 15, fontWeight: FontWeight.w800, color: AppColors.textDark)),
+                    Text('৳${total.toStringAsFixed(0)}', style: const TextStyle(fontSize: 17, fontWeight: FontWeight.w800, color: AppColors.primary)),
                   ],
                 ),
               ],
@@ -337,44 +200,21 @@ class CartScreen extends StatelessWidget {
               children: [
                 Container(
                   padding: const EdgeInsets.all(10),
-                  decoration: BoxDecoration(
-                    color: AppColors.successSoft,
-                    borderRadius: BorderRadius.circular(12),
-                  ),
+                  decoration: BoxDecoration(color: AppColors.successSoft, borderRadius: BorderRadius.circular(12)),
                   child: Row(
                     children: [
                       Container(
                         padding: const EdgeInsets.all(5),
-                        decoration: const BoxDecoration(
-                          shape: BoxShape.circle,
-                          color: AppColors.success,
-                        ),
-                        child: const Icon(
-                          Icons.check,
-                          size: 11,
-                          color: AppColors.white,
-                        ),
+                        decoration: const BoxDecoration(shape: BoxShape.circle, color: AppColors.success),
+                        child: const Icon(Icons.check, size: 11, color: AppColors.white),
                       ),
                       const SizedBox(width: 8),
                       const Expanded(
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text(
-                              AppStrings.safeSecureTitle,
-                              style: TextStyle(
-                                fontSize: 11,
-                                fontWeight: FontWeight.w700,
-                                color: AppColors.textDark,
-                              ),
-                            ),
-                            Text(
-                              AppStrings.safeSecureDesc,
-                              style: TextStyle(
-                                fontSize: 9.5,
-                                color: AppColors.textSecondary,
-                              ),
-                            ),
+                            Text(AppStrings.safeSecureTitle, style: TextStyle(fontSize: 11, fontWeight: FontWeight.w700, color: AppColors.textDark)),
+                            Text(AppStrings.safeSecureDesc, style: TextStyle(fontSize: 9.5, color: AppColors.textSecondary)),
                           ],
                         ),
                       ),
@@ -385,20 +225,13 @@ class CartScreen extends StatelessWidget {
                 SizedBox(
                   width: double.infinity,
                   child: ElevatedButton(
-                    onPressed: () => Navigator.of(
-                      context,
-                    ).push(AppRoutes.checkoutRoute(cart.items)),
+                    onPressed: () => Navigator.of(context).push(AppRoutes.checkoutRoute(cart.items)),
                     style: ElevatedButton.styleFrom(
                       backgroundColor: AppColors.primary,
                       foregroundColor: AppColors.white,
                       minimumSize: const Size(0, 46),
-                      textStyle: const TextStyle(
-                        fontSize: 12.5,
-                        fontWeight: FontWeight.w700,
-                      ),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(12),
-                      ),
+                      textStyle: const TextStyle(fontSize: 12.5, fontWeight: FontWeight.w700),
+                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
                     ),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -418,25 +251,12 @@ class CartScreen extends StatelessWidget {
     );
   }
 
-  Widget _summaryRow(String label, String value) {
+  Widget _summaryRow(String label, String value, {Color valueColor = AppColors.textDark}) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        Text(
-          label,
-          style: const TextStyle(
-            fontSize: 12.5,
-            color: AppColors.textSecondary,
-          ),
-        ),
-        Text(
-          value,
-          style: const TextStyle(
-            fontSize: 12.5,
-            fontWeight: FontWeight.w700,
-            color: AppColors.textDark,
-          ),
-        ),
+        Text(label, style: const TextStyle(fontSize: 12.5, color: AppColors.textSecondary)),
+        Text(value, style: TextStyle(fontSize: 12.5, fontWeight: FontWeight.w700, color: valueColor)),
       ],
     );
   }
