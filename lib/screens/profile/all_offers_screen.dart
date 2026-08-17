@@ -31,7 +31,9 @@ class _AllOffersScreenState extends State<AllOffersScreen> {
   @override
   void initState() {
     super.initState();
-    _available = DummyCoupons.all.where((c) => c.status == CouponStatus.available).toList();
+    _available = DummyCoupons.all
+        .where((c) => c.status == CouponStatus.available)
+        .toList();
     _featured = _available.where((c) => c.isFeatured).toList();
     _searchController.addListener(() {
       setState(() => _query = _searchController.text);
@@ -45,9 +47,14 @@ class _AllOffersScreenState extends State<AllOffersScreen> {
   }
 
   List<CouponModel> get _filtered {
-    final result = OfferFilterUtils.filter(offers: _available, selectedTag: _selectedTag, query: _query);
+    final result = OfferFilterUtils.filter(
+      offers: _available,
+      selectedTag: _selectedTag,
+      query: _query,
+    );
     if (_endingSoonFirst) {
-      final sorted = [...result]..sort((a, b) => a.validUntil.compareTo(b.validUntil));
+      final sorted = [...result]
+        ..sort((a, b) => a.validUntil.compareTo(b.validUntil));
       return sorted;
     }
     return result;
@@ -58,12 +65,16 @@ class _AllOffersScreenState extends State<AllOffersScreen> {
     final error = CouponUtils.validate(coupon, cart.items, cart.subtotal);
 
     if (error.isNotEmpty) {
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(error), backgroundColor: AppColors.error));
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text(error), backgroundColor: AppColors.error),
+      );
       return;
     }
 
     context.read<CouponProvider>().apply(coupon);
-    Navigator.of(context).pushNamedAndRemoveUntil(AppRoutes.main, (route) => false, arguments: 2);
+    Navigator.of(
+      context,
+    ).pushNamedAndRemoveUntil(AppRoutes.main, (route) => false, arguments: 2);
   }
 
   void _showHowItWorksDialog() {
@@ -71,8 +82,16 @@ class _AllOffersScreenState extends State<AllOffersScreen> {
       context: context,
       builder: (dialogContext) => AlertDialog(
         title: const Text(AppStrings.howItWorks),
-        content: const Text(AppStrings.howItWorksDialogDesc, style: TextStyle(fontSize: 13, height: 1.5)),
-        actions: [TextButton(onPressed: () => Navigator.pop(dialogContext), child: const Text('Got it'))],
+        content: const Text(
+          AppStrings.howItWorksDialogDesc,
+          style: TextStyle(fontSize: 13, height: 1.5),
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(dialogContext),
+            child: const Text('Got it'),
+          ),
+        ],
       ),
     );
   }
@@ -88,7 +107,10 @@ class _AllOffersScreenState extends State<AllOffersScreen> {
           children: [
             _buildTopBar(),
             const SizedBox(height: 12),
-            Padding(padding: const EdgeInsets.symmetric(horizontal: 16), child: _buildSearchBar()),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              child: _buildSearchBar(),
+            ),
             const SizedBox(height: 14),
             _buildCategoryTabs(),
             Expanded(
@@ -99,11 +121,29 @@ class _AllOffersScreenState extends State<AllOffersScreen> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        const Text(AppStrings.featuredOffersTitle, style: TextStyle(fontSize: 17, fontWeight: FontWeight.w700, color: AppColors.textDark)),
+                        const Text(
+                          AppStrings.featuredOffersTitle,
+                          style: TextStyle(
+                            fontSize: 17,
+                            fontWeight: FontWeight.w700,
+                            color: AppColors.textDark,
+                          ),
+                        ),
                         Row(
                           children: const [
-                            Text(AppStrings.viewAll, style: TextStyle(fontSize: 13, fontWeight: FontWeight.w700, color: AppColors.primary)),
-                            Icon(Icons.chevron_right, size: 16, color: AppColors.primary),
+                            Text(
+                              AppStrings.viewAll,
+                              style: TextStyle(
+                                fontSize: 13,
+                                fontWeight: FontWeight.w700,
+                                color: AppColors.primary,
+                              ),
+                            ),
+                            Icon(
+                              Icons.chevron_right,
+                              size: 16,
+                              color: AppColors.primary,
+                            ),
                           ],
                         ),
                       ],
@@ -126,17 +166,33 @@ class _AllOffersScreenState extends State<AllOffersScreen> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      const Text(AppStrings.allAvailableOffersTitle, style: TextStyle(fontSize: 17, fontWeight: FontWeight.w700, color: AppColors.textDark)),
+                      const Text(
+                        AppStrings.allAvailableOffersTitle,
+                        style: TextStyle(
+                          fontSize: 17,
+                          fontWeight: FontWeight.w700,
+                          color: AppColors.textDark,
+                        ),
+                      ),
                       GestureDetector(
-                        onTap: () => setState(() => _endingSoonFirst = !_endingSoonFirst),
+                        onTap: () => setState(
+                          () => _endingSoonFirst = !_endingSoonFirst,
+                        ),
                         child: Row(
                           mainAxisSize: MainAxisSize.min,
                           children: [
                             Text(
                               '${AppStrings.sortByPrefix}: ${_endingSoonFirst ? AppStrings.endingSoonLabel : AppStrings.latestLabel}',
-                              style: const TextStyle(fontSize: 12.5, color: AppColors.textSecondary),
+                              style: const TextStyle(
+                                fontSize: 12.5,
+                                color: AppColors.textSecondary,
+                              ),
                             ),
-                            const Icon(Icons.keyboard_arrow_down, size: 16, color: AppColors.textSecondary),
+                            const Icon(
+                              Icons.keyboard_arrow_down,
+                              size: 16,
+                              color: AppColors.textSecondary,
+                            ),
                           ],
                         ),
                       ),
@@ -146,10 +202,15 @@ class _AllOffersScreenState extends State<AllOffersScreen> {
                   if (filtered.isEmpty)
                     _buildEmptyState()
                   else
-                    ...filtered.map((o) => Padding(
-                      padding: const EdgeInsets.only(bottom: 12),
-                      child: AllOfferListCard(offer: o, onUseNow: () => _handleUseNow(o)),
-                    )),
+                    ...filtered.map(
+                      (o) => Padding(
+                        padding: const EdgeInsets.only(bottom: 12),
+                        child: AllOfferListCard(
+                          offer: o,
+                          onUseNow: () => _handleUseNow(o),
+                        ),
+                      ),
+                    ),
                   const SizedBox(height: 8),
                   _buildMoreOffersBanner(),
                 ],
@@ -170,7 +231,14 @@ class _AllOffersScreenState extends State<AllOffersScreen> {
           InkWell(
             onTap: () => Navigator.of(context).maybePop(),
             borderRadius: BorderRadius.circular(20),
-            child: const Padding(padding: EdgeInsets.all(8), child: Icon(Icons.arrow_back, size: 22, color: AppColors.textDark)),
+            child: const Padding(
+              padding: EdgeInsets.all(8),
+              child: Icon(
+                Icons.arrow_back,
+                size: 22,
+                color: AppColors.textDark,
+              ),
+            ),
           ),
           Expanded(
             child: Padding(
@@ -178,9 +246,22 @@ class _AllOffersScreenState extends State<AllOffersScreen> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: const [
-                  Text(AppStrings.allOffersTitle, style: TextStyle(fontSize: 20, fontWeight: FontWeight.w800, color: AppColors.textDark)),
+                  Text(
+                    AppStrings.allOffersTitle,
+                    style: TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.w800,
+                      color: AppColors.textDark,
+                    ),
+                  ),
                   SizedBox(height: 2),
-                  Text(AppStrings.allOffersSubtitle, style: TextStyle(fontSize: 12.5, color: AppColors.textSecondary)),
+                  Text(
+                    AppStrings.allOffersSubtitle,
+                    style: TextStyle(
+                      fontSize: 12.5,
+                      color: AppColors.textSecondary,
+                    ),
+                  ),
                 ],
               ),
             ),
@@ -193,7 +274,14 @@ class _AllOffersScreenState extends State<AllOffersScreen> {
                 children: const [
                   Icon(Icons.help_outline, size: 16, color: AppColors.primary),
                   SizedBox(width: 5),
-                  Text(AppStrings.howItWorks, style: TextStyle(fontSize: 12.5, fontWeight: FontWeight.w600, color: AppColors.primary)),
+                  Text(
+                    AppStrings.howItWorks,
+                    style: TextStyle(
+                      fontSize: 12.5,
+                      fontWeight: FontWeight.w600,
+                      color: AppColors.primary,
+                    ),
+                  ),
                 ],
               ),
             ),
@@ -206,7 +294,11 @@ class _AllOffersScreenState extends State<AllOffersScreen> {
   Widget _buildSearchBar() {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 14),
-      decoration: BoxDecoration(color: AppColors.surface, borderRadius: BorderRadius.circular(14), border: Border.all(color: AppColors.divider)),
+      decoration: BoxDecoration(
+        color: AppColors.surface,
+        borderRadius: BorderRadius.circular(14),
+        border: Border.all(color: AppColors.divider),
+      ),
       child: Row(
         children: [
           const Icon(Icons.search, color: AppColors.textHint, size: 20),
@@ -273,13 +365,30 @@ class _AllOffersScreenState extends State<AllOffersScreen> {
           Container(
             width: 70,
             height: 70,
-            decoration: const BoxDecoration(shape: BoxShape.circle, color: AppColors.surface),
-            child: const Icon(Icons.local_offer_outlined, size: 30, color: AppColors.textHint),
+            decoration: const BoxDecoration(
+              shape: BoxShape.circle,
+              color: AppColors.surface,
+            ),
+            child: const Icon(
+              Icons.local_offer_outlined,
+              size: 30,
+              color: AppColors.textHint,
+            ),
           ),
           const SizedBox(height: 14),
-          const Text(AppStrings.noOffersFoundTitle, style: TextStyle(fontSize: 15, fontWeight: FontWeight.w700, color: AppColors.textDark)),
+          const Text(
+            AppStrings.noOffersFoundTitle,
+            style: TextStyle(
+              fontSize: 15,
+              fontWeight: FontWeight.w700,
+              color: AppColors.textDark,
+            ),
+          ),
           const SizedBox(height: 4),
-          const Text(AppStrings.noOffersFoundDesc, style: TextStyle(fontSize: 12.5, color: AppColors.textSecondary)),
+          const Text(
+            AppStrings.noOffersFoundDesc,
+            style: TextStyle(fontSize: 12.5, color: AppColors.textSecondary),
+          ),
         ],
       ),
     );
@@ -288,13 +397,19 @@ class _AllOffersScreenState extends State<AllOffersScreen> {
   Widget _buildMoreOffersBanner() {
     return Container(
       padding: const EdgeInsets.all(16),
-      decoration: BoxDecoration(color: const Color(0xFFFFF3D6), borderRadius: BorderRadius.circular(18)),
+      decoration: BoxDecoration(
+        color: const Color(0xFFFFF3D6),
+        borderRadius: BorderRadius.circular(18),
+      ),
       child: Row(
         children: [
           Container(
             width: 44,
             height: 44,
-            decoration: const BoxDecoration(color: AppColors.white, shape: BoxShape.circle),
+            decoration: const BoxDecoration(
+              color: AppColors.white,
+              shape: BoxShape.circle,
+            ),
             child: const Icon(Icons.star, color: Color(0xFFB8860B), size: 20),
           ),
           const SizedBox(width: 12),
@@ -302,9 +417,22 @@ class _AllOffersScreenState extends State<AllOffersScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(AppStrings.moreOffersComingTitle, style: TextStyle(fontSize: 13.5, fontWeight: FontWeight.w700, color: AppColors.textDark)),
+                Text(
+                  AppStrings.moreOffersComingTitle,
+                  style: TextStyle(
+                    fontSize: 13.5,
+                    fontWeight: FontWeight.w700,
+                    color: AppColors.textDark,
+                  ),
+                ),
                 SizedBox(height: 2),
-                Text(AppStrings.moreOffersComingDesc, style: TextStyle(fontSize: 12, color: AppColors.textSecondary)),
+                Text(
+                  AppStrings.moreOffersComingDesc,
+                  style: TextStyle(
+                    fontSize: 12,
+                    color: AppColors.textSecondary,
+                  ),
+                ),
               ],
             ),
           ),

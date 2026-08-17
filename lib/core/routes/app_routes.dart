@@ -23,6 +23,7 @@ import '../../screens/checkout/place_order_screen.dart';
 import '../../screens/notification/notification_screen.dart';
 import '../../screens/orders/track_order_screen.dart';
 import '../../screens/product/product_details_screen.dart';
+import '../../screens/profile/all_offers_screen.dart';
 import '../../screens/profile/coupons_offers_screen.dart';
 import '../../screens/profile/edit_profile_screen.dart';
 import '../../screens/wishlist/wishlist_screen.dart';
@@ -46,6 +47,7 @@ class AppRoutes {
   static const String cart = '/cart';
   static const String editProfile = '/edit-profile';
   static const String couponsOffers = '/coupons-offers';
+  static const String allOffers = '/all-offers';
 
   static Map<String, WidgetBuilder> routes = {
     splash: (context) => const SplashScreen(),
@@ -66,6 +68,7 @@ class AppRoutes {
     cart: (context) => const CartScreen(),
     editProfile: (context) => const EditProfileScreen(),
     couponsOffers: (context) => const CouponsOffersScreen(),
+    allOffers: (context) => const AllOffersScreen(),
   };
 
   static Route<dynamic> productDetailsRoute(ProductModel product) {

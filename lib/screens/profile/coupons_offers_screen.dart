@@ -35,9 +35,13 @@ class _CouponsOffersScreenState extends State<CouponsOffersScreen> {
       case _CouponTab.all:
         return _allCoupons;
       case _CouponTab.available:
-        return _allCoupons.where((c) => c.status == CouponStatus.available).toList();
+        return _allCoupons
+            .where((c) => c.status == CouponStatus.available)
+            .toList();
       case _CouponTab.usedExpired:
-        return _allCoupons.where((c) => c.status != CouponStatus.available).toList();
+        return _allCoupons
+            .where((c) => c.status != CouponStatus.available)
+            .toList();
     }
   }
 
@@ -67,7 +71,9 @@ class _CouponsOffersScreenState extends State<CouponsOffersScreen> {
     }
 
     context.read<CouponProvider>().apply(coupon);
-    Navigator.of(context).pushNamedAndRemoveUntil(AppRoutes.main, (route) => false, arguments: 2);
+    Navigator.of(
+      context,
+    ).pushNamedAndRemoveUntil(AppRoutes.main, (route) => false, arguments: 2);
   }
 
   void _showEnterCodeSheet() {
@@ -82,9 +88,14 @@ class _CouponsOffersScreenState extends State<CouponsOffersScreen> {
         return StatefulBuilder(
           builder: (sheetContext, setSheetState) {
             return Padding(
-              padding: EdgeInsets.only(bottom: MediaQuery.of(sheetContext).viewInsets.bottom),
+              padding: EdgeInsets.only(
+                bottom: MediaQuery.of(sheetContext).viewInsets.bottom,
+              ),
               child: Container(
-                decoration: const BoxDecoration(color: AppColors.white, borderRadius: BorderRadius.vertical(top: Radius.circular(24))),
+                decoration: const BoxDecoration(
+                  color: AppColors.white,
+                  borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
+                ),
                 padding: const EdgeInsets.fromLTRB(20, 12, 20, 20),
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
@@ -95,10 +106,20 @@ class _CouponsOffersScreenState extends State<CouponsOffersScreen> {
                         width: 40,
                         height: 4,
                         margin: const EdgeInsets.only(bottom: 16),
-                        decoration: BoxDecoration(color: AppColors.divider, borderRadius: BorderRadius.circular(4)),
+                        decoration: BoxDecoration(
+                          color: AppColors.divider,
+                          borderRadius: BorderRadius.circular(4),
+                        ),
                       ),
                     ),
-                    const Text(AppStrings.haveACouponCode, style: TextStyle(fontSize: 17, fontWeight: FontWeight.w800, color: AppColors.textDark)),
+                    const Text(
+                      AppStrings.haveACouponCode,
+                      style: TextStyle(
+                        fontSize: 17,
+                        fontWeight: FontWeight.w800,
+                        color: AppColors.textDark,
+                      ),
+                    ),
                     const SizedBox(height: 14),
                     TextField(
                       controller: controller,
@@ -108,7 +129,10 @@ class _CouponsOffersScreenState extends State<CouponsOffersScreen> {
                         errorText: errorText,
                         filled: true,
                         fillColor: AppColors.surface,
-                        border: OutlineInputBorder(borderRadius: BorderRadius.circular(14), borderSide: BorderSide.none),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(14),
+                          borderSide: BorderSide.none,
+                        ),
                       ),
                     ),
                     const SizedBox(height: 16),
@@ -117,9 +141,13 @@ class _CouponsOffersScreenState extends State<CouponsOffersScreen> {
                       child: ElevatedButton(
                         onPressed: () {
                           final code = controller.text.trim().toUpperCase();
-                          final matches = _allCoupons.where((c) => c.code == code).toList();
+                          final matches = _allCoupons
+                              .where((c) => c.code == code)
+                              .toList();
                           if (matches.isEmpty) {
-                            setSheetState(() => errorText = AppStrings.invalidCouponCode);
+                            setSheetState(
+                              () => errorText = AppStrings.invalidCouponCode,
+                            );
                             return;
                           }
                           Navigator.pop(sheetContext);
@@ -129,7 +157,9 @@ class _CouponsOffersScreenState extends State<CouponsOffersScreen> {
                           backgroundColor: AppColors.primary,
                           foregroundColor: AppColors.white,
                           minimumSize: const Size(0, 52),
-                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(14),
+                          ),
                         ),
                         child: const Text(AppStrings.apply),
                       ),
@@ -149,15 +179,25 @@ class _CouponsOffersScreenState extends State<CouponsOffersScreen> {
       context: context,
       builder: (dialogContext) => AlertDialog(
         title: const Text(AppStrings.termsConditions),
-        content: const Text(AppStrings.couponTermsBody, style: TextStyle(fontSize: 13, height: 1.7)),
-        actions: [TextButton(onPressed: () => Navigator.pop(dialogContext), child: const Text('Got it'))],
+        content: const Text(
+          AppStrings.couponTermsBody,
+          style: TextStyle(fontSize: 13, height: 1.7),
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(dialogContext),
+            child: const Text('Got it'),
+          ),
+        ],
       ),
     );
   }
 
   @override
   Widget build(BuildContext context) {
-    final available = _allCoupons.where((c) => c.status == CouponStatus.available).length;
+    final available = _allCoupons
+        .where((c) => c.status == CouponStatus.available)
+        .length;
     final usedExpired = _allCoupons.length - available;
     final featured = _featured;
     final listItems = _listItems;
@@ -178,26 +218,82 @@ class _CouponsOffersScreenState extends State<CouponsOffersScreen> {
                   _buildEnterCodeBanner(),
                   if (featured != null) ...[
                     const SizedBox(height: 20),
-                    const Text(AppStrings.bestOffersForYou, style: TextStyle(fontSize: 17, fontWeight: FontWeight.w700, color: AppColors.textDark)),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        const Text(
+                          AppStrings.bestOffersForYou,
+                          style: TextStyle(
+                            fontSize: 17,
+                            fontWeight: FontWeight.w700,
+                            color: AppColors.textDark,
+                          ),
+                        ),
+                        GestureDetector(
+                          onTap: () => Navigator.of(
+                            context,
+                          ).pushNamed(AppRoutes.allOffers),
+                          child: Row(
+                            children: const [
+                              Text(
+                                AppStrings.viewAll,
+                                style: TextStyle(
+                                  fontSize: 13,
+                                  fontWeight: FontWeight.w700,
+                                  color: AppColors.primary,
+                                ),
+                              ),
+                              Icon(
+                                Icons.chevron_right,
+                                size: 16,
+                                color: AppColors.primary,
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
                     const SizedBox(height: 12),
-                    FeaturedCouponCard(coupon: featured, onUseNow: () => _handleUseNow(featured)),
+                    FeaturedCouponCard(
+                      coupon: featured,
+                      onUseNow: () => _handleUseNow(featured),
+                    ),
                   ],
                   const SizedBox(height: 22),
                   Text(
-                    _selectedTab == _CouponTab.usedExpired ? AppStrings.usedExpiredTab : AppStrings.availableCouponsSectionTitle,
-                    style: const TextStyle(fontSize: 17, fontWeight: FontWeight.w700, color: AppColors.textDark),
+                    _selectedTab == _CouponTab.usedExpired
+                        ? AppStrings.usedExpiredTab
+                        : AppStrings.availableCouponsSectionTitle,
+                    style: const TextStyle(
+                      fontSize: 17,
+                      fontWeight: FontWeight.w700,
+                      color: AppColors.textDark,
+                    ),
                   ),
                   const SizedBox(height: 12),
                   if (listItems.isEmpty)
                     const Padding(
                       padding: EdgeInsets.symmetric(vertical: 24),
-                      child: Center(child: Text('No coupons here', style: TextStyle(fontSize: 13, color: AppColors.textHint))),
+                      child: Center(
+                        child: Text(
+                          'No coupons here',
+                          style: TextStyle(
+                            fontSize: 13,
+                            color: AppColors.textHint,
+                          ),
+                        ),
+                      ),
                     )
                   else
-                    ...listItems.map((c) => Padding(
-                      padding: const EdgeInsets.only(bottom: 14),
-                      child: CouponListCard(coupon: c, onUseNow: () => _handleUseNow(c)),
-                    )),
+                    ...listItems.map(
+                      (c) => Padding(
+                        padding: const EdgeInsets.only(bottom: 14),
+                        child: CouponListCard(
+                          coupon: c,
+                          onUseNow: () => _handleUseNow(c),
+                        ),
+                      ),
+                    ),
                   const SizedBox(height: 8),
                   _buildTermsCard(),
                 ],
@@ -218,7 +314,14 @@ class _CouponsOffersScreenState extends State<CouponsOffersScreen> {
           InkWell(
             onTap: () => Navigator.of(context).maybePop(),
             borderRadius: BorderRadius.circular(20),
-            child: const Padding(padding: EdgeInsets.all(8), child: Icon(Icons.arrow_back, size: 22, color: AppColors.textDark)),
+            child: const Padding(
+              padding: EdgeInsets.all(8),
+              child: Icon(
+                Icons.arrow_back,
+                size: 22,
+                color: AppColors.textDark,
+              ),
+            ),
           ),
           Expanded(
             child: Padding(
@@ -226,9 +329,22 @@ class _CouponsOffersScreenState extends State<CouponsOffersScreen> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: const [
-                  Text(AppStrings.couponsOffersTitle, style: TextStyle(fontSize: 20, fontWeight: FontWeight.w800, color: AppColors.textDark)),
+                  Text(
+                    AppStrings.couponsOffersTitle,
+                    style: TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.w800,
+                      color: AppColors.textDark,
+                    ),
+                  ),
                   SizedBox(height: 2),
-                  Text(AppStrings.couponsOffersSubtitle, style: TextStyle(fontSize: 12.5, color: AppColors.textSecondary)),
+                  Text(
+                    AppStrings.couponsOffersSubtitle,
+                    style: TextStyle(
+                      fontSize: 12.5,
+                      color: AppColors.textSecondary,
+                    ),
+                  ),
                 ],
               ),
             ),
@@ -239,9 +355,20 @@ class _CouponsOffersScreenState extends State<CouponsOffersScreen> {
               onTap: () => setState(() => _selectedTab = _CouponTab.available),
               child: Row(
                 children: const [
-                  Icon(Icons.confirmation_num_outlined, size: 16, color: AppColors.primary),
+                  Icon(
+                    Icons.confirmation_num_outlined,
+                    size: 16,
+                    color: AppColors.primary,
+                  ),
                   SizedBox(width: 5),
-                  Text(AppStrings.myCoupons, style: TextStyle(fontSize: 13, fontWeight: FontWeight.w700, color: AppColors.primary)),
+                  Text(
+                    AppStrings.myCoupons,
+                    style: TextStyle(
+                      fontSize: 13,
+                      fontWeight: FontWeight.w700,
+                      color: AppColors.primary,
+                    ),
+                  ),
                 ],
               ),
             ),
@@ -256,11 +383,30 @@ class _CouponsOffersScreenState extends State<CouponsOffersScreen> {
       padding: const EdgeInsets.symmetric(horizontal: 16),
       child: Row(
         children: [
-          Expanded(child: _TabPill(label: '${AppStrings.allTab} (${_allCoupons.length})', selected: _selectedTab == _CouponTab.all, onTap: () => setState(() => _selectedTab = _CouponTab.all))),
+          Expanded(
+            child: _TabPill(
+              label: '${AppStrings.allTab} (${_allCoupons.length})',
+              selected: _selectedTab == _CouponTab.all,
+              onTap: () => setState(() => _selectedTab = _CouponTab.all),
+            ),
+          ),
           const SizedBox(width: 8),
-          Expanded(child: _TabPill(label: '${AppStrings.availableTab} ($available)', selected: _selectedTab == _CouponTab.available, onTap: () => setState(() => _selectedTab = _CouponTab.available))),
+          Expanded(
+            child: _TabPill(
+              label: '${AppStrings.availableTab} ($available)',
+              selected: _selectedTab == _CouponTab.available,
+              onTap: () => setState(() => _selectedTab = _CouponTab.available),
+            ),
+          ),
           const SizedBox(width: 8),
-          Expanded(child: _TabPill(label: '${AppStrings.usedExpiredTab} ($usedExpired)', selected: _selectedTab == _CouponTab.usedExpired, onTap: () => setState(() => _selectedTab = _CouponTab.usedExpired))),
+          Expanded(
+            child: _TabPill(
+              label: '${AppStrings.usedExpiredTab} ($usedExpired)',
+              selected: _selectedTab == _CouponTab.usedExpired,
+              onTap: () =>
+                  setState(() => _selectedTab = _CouponTab.usedExpired),
+            ),
+          ),
         ],
       ),
     );
@@ -269,23 +415,46 @@ class _CouponsOffersScreenState extends State<CouponsOffersScreen> {
   Widget _buildEnterCodeBanner() {
     return Container(
       padding: const EdgeInsets.all(14),
-      decoration: BoxDecoration(color: AppColors.successSoft, borderRadius: BorderRadius.circular(16)),
+      decoration: BoxDecoration(
+        color: AppColors.successSoft,
+        borderRadius: BorderRadius.circular(16),
+      ),
       child: Row(
         children: [
           Container(
             width: 40,
             height: 40,
-            decoration: const BoxDecoration(color: AppColors.white, shape: BoxShape.circle),
-            child: const Icon(Icons.local_offer_outlined, color: AppColors.success, size: 18),
+            decoration: const BoxDecoration(
+              color: AppColors.white,
+              shape: BoxShape.circle,
+            ),
+            child: const Icon(
+              Icons.local_offer_outlined,
+              color: AppColors.success,
+              size: 18,
+            ),
           ),
           const SizedBox(width: 12),
           const Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(AppStrings.haveACouponCode, style: TextStyle(fontSize: 13.5, fontWeight: FontWeight.w700, color: AppColors.textDark)),
+                Text(
+                  AppStrings.haveACouponCode,
+                  style: TextStyle(
+                    fontSize: 13.5,
+                    fontWeight: FontWeight.w700,
+                    color: AppColors.textDark,
+                  ),
+                ),
                 SizedBox(height: 2),
-                Text(AppStrings.enterCodeToUnlock, style: TextStyle(fontSize: 11.5, color: AppColors.textSecondary)),
+                Text(
+                  AppStrings.enterCodeToUnlock,
+                  style: TextStyle(
+                    fontSize: 11.5,
+                    color: AppColors.textSecondary,
+                  ),
+                ),
               ],
             ),
           ),
@@ -295,8 +464,13 @@ class _CouponsOffersScreenState extends State<CouponsOffersScreen> {
               foregroundColor: AppColors.success,
               side: const BorderSide(color: AppColors.success),
               padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
-              textStyle: const TextStyle(fontSize: 12.5, fontWeight: FontWeight.w700),
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+              textStyle: const TextStyle(
+                fontSize: 12.5,
+                fontWeight: FontWeight.w700,
+              ),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10),
+              ),
             ),
             child: const Text(AppStrings.enterCode),
           ),
@@ -311,28 +485,57 @@ class _CouponsOffersScreenState extends State<CouponsOffersScreen> {
       borderRadius: BorderRadius.circular(16),
       child: Container(
         padding: const EdgeInsets.all(14),
-        decoration: BoxDecoration(color: AppColors.white, borderRadius: BorderRadius.circular(16), border: Border.all(color: AppColors.divider)),
+        decoration: BoxDecoration(
+          color: AppColors.white,
+          borderRadius: BorderRadius.circular(16),
+          border: Border.all(color: AppColors.divider),
+        ),
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Container(
               width: 34,
               height: 34,
-              decoration: const BoxDecoration(color: AppColors.primarySoft, shape: BoxShape.circle),
-              child: const Icon(Icons.shield_outlined, color: AppColors.primary, size: 16),
+              decoration: const BoxDecoration(
+                color: AppColors.primarySoft,
+                shape: BoxShape.circle,
+              ),
+              child: const Icon(
+                Icons.shield_outlined,
+                color: AppColors.primary,
+                size: 16,
+              ),
             ),
             const SizedBox(width: 12),
             const Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(AppStrings.termsConditions, style: TextStyle(fontSize: 14, fontWeight: FontWeight.w700, color: AppColors.textDark)),
+                  Text(
+                    AppStrings.termsConditions,
+                    style: TextStyle(
+                      fontSize: 14,
+                      fontWeight: FontWeight.w700,
+                      color: AppColors.textDark,
+                    ),
+                  ),
                   SizedBox(height: 6),
-                  Text(AppStrings.couponTermsBody, style: TextStyle(fontSize: 11.5, color: AppColors.textSecondary, height: 1.6)),
+                  Text(
+                    AppStrings.couponTermsBody,
+                    style: TextStyle(
+                      fontSize: 11.5,
+                      color: AppColors.textSecondary,
+                      height: 1.6,
+                    ),
+                  ),
                 ],
               ),
             ),
-            const Icon(Icons.chevron_right, size: 18, color: AppColors.textHint),
+            const Icon(
+              Icons.chevron_right,
+              size: 18,
+              color: AppColors.textHint,
+            ),
           ],
         ),
       ),
@@ -345,7 +548,11 @@ class _TabPill extends StatelessWidget {
   final bool selected;
   final VoidCallback onTap;
 
-  const _TabPill({required this.label, required this.selected, required this.onTap});
+  const _TabPill({
+    required this.label,
+    required this.selected,
+    required this.onTap,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -357,13 +564,19 @@ class _TabPill extends StatelessWidget {
         decoration: BoxDecoration(
           color: selected ? AppColors.primarySoft : AppColors.white,
           borderRadius: BorderRadius.circular(12),
-          border: Border.all(color: selected ? AppColors.primary : AppColors.divider),
+          border: Border.all(
+            color: selected ? AppColors.primary : AppColors.divider,
+          ),
         ),
         alignment: Alignment.center,
         child: Text(
           label,
           textAlign: TextAlign.center,
-          style: TextStyle(fontSize: 11.5, fontWeight: FontWeight.w700, color: selected ? AppColors.primary : AppColors.textHint),
+          style: TextStyle(
+            fontSize: 11.5,
+            fontWeight: FontWeight.w700,
+            color: selected ? AppColors.primary : AppColors.textHint,
+          ),
         ),
       ),
     );
