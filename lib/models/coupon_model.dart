@@ -23,6 +23,7 @@ class CouponModel {
   final CouponStatus status;
   final bool isFeatured;
   final String? image;
+  final List<String> offerTags;
 
   const CouponModel({
     required this.code,
@@ -43,5 +44,6 @@ class CouponModel {
     this.status = CouponStatus.available,
     this.isFeatured = false,
     this.image,
+    this.offerTags = const [],
   });
 }

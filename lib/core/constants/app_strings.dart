@@ -408,4 +408,23 @@ class AppStrings {
   static const String remove = 'Remove';
   static const String couponAppliedSuccessSuffix = 'coupon applied successfully';
   static const String couponDiscountLabel = 'Coupon Discount';
+  // All Offers
+  static const String allOffersTitle = 'All Offers';
+  static const String allOffersSubtitle = 'Find the best offers and save more';
+  static const String searchOffersHint = 'Search offers, categories or codes';
+  static const String featuredOffersTitle = 'Featured Offers';
+  static const String allAvailableOffersTitle = 'All Available Offers';
+  static const String sortByPrefix = 'Sort by';
+  static const String latestLabel = 'Latest';
+  static const String endingSoonLabel = 'Ending Soon';
+  static const String noOffersFoundTitle = 'No offers found';
+  static const String noOffersFoundDesc = 'Try another category or search.';
+  static const String moreOffersComingTitle = 'More offers coming your way!';
+  static const String moreOffersComingDesc = 'We add new deals every week. Stay tuned!';
+  static const String tabAll = 'All';
+  static const String tabMeat = 'Meat';
+  static const String tabDelivery = 'Delivery';
+  static const String tabCashback = 'Cashback';
+  static const String tabNewUser = 'New User';
+
 }
