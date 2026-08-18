@@ -26,6 +26,7 @@ import '../../screens/product/product_details_screen.dart';
 import '../../screens/profile/all_offers_screen.dart';
 import '../../screens/profile/coupons_offers_screen.dart';
 import '../../screens/profile/edit_profile_screen.dart';
+import '../../screens/profile/how_it_works_screen.dart';
 import '../../screens/wishlist/wishlist_screen.dart';
 
 class AppRoutes {
@@ -48,6 +49,7 @@ class AppRoutes {
   static const String editProfile = '/edit-profile';
   static const String couponsOffers = '/coupons-offers';
   static const String allOffers = '/all-offers';
+  static const String howItWorks = '/how-it-works';
 
   static Map<String, WidgetBuilder> routes = {
     splash: (context) => const SplashScreen(),
@@ -69,6 +71,7 @@ class AppRoutes {
     editProfile: (context) => const EditProfileScreen(),
     couponsOffers: (context) => const CouponsOffersScreen(),
     allOffers: (context) => const AllOffersScreen(),
+    howItWorks: (context) => const HowItWorksScreen(),
   };
 
   static Route<dynamic> productDetailsRoute(ProductModel product) {
@@ -156,6 +159,12 @@ class AppRoutes {
         paymentMethod: paymentMethod,
         platformFee: platformFee,
       ),
+    );
+  }
+
+  static Route<dynamic> allOffersRoute({String initialTag = 'all'}) {
+    return MaterialPageRoute(
+      builder: (_) => AllOffersScreen(initialTag: initialTag),
     );
   }
 }
