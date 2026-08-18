@@ -426,5 +426,39 @@ class AppStrings {
   static const String tabDelivery = 'Delivery';
   static const String tabCashback = 'Cashback';
   static const String tabNewUser = 'New User';
+  // How it Works (Offers)
+  static const String howItWorksTitle = 'How it works';
+  static const String howItWorksSubtitle = 'Learn how offers & coupons work on MeatHub';
+  static const String howToUseOffers = 'How to use offers';
+  static const String stepChooseOffer = 'Choose an Offer';
+  static const String stepChooseOfferDesc = 'Browse offers and find the best one for you.';
+  static const String stepTapUseNow = 'Tap "Use Now"';
+  static const String stepTapUseNowDesc = 'Tap on any offer to apply it to your order.';
+  static const String stepDiscountApplied = 'Discount Applied';
+  static const String stepDiscountAppliedDesc = 'The offer will be automatically added in your cart.';
+  static const String stepCheckoutSave = 'Checkout & Save';
+  static const String stepCheckoutSaveDesc = 'Complete your order and enjoy the savings.';
+  static const String offerCategoriesTitle = 'Offer Categories';
+  static const String meatOffersTitle = 'Meat Offers';
+  static const String meatOffersDesc = 'Discounts and special deals on meat categories like beef, mutton, chicken & more.';
+  static const String deliveryOffersTitle = 'Delivery Offers';
+  static const String deliveryOffersDesc = 'Save on delivery charges with free delivery or discounted delivery offers.';
+  static const String cashbackOffersTitle = 'Cashback Offers';
+  static const String cashbackOffersDesc = 'Get cashback on your orders. Cashback will be added to your MeatHub wallet.';
+  static const String newUserOffersTitle = 'New User Offers';
+  static const String newUserOffersDesc = 'Special offers for new users on their first order.';
+  static const String importantPoints = 'Important Points';
+  static const String pointOneOfferPerOrder = 'Only one offer can be used per order.';
+  static const String pointNoCombine = 'Offers cannot be combined with other offers.';
+  static const String pointMinOrder = 'Some offers have a minimum order value.';
+  static const String pointCaseSensitive = 'Offer codes are case-sensitive.';
+  static const String pointCheckTerms = "If an offer doesn't work, check the terms & conditions.";
+  static const String pointValidDate = 'Offers are valid until the mentioned date only.';
+  static const String needHelpTitle = 'Need Help?';
+  static const String needHelpDesc = 'If you face any issue with offers or coupons, our support team is here to help you.';
+  static const String contactSupport = 'Contact Support';
+  static const String helpCenterPrompt = 'Have more questions? Visit our ';
+  static const String helpCenterLink = 'Help Center';
+  static const String helpCenterSuffix = ' for detailed information.';
 
 }
