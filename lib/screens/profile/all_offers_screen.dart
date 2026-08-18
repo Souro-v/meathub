@@ -13,7 +13,9 @@ import 'package:meathub/providers/cart_provider.dart';
 import 'package:meathub/providers/coupon_provider.dart';
 
 class AllOffersScreen extends StatefulWidget {
-  const AllOffersScreen({super.key});
+  final String initialTag;
+
+  const AllOffersScreen({super.key, this.initialTag = OfferFilterUtils.allKey});
 
   @override
   State<AllOffersScreen> createState() => _AllOffersScreenState();
@@ -22,7 +24,7 @@ class AllOffersScreen extends StatefulWidget {
 class _AllOffersScreenState extends State<AllOffersScreen> {
   final TextEditingController _searchController = TextEditingController();
   String _query = '';
-  String _selectedTag = OfferFilterUtils.allKey;
+  late String _selectedTag;
   bool _endingSoonFirst = false;
 
   late final List<CouponModel> _available;
@@ -31,6 +33,7 @@ class _AllOffersScreenState extends State<AllOffersScreen> {
   @override
   void initState() {
     super.initState();
+    _selectedTag = widget.initialTag;
     _available = DummyCoupons.all
         .where((c) => c.status == CouponStatus.available)
         .toList();
@@ -75,25 +78,6 @@ class _AllOffersScreenState extends State<AllOffersScreen> {
     Navigator.of(
       context,
     ).pushNamedAndRemoveUntil(AppRoutes.main, (route) => false, arguments: 2);
-  }
-
-  void _showHowItWorksDialog() {
-    showDialog(
-      context: context,
-      builder: (dialogContext) => AlertDialog(
-        title: const Text(AppStrings.howItWorks),
-        content: const Text(
-          AppStrings.howItWorksDialogDesc,
-          style: TextStyle(fontSize: 13, height: 1.5),
-        ),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(dialogContext),
-            child: const Text('Got it'),
-          ),
-        ],
-      ),
-    );
   }
 
   @override
@@ -269,7 +253,7 @@ class _AllOffersScreenState extends State<AllOffersScreen> {
           Padding(
             padding: const EdgeInsets.only(top: 10),
             child: InkWell(
-              onTap: _showHowItWorksDialog,
+              onTap: () => Navigator.of(context).pushNamed(AppRoutes.howItWorks),
               child: Row(
                 children: const [
                   Icon(Icons.help_outline, size: 16, color: AppColors.primary),
