@@ -434,7 +434,8 @@ class ProfileScreen extends StatelessWidget {
         icon: Icons.verified_user_outlined,
         title: AppStrings.meatHubGuarantee,
         subtitle: AppStrings.meatHubGuaranteeDesc,
-        onTap: () => _showComingSoon(context, AppStrings.meatHubGuarantee),
+        onTap: () =>
+            Navigator.of(context).pushNamed(AppRoutes.meatHubGuarantee),
       ),
       ProfileMenuTile(
         icon: Icons.headset_mic_outlined,
