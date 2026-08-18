@@ -460,5 +460,37 @@ class AppStrings {
   static const String helpCenterPrompt = 'Have more questions? Visit our ';
   static const String helpCenterLink = 'Help Center';
   static const String helpCenterSuffix = ' for detailed information.';
+  // MeatHub Guarantee
+  static const String meatHubGuaranteeTitle = 'MeatHub Guarantee';
+  static const String ourPromiseToYou = 'Our promise to you';
+  static const String guaranteeHeroLine1 = "We don't just sell meat,";
+  static const String guaranteeHeroLine2 = 'We stand behind it.';
+  static const String guaranteeHeroDesc =
+      'MeatHub Guarantee is our promise to deliver the best quality meat and service every time you shop with us.';
+  static const String ourGuaranteesTitle = 'Our 6 Guarantees';
+  static const String guaranteeFreshTitle = '100% Fresh Meat';
+  static const String guaranteeFreshDesc = 'We deliver only fresh meat, never frozen (unless stated).';
+  static const String guaranteeHalalTitle = 'Halal & Hygienic';
+  static const String guaranteeHalalDesc = 'All meat is 100% Halal and processed under strict hygiene.';
+  static const String guaranteeDeliveryTitle = 'On-Time Delivery';
+  static const String guaranteeDeliveryDesc = 'We ensure fast and on-time delivery at your doorstep.';
+  static const String guaranteeChilledTitle = 'Properly Chilled';
+  static const String guaranteeChilledDesc = 'Maintained at the right temperature from our store to your home.';
+  static const String guaranteePackagingTitle = 'Safe Packaging';
+  static const String guaranteePackagingDesc = 'Vacuum-sealed and hygienic packaging to keep it safe & fresh.';
+  static const String guaranteeSupportTitle = 'Hassle-Free Support';
+  static const String guaranteeSupportDesc = "We're here to help. Quick support for any issue you face.";
+  static const String notSatisfiedTitle = "Not satisfied? We'll make it right.";
+  static const String notSatisfiedDesc =
+      'If you are not satisfied with the quality of the meat you received, simply let us know within 12 hours of delivery. We will replace it or issue a refund.';
+  static const String ourCommitmentTitle = 'Our Commitment';
+  static const String commitmentTrustedFamilies = 'Trusted by\n1000+ Families';
+  static const String commitmentSourced = 'Sourced from\nTrusted Suppliers';
+  static const String commitmentQualityChecked = 'Quality Checked\nBefore Delivery';
+  static const String commitmentCareFamily = 'We Care About\nYour Family';
+  static const String sustainabilityMattersTitle = 'Sustainability Matters';
+  static const String sustainabilityMattersDesc = 'We follow responsible sourcing and reduce food waste to build a better and healthier future.';
+  static const String thankYouGuaranteeFooter = 'Thank you for choosing MeatHub.';
+  static const String trustMotivatesFooter = 'Your trust motivates us every day. ❤️';
 
 }
