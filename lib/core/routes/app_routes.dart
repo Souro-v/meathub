@@ -26,6 +26,7 @@ import '../../screens/product/product_details_screen.dart';
 import '../../screens/profile/all_offers_screen.dart';
 import '../../screens/profile/coupons_offers_screen.dart';
 import '../../screens/profile/edit_profile_screen.dart';
+import '../../screens/profile/help_support_screen.dart';
 import '../../screens/profile/how_it_works_screen.dart';
 import '../../screens/profile/meathub_guarantee_screen.dart';
 import '../../screens/wishlist/wishlist_screen.dart';
@@ -52,6 +53,7 @@ class AppRoutes {
   static const String allOffers = '/all-offers';
   static const String howItWorks = '/how-it-works';
   static const String meatHubGuarantee = '/meathub-guarantee';
+  static const String helpSupport = '/help-support';
 
   static Map<String, WidgetBuilder> routes = {
     splash: (context) => const SplashScreen(),
@@ -75,6 +77,7 @@ class AppRoutes {
     allOffers: (context) => const AllOffersScreen(),
     howItWorks: (context) => const HowItWorksScreen(),
     meatHubGuarantee: (context) => const MeatHubGuaranteeScreen(),
+    helpSupport: (context) => const HelpSupportScreen(),
   };
 
   static Route<dynamic> productDetailsRoute(ProductModel product) {

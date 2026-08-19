@@ -441,7 +441,7 @@ class ProfileScreen extends StatelessWidget {
         icon: Icons.headset_mic_outlined,
         title: AppStrings.helpSupport,
         subtitle: AppStrings.helpSupportDesc,
-        onTap: () => _showComingSoon(context, AppStrings.helpSupport),
+        onTap: () => Navigator.of(context).pushNamed(AppRoutes.helpSupport),
       ),
       ProfileMenuTile(
         icon: Icons.info_outline,
