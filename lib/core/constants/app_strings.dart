@@ -492,5 +492,42 @@ class AppStrings {
   static const String sustainabilityMattersDesc = 'We follow responsible sourcing and reduce food waste to build a better and healthier future.';
   static const String thankYouGuaranteeFooter = 'Thank you for choosing MeatHub.';
   static const String trustMotivatesFooter = 'Your trust motivates us every day. ❤️';
+  // Help & Support
+  static const String helpSupportTitle = 'Help & Support';
+  static const String helpSupportSubtitle = "We're here to help you";
+  static const String myTickets = 'My Tickets';
+  static const String searchHelpHint = 'Search for help, topics or questions...';
+  static const String needImmediateHelp = 'Need Immediate Help?';
+  static const String needImmediateHelpDesc = 'Our support team is ready to assist you with any issue.';
+  static const String chatWithUs = 'Chat with us';
+  static const String supportAvailableHours = 'Available 8 AM – 10 PM';
+  static const String quickHelpTopics = 'Quick Help Topics';
+  static const String popularQuestions = 'Popular Questions';
+  static const String viewAllFaqs = 'View All FAQs';
+  static const String otherWaysToReachUs = 'Other Ways to Reach Us';
+  static const String whatsappSupport = 'WhatsApp Support';
+  static const String whatsappSupportDesc = 'Chat with us on WhatsApp';
+  static const String chatNow = 'Chat Now';
+  static const String emailSupport = 'Email Support';
+  static const String emailSupportDesc = "Send us an email, we'll reply soon";
+  static const String sendEmail = 'Send Email';
+  static const String callSupport = 'Call Support';
+  static const String callSupportDesc = 'Talk to our support executive';
+  static const String mySupportTickets = 'My Support Tickets';
+  static const String mySupportTicketsDesc = 'View your previous tickets and check our responses.';
+  static const String viewMyTickets = 'View My Tickets';
+  static const String committedToSatisfaction = "We're committed to your satisfaction";
+  static const String committedToSatisfactionDesc = 'Your happiness is our priority at MeatHub.';
+  static const String noHelpResultsTitle = 'No results found';
+  static const String noHelpResultsDesc = 'Try a different search term.';
+  static const String couldNotOpenLink = 'Could not open the link';
 
+  static const String topicOrdersDeliveries = 'Orders &\nDeliveries';
+  static const String topicProductQuality = 'Product &\nQuality';
+  static const String topicPaymentsRefunds = 'Payments &\nRefunds';
+  static const String topicCouponsOffers = 'Coupons &\nOffers';
+  static const String topicAccountProfile = 'Account &\nProfile';
+  static const String topicAddressesLocations = 'Addresses &\nLocations';
+  static const String topicWalletCredits = 'Wallet &\nCredits';
+  static const String topicOtherIssues = 'Other\nIssues';
 }
