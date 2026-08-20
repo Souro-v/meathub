@@ -24,6 +24,28 @@ class OrdersProvider extends ChangeNotifier {
     );
   }
 
+  OrderModel? findById(String orderId) {
+    try {
+      return _orders.firstWhere((o) => o.orderId == orderId);
+    } catch (_) {
+      return null;
+    }
+  }
+
+  OrderModel? get mostRelevantOrder {
+    if (_orders.isEmpty) return null;
+    final ongoing = _orders.where(
+      (o) => [
+        OrderStatus.placed,
+        OrderStatus.confirmed,
+        OrderStatus.preparing,
+        OrderStatus.outForDelivery,
+      ].contains(o.status),
+    );
+    if (ongoing.isNotEmpty) return ongoing.first;
+    return _orders.first;
+  }
+
   void placeOrder(OrderModel order) {
     _orders.insert(0, order);
     notifyListeners();
