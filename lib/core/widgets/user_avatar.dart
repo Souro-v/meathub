@@ -5,6 +5,7 @@ import 'package:meathub/providers/user_provider.dart';
 
 class UserAvatar extends StatelessWidget {
   final double radius;
+
   const UserAvatar({super.key, this.radius = 34});
 
   @override
@@ -12,7 +13,10 @@ class UserAvatar extends StatelessWidget {
     final user = context.watch<UserProvider>();
 
     if (user.hasPhoto) {
-      return CircleAvatar(radius: radius, backgroundImage: FileImage(user.photo!));
+      return CircleAvatar(
+        radius: radius,
+        backgroundImage: FileImage(user.photo!),
+      );
     }
 
     return CircleAvatar(
@@ -20,7 +24,11 @@ class UserAvatar extends StatelessWidget {
       backgroundColor: AppColors.primary,
       child: Text(
         user.initials,
-        style: TextStyle(fontSize: radius * 0.62, fontWeight: FontWeight.w800, color: AppColors.white),
+        style: TextStyle(
+          fontSize: radius * 0.62,
+          fontWeight: FontWeight.w800,
+          color: AppColors.white,
+        ),
       ),
     );
   }
