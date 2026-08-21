@@ -20,6 +20,14 @@ import '../../screens/checkout/checkout_screen.dart';
 import '../../screens/checkout/order_success_screen.dart';
 import '../../screens/checkout/payment_screen.dart';
 import '../../screens/checkout/place_order_screen.dart';
+import '../../screens/help/faq_screen.dart';
+import '../../screens/help/help_category_screen.dart';
+import '../../screens/help/live_chat_screen.dart';
+import '../../screens/help/manage_order_screen.dart';
+import '../../screens/help/refund_request_screen.dart';
+import '../../screens/help/report_issue_screen.dart';
+import '../../screens/help/ticket_detail_screen.dart';
+import '../../screens/help/ticket_list_screen.dart';
 import '../../screens/notification/notification_screen.dart';
 import '../../screens/orders/track_order_screen.dart';
 import '../../screens/product/product_details_screen.dart';
@@ -54,6 +62,9 @@ class AppRoutes {
   static const String howItWorks = '/how-it-works';
   static const String meatHubGuarantee = '/meathub-guarantee';
   static const String helpSupport = '/help-support';
+  static const String faqScreen = '/faq';
+  static const String ticketList = '/ticket-list';
+  static const String liveChat = '/live-chat';
 
   static Map<String, WidgetBuilder> routes = {
     splash: (context) => const SplashScreen(),
@@ -78,6 +89,9 @@ class AppRoutes {
     howItWorks: (context) => const HowItWorksScreen(),
     meatHubGuarantee: (context) => const MeatHubGuaranteeScreen(),
     helpSupport: (context) => const HelpSupportScreen(),
+    faqScreen: (context) => const FaqScreen(),
+    ticketList: (context) => const TicketListScreen(),
+    liveChat: (context) => const LiveChatScreen(),
   };
 
   static Route<dynamic> productDetailsRoute(ProductModel product) {
@@ -171,6 +185,40 @@ class AppRoutes {
   static Route<dynamic> allOffersRoute({String initialTag = 'all'}) {
     return MaterialPageRoute(
       builder: (_) => AllOffersScreen(initialTag: initialTag),
+    );
+  }
+
+  static Route<dynamic> helpCategoryRoute(String topicKey) {
+    return MaterialPageRoute(
+      builder: (_) => HelpCategoryScreen(topicKey: topicKey),
+    );
+  }
+
+  static Route<dynamic> ticketDetailRoute(String ticketId) {
+    return MaterialPageRoute(
+      builder: (_) => TicketDetailScreen(ticketId: ticketId),
+    );
+  }
+
+  static Route<dynamic> reportIssueRoute({
+    String? orderId,
+    String? presetIssueType,
+  }) {
+    return MaterialPageRoute(
+      builder: (_) =>
+          ReportIssueScreen(orderId: orderId, presetIssueType: presetIssueType),
+    );
+  }
+
+  static Route<dynamic> refundRequestRoute(String orderId) {
+    return MaterialPageRoute(
+      builder: (_) => RefundRequestScreen(orderId: orderId),
+    );
+  }
+
+  static Route<dynamic> manageOrderRoute(String orderId) {
+    return MaterialPageRoute(
+      builder: (_) => ManageOrderScreen(orderId: orderId),
     );
   }
 }
