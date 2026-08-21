@@ -34,24 +34,48 @@ class _TicketListScreenState extends State<TicketListScreen> {
               padding: const EdgeInsets.symmetric(horizontal: 16),
               child: Row(
                 children: [
-                  Expanded(child: _TabButton(label: '${AppStrings.openLabel} (${open.length})', selected: _showOpen, onTap: () => setState(() => _showOpen = true))),
+                  Expanded(
+                    child: _TabButton(
+                      label: '${AppStrings.openLabel} (${open.length})',
+                      selected: _showOpen,
+                      onTap: () => setState(() => _showOpen = true),
+                    ),
+                  ),
                   const SizedBox(width: 10),
-                  Expanded(child: _TabButton(label: '${AppStrings.resolvedLabel} (${resolved.length})', selected: !_showOpen, onTap: () => setState(() => _showOpen = false))),
+                  Expanded(
+                    child: _TabButton(
+                      label: '${AppStrings.resolvedLabel} (${resolved.length})',
+                      selected: !_showOpen,
+                      onTap: () => setState(() => _showOpen = false),
+                    ),
+                  ),
                 ],
               ),
             ),
             const SizedBox(height: 14),
             Expanded(
               child: list.isEmpty
-                  ? Center(child: Text(_showOpen ? AppStrings.noOpenTickets : AppStrings.noResolvedTickets, style: const TextStyle(fontSize: 13, color: AppColors.textHint)))
+                  ? Center(
+                      child: Text(
+                        _showOpen
+                            ? AppStrings.noOpenTickets
+                            : AppStrings.noResolvedTickets,
+                        style: const TextStyle(
+                          fontSize: 13,
+                          color: AppColors.textHint,
+                        ),
+                      ),
+                    )
                   : ListView.builder(
-                padding: const EdgeInsets.fromLTRB(16, 0, 16, 20),
-                itemCount: list.length,
-                itemBuilder: (context, index) => TicketCard(
-                  ticket: list[index],
-                  onTap: () => Navigator.of(context).push(AppRoutes.ticketDetailRoute(list[index].id)),
-                ),
-              ),
+                      padding: const EdgeInsets.fromLTRB(16, 0, 16, 20),
+                      itemCount: list.length,
+                      itemBuilder: (context, index) => TicketCard(
+                        ticket: list[index],
+                        onTap: () => Navigator.of(
+                          context,
+                        ).push(AppRoutes.ticketDetailRoute(list[index].id)),
+                      ),
+                    ),
             ),
           ],
         ),
@@ -68,7 +92,14 @@ class _TicketListScreenState extends State<TicketListScreen> {
           InkWell(
             onTap: () => Navigator.of(context).maybePop(),
             borderRadius: BorderRadius.circular(20),
-            child: const Padding(padding: EdgeInsets.all(8), child: Icon(Icons.arrow_back, size: 22, color: AppColors.textDark)),
+            child: const Padding(
+              padding: EdgeInsets.all(8),
+              child: Icon(
+                Icons.arrow_back,
+                size: 22,
+                color: AppColors.textDark,
+              ),
+            ),
           ),
           Expanded(
             child: Padding(
@@ -76,9 +107,22 @@ class _TicketListScreenState extends State<TicketListScreen> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: const [
-                  Text(AppStrings.mySupportTicketsTitle, style: TextStyle(fontSize: 19, fontWeight: FontWeight.w800, color: AppColors.textDark)),
+                  Text(
+                    AppStrings.mySupportTicketsTitle,
+                    style: TextStyle(
+                      fontSize: 19,
+                      fontWeight: FontWeight.w800,
+                      color: AppColors.textDark,
+                    ),
+                  ),
                   SizedBox(height: 2),
-                  Text(AppStrings.trackAllSupportConversations, style: TextStyle(fontSize: 12.5, color: AppColors.textSecondary)),
+                  Text(
+                    AppStrings.trackAllSupportConversations,
+                    style: TextStyle(
+                      fontSize: 12.5,
+                      color: AppColors.textSecondary,
+                    ),
+                  ),
                 ],
               ),
             ),
@@ -94,7 +138,11 @@ class _TabButton extends StatelessWidget {
   final bool selected;
   final VoidCallback onTap;
 
-  const _TabButton({required this.label, required this.selected, required this.onTap});
+  const _TabButton({
+    required this.label,
+    required this.selected,
+    required this.onTap,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -107,9 +155,18 @@ class _TabButton extends StatelessWidget {
         decoration: BoxDecoration(
           color: selected ? AppColors.primary : AppColors.white,
           borderRadius: BorderRadius.circular(12),
-          border: Border.all(color: selected ? AppColors.primary : AppColors.divider),
+          border: Border.all(
+            color: selected ? AppColors.primary : AppColors.divider,
+          ),
         ),
-        child: Text(label, style: TextStyle(fontSize: 12.5, fontWeight: FontWeight.w700, color: selected ? AppColors.white : AppColors.textDark)),
+        child: Text(
+          label,
+          style: TextStyle(
+            fontSize: 12.5,
+            fontWeight: FontWeight.w700,
+            color: selected ? AppColors.white : AppColors.textDark,
+          ),
+        ),
       ),
     );
   }

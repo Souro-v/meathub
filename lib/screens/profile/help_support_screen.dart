@@ -13,6 +13,10 @@ import 'package:meathub/screens/address/manage_addresses_screen.dart';
 import 'package:meathub/screens/profile/coupons_offers_screen.dart';
 import 'package:meathub/screens/profile/edit_profile_screen.dart';
 
+import '../help/faq_screen.dart';
+import '../help/live_chat_screen.dart';
+import '../help/ticket_list_screen.dart';
+
 class HelpSupportScreen extends StatefulWidget {
   const HelpSupportScreen({super.key});
 
@@ -23,7 +27,6 @@ class HelpSupportScreen extends StatefulWidget {
 class _HelpSupportScreenState extends State<HelpSupportScreen> {
   final TextEditingController _searchController = TextEditingController();
   String _query = '';
-  String? _selectedTopicKey;
 
   static const String _whatsappNumber = '8801234567890';
   static const String _supportEmail = 'support@meathub.com';
@@ -63,24 +66,22 @@ class _HelpSupportScreenState extends State<HelpSupportScreen> {
   }
 
   List<FaqItemModel> get _filteredFaqs {
-    return DummyHelpData.faqs.where((f) {
-      final matchesTopic =
-          _selectedTopicKey == null || f.topicKey == _selectedTopicKey;
-      if (!matchesTopic) return false;
-      if (_query.isEmpty) return true;
-      return f.question.toLowerCase().contains(_query) ||
-          f.answer.toLowerCase().contains(_query);
-    }).toList();
+    if (_query.isEmpty) return DummyHelpData.faqs;
+    return DummyHelpData.faqs
+        .where(
+          (f) =>
+              f.question.toLowerCase().contains(_query) ||
+              f.answer.toLowerCase().contains(_query),
+        )
+        .toList();
   }
 
   void _handleTopicTap(HelpTopicModel topic) {
     switch (topic.key) {
       case 'orders':
-        Navigator.of(context).pushNamedAndRemoveUntil(
-          AppRoutes.main,
-          (route) => false,
-          arguments: 3,
-        );
+      case 'product':
+      case 'payments':
+        Navigator.of(context).push(AppRoutes.helpCategoryRoute(topic.key));
         break;
       case 'coupons':
         Navigator.of(
@@ -97,15 +98,11 @@ class _HelpSupportScreenState extends State<HelpSupportScreen> {
           MaterialPageRoute(builder: (_) => const ManageAddressesScreen()),
         );
         break;
-      case 'product':
-      case 'payments':
-        setState(() => _selectedTopicKey = topic.key);
-        break;
       case 'wallet':
         _showComingSoon(topic.title.replaceAll('\n', ' '));
         break;
       default:
-        setState(() => _selectedTopicKey = null);
+        Navigator.of(context).push(AppRoutes.reportIssueRoute());
     }
   }
 
@@ -202,8 +199,11 @@ class _HelpSupportScreenState extends State<HelpSupportScreen> {
                             ),
                           ),
                           GestureDetector(
-                            onTap: () =>
-                                _showComingSoon(AppStrings.viewAllFaqs),
+                            onTap: () => Navigator.of(context).push(
+                              MaterialPageRoute(
+                                builder: (_) => const FaqScreen(),
+                              ),
+                            ),
                             child: Row(
                               children: const [
                                 Text(
@@ -224,30 +224,6 @@ class _HelpSupportScreenState extends State<HelpSupportScreen> {
                           ),
                         ],
                       ),
-                      if (_selectedTopicKey != null) ...[
-                        const SizedBox(height: 8),
-                        InkWell(
-                          onTap: () => setState(() => _selectedTopicKey = null),
-                          child: Row(
-                            children: const [
-                              Icon(
-                                Icons.close,
-                                size: 14,
-                                color: AppColors.primary,
-                              ),
-                              SizedBox(width: 4),
-                              Text(
-                                'Clear topic filter',
-                                style: TextStyle(
-                                  fontSize: 12,
-                                  color: AppColors.primary,
-                                  fontWeight: FontWeight.w600,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ],
                       const SizedBox(height: 6),
                       Container(
                         padding: const EdgeInsets.symmetric(horizontal: 16),
@@ -399,7 +375,9 @@ class _HelpSupportScreenState extends State<HelpSupportScreen> {
           Padding(
             padding: const EdgeInsets.only(top: 10),
             child: InkWell(
-              onTap: () => _showComingSoon(AppStrings.myTickets),
+              onTap: () => Navigator.of(context).push(
+                MaterialPageRoute(builder: (_) => const TicketListScreen()),
+              ),
               child: Row(
                 children: const [
                   Icon(
@@ -501,7 +479,9 @@ class _HelpSupportScreenState extends State<HelpSupportScreen> {
                 ),
                 const SizedBox(height: 10),
                 ElevatedButton.icon(
-                  onPressed: () => _showComingSoon(AppStrings.chatWithUs),
+                  onPressed: () => Navigator.of(context).push(
+                    MaterialPageRoute(builder: (_) => const LiveChatScreen()),
+                  ),
                   icon: const Icon(Icons.chat_bubble_outline, size: 15),
                   label: const Text(AppStrings.chatWithUs),
                   style: ElevatedButton.styleFrom(
@@ -572,7 +552,9 @@ class _HelpSupportScreenState extends State<HelpSupportScreen> {
 
   Widget _buildMyTicketsBanner() {
     return InkWell(
-      onTap: () => _showComingSoon(AppStrings.mySupportTickets),
+      onTap: () => Navigator.of(
+        context,
+      ).push(MaterialPageRoute(builder: (_) => const TicketListScreen())),
       borderRadius: BorderRadius.circular(18),
       child: Container(
         padding: const EdgeInsets.all(14),
@@ -621,7 +603,9 @@ class _HelpSupportScreenState extends State<HelpSupportScreen> {
               ),
             ),
             OutlinedButton(
-              onPressed: () => _showComingSoon(AppStrings.viewMyTickets),
+              onPressed: () => Navigator.of(context).push(
+                MaterialPageRoute(builder: (_) => const TicketListScreen()),
+              ),
               style: OutlinedButton.styleFrom(
                 foregroundColor: AppColors.primary,
                 side: const BorderSide(color: AppColors.primary),
