@@ -37,21 +37,161 @@ class ProfileScreen extends StatelessWidget {
   void _confirmLogout(BuildContext context) {
     showDialog(
       context: context,
-      builder: (dialogContext) => AlertDialog(
-        title: const Text(AppStrings.logoutConfirmTitle),
-        content: const Text(AppStrings.logoutConfirmDesc),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(dialogContext),
-            child: const Text(AppStrings.no),
+      builder: (dialogContext) => Dialog(
+        backgroundColor: AppColors.white,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(24)),
+        child: Padding(
+          padding: const EdgeInsets.fromLTRB(20, 12, 20, 20),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Align(
+                alignment: Alignment.centerRight,
+                child: InkWell(
+                  onTap: () => Navigator.pop(dialogContext),
+                  borderRadius: BorderRadius.circular(16),
+                  child: Container(
+                    width: 30,
+                    height: 30,
+                    decoration: const BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: AppColors.surface,
+                    ),
+                    child: const Icon(
+                      Icons.close,
+                      size: 15,
+                      color: AppColors.textDark,
+                    ),
+                  ),
+                ),
+              ),
+              _buildLogoutGraphic(),
+              const SizedBox(height: 14),
+              const Text(
+                AppStrings.logOutTitle,
+                style: TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.w800,
+                  color: AppColors.textDark,
+                ),
+              ),
+              const SizedBox(height: 8),
+              const Text(
+                AppStrings.logOutConfirmDesc,
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontSize: 13,
+                  color: AppColors.textSecondary,
+                  height: 1.4,
+                ),
+              ),
+              const SizedBox(height: 18),
+              Container(
+                width: double.infinity,
+                padding: const EdgeInsets.all(14),
+                decoration: BoxDecoration(
+                  color: AppColors.surface,
+                  borderRadius: BorderRadius.circular(14),
+                ),
+                child: const Column(
+                  children: [
+                    _LogoutNoteRow(
+                      icon: Icons.person_outline,
+                      text: AppStrings.logOutNoteLoginAgain,
+                    ),
+                    SizedBox(height: 10),
+                    _LogoutNoteRow(
+                      icon: Icons.favorite_border,
+                      text: AppStrings.logOutNoteSavedItems,
+                    ),
+                    SizedBox(height: 10),
+                    _LogoutNoteRow(
+                      icon: Icons.inventory_2_outlined,
+                      text: AppStrings.logOutNoteOrdersSafe,
+                    ),
+                  ],
+                ),
+              ),
+              const SizedBox(height: 18),
+              Row(
+                children: [
+                  Expanded(
+                    child: OutlinedButton(
+                      onPressed: () => Navigator.pop(dialogContext),
+                      style: OutlinedButton.styleFrom(
+                        foregroundColor: AppColors.primary,
+                        side: const BorderSide(color: AppColors.primary),
+                        minimumSize: const Size(0, 50),
+                        textStyle: const TextStyle(
+                          fontSize: 13.5,
+                          fontWeight: FontWeight.w700,
+                        ),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(14),
+                        ),
+                      ),
+                      child: const Text(AppStrings.cancel),
+                    ),
+                  ),
+                  const SizedBox(width: 12),
+                  Expanded(
+                    child: ElevatedButton.icon(
+                      onPressed: () =>
+                          Navigator.of(dialogContext).pushNamedAndRemoveUntil(
+                            AppRoutes.login,
+                            (route) => false,
+                          ),
+                      icon: const Icon(Icons.logout, size: 15),
+                      label: const Text(AppStrings.logout),
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: AppColors.primary,
+                        foregroundColor: AppColors.white,
+                        minimumSize: const Size(0, 50),
+                        textStyle: const TextStyle(
+                          fontSize: 13.5,
+                          fontWeight: FontWeight.w700,
+                        ),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(14),
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ],
           ),
-          TextButton(
-            onPressed: () => Navigator.of(
-              dialogContext,
-            ).pushNamedAndRemoveUntil(AppRoutes.login, (route) => false),
-            child: const Text(
-              AppStrings.logout,
-              style: TextStyle(color: AppColors.error),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildLogoutGraphic() {
+    return SizedBox(
+      height: 108,
+      width: 108,
+      child: Stack(
+        alignment: Alignment.center,
+        children: [
+          Container(
+            width: 108,
+            height: 108,
+            decoration: const BoxDecoration(
+              shape: BoxShape.circle,
+              color: AppColors.primarySoft,
+            ),
+          ),
+          const Icon(Icons.logout_rounded, size: 48, color: AppColors.primary),
+          Positioned(
+            bottom: 4,
+            left: 10,
+            child: Container(
+              padding: const EdgeInsets.all(6),
+              decoration: const BoxDecoration(
+                shape: BoxShape.circle,
+                color: AppColors.white,
+              ),
+              child: const Icon(Icons.eco, size: 14, color: AppColors.success),
             ),
           ),
         ],
@@ -447,7 +587,7 @@ class ProfileScreen extends StatelessWidget {
         icon: Icons.info_outline,
         title: AppStrings.aboutMeatHub,
         subtitle: AppStrings.aboutMeatHubDesc,
-        onTap: () => _showComingSoon(context, AppStrings.aboutMeatHub),
+        onTap: () => Navigator.of(context).pushNamed(AppRoutes.aboutMeatHub),
       ),
       ProfileMenuTile(
         icon: Icons.logout,
@@ -571,6 +711,29 @@ class _HalalSeal extends StatelessWidget {
           ),
         ],
       ),
+    );
+  }
+}
+
+class _LogoutNoteRow extends StatelessWidget {
+  final IconData icon;
+  final String text;
+
+  const _LogoutNoteRow({required this.icon, required this.text});
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        Icon(icon, size: 16, color: AppColors.primary),
+        const SizedBox(width: 10),
+        Expanded(
+          child: Text(
+            text,
+            style: const TextStyle(fontSize: 12.5, color: AppColors.textDark),
+          ),
+        ),
+      ],
     );
   }
 }

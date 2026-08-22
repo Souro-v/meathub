@@ -31,6 +31,7 @@ import '../../screens/help/ticket_list_screen.dart';
 import '../../screens/notification/notification_screen.dart';
 import '../../screens/orders/track_order_screen.dart';
 import '../../screens/product/product_details_screen.dart';
+import '../../screens/profile/about_meathub_screen.dart';
 import '../../screens/profile/all_offers_screen.dart';
 import '../../screens/profile/coupons_offers_screen.dart';
 import '../../screens/profile/edit_profile_screen.dart';
@@ -65,6 +66,7 @@ class AppRoutes {
   static const String faqScreen = '/faq';
   static const String ticketList = '/ticket-list';
   static const String liveChat = '/live-chat';
+  static const String aboutMeatHub = '/about-meathub';
 
   static Map<String, WidgetBuilder> routes = {
     splash: (context) => const SplashScreen(),
@@ -92,6 +94,7 @@ class AppRoutes {
     faqScreen: (context) => const FaqScreen(),
     ticketList: (context) => const TicketListScreen(),
     liveChat: (context) => const LiveChatScreen(),
+    aboutMeatHub: (context) => const AboutMeatHubScreen(),
   };
 
   static Route<dynamic> productDetailsRoute(ProductModel product) {
