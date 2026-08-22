@@ -567,4 +567,51 @@ class AppStrings {
   static const String contactSupportForOrderDesc = 'Need help with this order?';
   static const String orderPlacedLabel = 'Order placed';
   static const String viewOrderDetails = 'View Order Details';
+  // About MeatHub
+  static const String aboutMeatHubTitle = 'About MeatHub';
+  static const String meatHubTagline = 'Simplicity in Style';
+  static const String freshMeatDeliveredTitle = 'Fresh Meat, Delivered to Your Door';
+  static const String freshMeatDeliveredDesc =
+      'MeatHub is your trusted online meat shop, bringing fresh, high-quality and hygienic meat directly to your home. We make it simple, safe and convenient for you to get the best meat, anytime.';
+  static const String ourMissionTitle = 'Our Mission';
+  static const String ourMissionDesc =
+      'To provide fresh, halal and high-quality meat with unmatched convenience, ensuring every family can enjoy healthy and tasty meals.';
+  static const String ourVisionTitle = 'Our Vision';
+  static const String ourVisionDesc =
+      'To become the most trusted and preferred meat delivery platform in Bangladesh, known for quality, reliability and customer satisfaction.';
+  static const String whatMakesUsDifferentTitle = 'What Makes Us Different?';
+  static const String diff100FreshHalal = '100% Fresh\n& Halal';
+  static const String diffFastSafeDelivery = 'Fast & Safe\nDelivery';
+  static const String diffHygienicPackaging = 'Hygienic\nPackaging';
+  static const String diffTrustedByFamilies = 'Trusted by\nFamilies';
+  static const String diffAffordablePrices = 'Affordable\nPrices';
+  static const String diffCustomerFirst = 'Customer\nFirst';
+  static const String thankYouAboutFooterTitle = 'Thank you for being part of our MeatHub family!';
+  static const String thankYouAboutFooterDesc = 'Together, we make every meal better.';
+  static const String ourStoryTitle = 'Our Story';
+  static const String ourStoryDesc =
+      'MeatHub started with a simple idea — to make fresh, quality meat easily accessible to everyone. We saw the struggles people face in finding hygienic meat, so we built a platform that delivers trust, quality and convenience right to your home.';
+  static const String goodFoodQuote = 'Good food brings people together.';
+  static const String ourValuesTitle = 'Our Values';
+  static const String valueQualityTitle = 'Quality';
+  static const String valueQualityDesc = 'Never compromise on quality';
+  static const String valueTrustTitle = 'Trust';
+  static const String valueTrustDesc = 'Honest and transparent in everything';
+  static const String valueConvenienceTitle = 'Convenience';
+  static const String valueConvenienceDesc = 'Easy and hassle-free shopping';
+  static const String valueCareTitle = 'Care';
+  static const String valueCareDesc = 'We care about your health and happiness';
+  static const String contactUsTitle = 'Contact Us';
+  static const String needHelpRowTitle = 'Need Help?';
+  static const String needHelpRowDesc = "We're always here for you.";
+  static const String togetherHealthierFutureTitle = 'Together for a Healthier Future';
+  static const String togetherHealthierFutureDesc = 'Fresh Food • Happy Families • Better Life';
+  static const String allRightsReserved = 'All rights reserved.';
+
+  // Logout dialog
+  static const String logOutTitle = 'Log Out?';
+  static const String logOutConfirmDesc = 'Are you sure you want to log out from your MeatHub account?';
+  static const String logOutNoteLoginAgain = "You'll need to log in again.";
+  static const String logOutNoteSavedItems = 'Your saved items will remain.';
+  static const String logOutNoteOrdersSafe = 'Your orders & data are safe.';
 }
