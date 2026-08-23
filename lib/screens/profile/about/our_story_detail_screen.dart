@@ -22,46 +22,103 @@ class OurStoryDetailScreen extends StatelessWidget {
                   children: [
                     ClipRRect(
                       borderRadius: BorderRadius.circular(18),
-                      child: Image.asset(AppAssets.beef, height: 170, width: double.infinity, fit: BoxFit.cover),
+                      child: Image.asset(
+                        AppAssets.beef,
+                        height: 170,
+                        width: double.infinity,
+                        fit: BoxFit.cover,
+                      ),
                     ),
                     const SizedBox(height: 18),
                     Row(
                       children: const [
-                        Icon(Icons.favorite_border, size: 18, color: AppColors.primary),
+                        Icon(
+                          Icons.favorite_border,
+                          size: 18,
+                          color: AppColors.primary,
+                        ),
                         SizedBox(width: 8),
-                        Text(AppStrings.howItAllStarted, style: TextStyle(fontSize: 16, fontWeight: FontWeight.w800, color: AppColors.primary)),
+                        Text(
+                          AppStrings.howItAllStarted,
+                          style: TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.w800,
+                            color: AppColors.primary,
+                          ),
+                        ),
                       ],
                     ),
                     const SizedBox(height: 12),
-                    const Text(AppStrings.storyParagraph1, style: TextStyle(fontSize: 13.5, color: AppColors.textSecondary, height: 1.6)),
+                    const Text(
+                      AppStrings.storyParagraph1,
+                      style: TextStyle(
+                        fontSize: 13.5,
+                        color: AppColors.textSecondary,
+                        height: 1.6,
+                      ),
+                    ),
                     const SizedBox(height: 12),
-                    const Text(AppStrings.storyParagraph2, style: TextStyle(fontSize: 13.5, color: AppColors.textSecondary, height: 1.6)),
+                    const Text(
+                      AppStrings.storyParagraph2,
+                      style: TextStyle(
+                        fontSize: 13.5,
+                        color: AppColors.textSecondary,
+                        height: 1.6,
+                      ),
+                    ),
                     const SizedBox(height: 18),
                     Container(
                       width: double.infinity,
                       padding: const EdgeInsets.all(14),
-                      decoration: BoxDecoration(color: AppColors.primarySoft, borderRadius: BorderRadius.circular(16)),
+                      decoration: BoxDecoration(
+                        color: AppColors.primarySoft,
+                        borderRadius: BorderRadius.circular(16),
+                      ),
                       child: Row(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Container(
                             width: 38,
                             height: 38,
-                            decoration: const BoxDecoration(color: AppColors.white, shape: BoxShape.circle),
-                            child: const Icon(Icons.people_alt_outlined, size: 18, color: AppColors.primary),
+                            decoration: const BoxDecoration(
+                              color: AppColors.white,
+                              shape: BoxShape.circle,
+                            ),
+                            child: const Icon(
+                              Icons.people_alt_outlined,
+                              size: 18,
+                              color: AppColors.primary,
+                            ),
                           ),
                           const SizedBox(width: 12),
                           Expanded(
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: const [
-                                Text(AppStrings.storyQuoteText, style: TextStyle(fontSize: 14, fontWeight: FontWeight.w700, color: AppColors.textDark)),
+                                Text(
+                                  AppStrings.storyQuoteText,
+                                  style: TextStyle(
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.w700,
+                                    color: AppColors.textDark,
+                                  ),
+                                ),
                                 SizedBox(height: 3),
-                                Text(AppStrings.storyQuoteSubtext, style: TextStyle(fontSize: 12, color: AppColors.textSecondary, height: 1.4)),
+                                Text(
+                                  AppStrings.storyQuoteSubtext,
+                                  style: TextStyle(
+                                    fontSize: 12,
+                                    color: AppColors.textSecondary,
+                                    height: 1.4,
+                                  ),
+                                ),
                               ],
                             ),
                           ),
-                          const Padding(padding: EdgeInsets.only(top: 2), child: Text('❤️', style: TextStyle(fontSize: 16))),
+                          const Padding(
+                            padding: EdgeInsets.only(top: 2),
+                            child: Text('❤️', style: TextStyle(fontSize: 16)),
+                          ),
                         ],
                       ),
                     ),
@@ -83,10 +140,24 @@ class OurStoryDetailScreen extends StatelessWidget {
           InkWell(
             onTap: () => Navigator.of(context).maybePop(),
             borderRadius: BorderRadius.circular(20),
-            child: const Padding(padding: EdgeInsets.all(8), child: Icon(Icons.arrow_back, size: 22, color: AppColors.textDark)),
+            child: const Padding(
+              padding: EdgeInsets.all(8),
+              child: Icon(
+                Icons.arrow_back,
+                size: 22,
+                color: AppColors.textDark,
+              ),
+            ),
           ),
           const SizedBox(width: 2),
-          Text(title, style: const TextStyle(fontSize: 19, fontWeight: FontWeight.w800, color: AppColors.textDark)),
+          Text(
+            title,
+            style: const TextStyle(
+              fontSize: 19,
+              fontWeight: FontWeight.w800,
+              color: AppColors.textDark,
+            ),
+          ),
         ],
       ),
     );
