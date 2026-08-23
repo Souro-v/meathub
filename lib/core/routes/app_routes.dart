@@ -31,6 +31,14 @@ import '../../screens/help/ticket_list_screen.dart';
 import '../../screens/notification/notification_screen.dart';
 import '../../screens/orders/track_order_screen.dart';
 import '../../screens/product/product_details_screen.dart';
+import '../../screens/profile/about/contact_us_detail_screen.dart';
+import '../../screens/profile/about/healthier_future_detail_screen.dart';
+import '../../screens/profile/about/our_mission_detail_screen.dart';
+import '../../screens/profile/about/our_story_detail_screen.dart';
+import '../../screens/profile/about/our_values_detail_screen.dart';
+import '../../screens/profile/about/our_vision_detail_screen.dart';
+import '../../screens/profile/about/thank_you_detail_screen.dart';
+import '../../screens/profile/about/what_makes_us_different_detail_screen.dart';
 import '../../screens/profile/about_meathub_screen.dart';
 import '../../screens/profile/all_offers_screen.dart';
 import '../../screens/profile/coupons_offers_screen.dart';
@@ -67,6 +75,15 @@ class AppRoutes {
   static const String ticketList = '/ticket-list';
   static const String liveChat = '/live-chat';
   static const String aboutMeatHub = '/about-meathub';
+  static const String ourStoryDetail = '/about/our-story';
+  static const String ourMissionDetail = '/about/our-mission';
+  static const String ourVisionDetail = '/about/our-vision';
+  static const String whatMakesUsDifferentDetail =
+      '/about/what-makes-us-different';
+  static const String ourValuesDetail = '/about/our-values';
+  static const String contactUsDetail = '/about/contact-us';
+  static const String healthierFutureDetail = '/about/healthier-future';
+  static const String thankYouDetail = '/about/thank-you';
 
   static Map<String, WidgetBuilder> routes = {
     splash: (context) => const SplashScreen(),
@@ -95,6 +112,15 @@ class AppRoutes {
     ticketList: (context) => const TicketListScreen(),
     liveChat: (context) => const LiveChatScreen(),
     aboutMeatHub: (context) => const AboutMeatHubScreen(),
+    ourStoryDetail: (context) => const OurStoryDetailScreen(),
+    ourMissionDetail: (context) => const OurMissionDetailScreen(),
+    ourVisionDetail: (context) => const OurVisionDetailScreen(),
+    whatMakesUsDifferentDetail: (context) =>
+        const WhatMakesUsDifferentDetailScreen(),
+    ourValuesDetail: (context) => const OurValuesDetailScreen(),
+    contactUsDetail: (context) => const ContactUsDetailScreen(),
+    healthierFutureDetail: (context) => const HealthierFutureDetailScreen(),
+    thankYouDetail: (context) => const ThankYouDetailScreen(),
   };
 
   static Route<dynamic> productDetailsRoute(ProductModel product) {
