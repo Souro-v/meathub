@@ -188,8 +188,10 @@ class HomeScreen extends StatelessWidget {
               scrollDirection: Axis.horizontal,
               itemCount: DummyData.categories.length,
               separatorBuilder: (_, _) => const SizedBox(width: 14),
-              itemBuilder: (context, index) =>
-                  CategoryItem(category: DummyData.categories[index]),
+              itemBuilder: (context, index) => CategoryItem(
+                category: DummyData.categories[index],
+                onTap: () => Navigator.of(context).push(AppRoutes.categoryProductsRoute(DummyData.categories[index].name)),
+              ),
             ),
           ),
         ],

@@ -7,6 +7,8 @@ import 'package:meathub/models/product_model.dart';
 import 'package:flutter/material.dart';
 
 import '../core/constants/app_colors.dart';
+import '../models/delivery_rider_model.dart';
+
 class DummyData {
   DummyData._();
 
@@ -559,6 +561,12 @@ class DummyData {
       fee: 60,
     ),
   ];
+  static const DeliveryRiderModel demoRider = DeliveryRiderModel(
+    name: 'Rahim Hossain',
+    rating: 4.9,
+    orderCount: 128,
+    phone: '+880 1812 345678',
+  );
 
   static const List<PaymentMethodModel> paymentMethods = [
     PaymentMethodModel(
