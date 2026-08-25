@@ -12,6 +12,8 @@ class ProductModel {
   final String? description;
   final bool inStock;
   final bool isFreshToday;
+  final String subCategory;
+  final String? badgeLabel;
 
   const ProductModel({
     required this.id,
@@ -27,6 +29,8 @@ class ProductModel {
     this.description,
     this.inStock = true,
     this.isFreshToday = true,
+    this.subCategory = '',
+    this.badgeLabel,
   });
 
   bool get hasDiscount => originalPrice != price;
@@ -37,6 +41,9 @@ class ProductModel {
     if (orig <= 0 || curr >= orig) return 0;
     return (((orig - curr) / orig) * 100).round();
   }
+
+  /// Curated badge (BEST SELLER / NEW) if set, else auto discount badge.
+  String? get computedBadge => badgeLabel ?? (hasDiscount ? '$discountPercent% OFF' : null);
 
   List<String> get images => (gallery != null && gallery!.isNotEmpty) ? gallery! : [image];
 
