@@ -51,7 +51,17 @@ class DummyCategoryConfig {
       themeColorValue: 0xFFB8860B,
       themeBgValue: 0xFFFFF3D6,
       tagline: 'Farm fresh eggs',
-      chips: ['All', 'White', 'Brown', 'Deshi', 'Organic', 'Duck'],
+      chips: [
+        'All',
+        'White',
+        'Brown',
+        'Deshi',
+        'Organic',
+        'Duck',
+        'Quail',
+        'Ostrich',
+        'Swan',
+      ],
     ),
   };
 }

@@ -721,6 +721,7 @@ class AppStrings {
   static const String thankYouHeartText = 'Thank You!';
   static const String thankYouDetailDesc =
       "We're grateful to have you as a part of the MeatHub family. Together, we make every meal better.";
+
   // Category Products
   static const String categoryPrawnLabel = 'Prawn';
   static const String searchCategoryHintPrefix = 'Search';
@@ -729,5 +730,6 @@ class AppStrings {
   static const String priceLowHigh = 'Price: Low to High';
   static const String priceHighLow = 'Price: High to Low';
   static const String noProductsFoundTitle = 'No products found';
-  static const String noProductsFoundDesc = 'Try a different category or search.';
+  static const String noProductsFoundDesc =
+      'Try a different category or search.';
 }

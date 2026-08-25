@@ -88,5 +88,8 @@ class AppAssets {
   static const String duckEggs = '$_images/duckEggs.jpg';
   static const String organicEggs = '$_images/organicEggs.jpg';
   static const String whiteEggs12 = '$_images/whiteEggs12.jpg';
+  static const String koyelEggs = '$_images/koyelEggs.jpg';
+  static const String ostrichEggs = '$_images/ostrichEggs.jpg';
+  static const String sawnEggs = '$_images/sawnEggs.jpg';
 
 }
