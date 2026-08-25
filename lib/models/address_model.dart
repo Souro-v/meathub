@@ -13,6 +13,7 @@ class RecentAddressModel {
     required this.note,
   });
 }
+
 class RecentAddressFullModel {
   final String title;
   final String address;
@@ -38,6 +39,7 @@ class SavedAddressModel {
     this.isDefault = false,
   });
 }
+
 class ManagedAddressModel {
   final String label;
   final IconData labelIcon;

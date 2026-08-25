@@ -8,7 +8,12 @@ class HowToStepData {
   final String title;
   final String description;
 
-  const HowToStepData({required this.number, required this.icon, required this.title, required this.description});
+  const HowToStepData({
+    required this.number,
+    required this.icon,
+    required this.title,
+    required this.description,
+  });
 }
 
 class OfferCategoryInfoData {
