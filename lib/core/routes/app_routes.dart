@@ -16,6 +16,7 @@ import '../../screens/address/address_selection_screen.dart';
 import '../../screens/address/manage_addresses_screen.dart';
 import '../../screens/address/recent_addresses_screen.dart';
 import '../../screens/cart/cart_screen.dart';
+import '../../screens/category/category_products_screen.dart';
 import '../../screens/checkout/checkout_screen.dart';
 import '../../screens/checkout/order_success_screen.dart';
 import '../../screens/checkout/payment_screen.dart';
@@ -248,6 +249,12 @@ class AppRoutes {
   static Route<dynamic> manageOrderRoute(String orderId) {
     return MaterialPageRoute(
       builder: (_) => ManageOrderScreen(orderId: orderId),
+    );
+  }
+
+  static Route<dynamic> categoryProductsRoute(String categoryKey) {
+    return MaterialPageRoute(
+      builder: (_) => CategoryProductsScreen(categoryKey: categoryKey),
     );
   }
 }
