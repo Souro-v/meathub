@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:meathub/core/constants/app_assets.dart';
+import 'package:meathub/core/utils/order_utils.dart';
+import 'package:meathub/core/utils/refund_utils.dart';
 import 'package:meathub/data/dummy_addresses.dart';
 import 'package:meathub/data/dummy_data.dart';
 import 'package:meathub/models/cart_item_model.dart';
 import 'package:meathub/models/order_model.dart';
 import 'package:meathub/models/product_model.dart';
-
-import '../core/utils/order_utils.dart';
+import 'package:meathub/models/refund_model.dart';
 
 class OrdersProvider extends ChangeNotifier {
   final List<OrderModel> _orders = [];
@@ -17,11 +18,48 @@ class OrdersProvider extends ChangeNotifier {
 
   List<OrderModel> get orders => List.unmodifiable(_orders);
 
-  int get totalPoints {
-    return _orders.fold<int>(
-      0,
-      (sum, order) => sum + OrderUtils.calculatePoints(order.total),
-    );
+  void placeOrder(OrderModel order) {
+    _orders.insert(0, order);
+    notifyListeners();
+  }
+
+  /// Cancels the order. If it was prepaid (not COD), automatically starts
+  /// a refund — matching "cancelling a paid order triggers the refund
+  /// process according to payment method".
+  void cancelOrder(String orderId) {
+    final index = _orders.indexWhere((o) => o.orderId == orderId);
+    if (index == -1) return;
+    final order = _orders[index];
+
+    RefundModel? refund;
+    if (!order.isCod) {
+      refund = RefundModel(
+        refundId: RefundUtils.generateRefundId(),
+        orderId: order.orderId,
+        reason: 'Order cancelled',
+        methodId: 'wallet',
+        methodLabel: 'MeatHub Wallet',
+        amount: order.total,
+        requestedAt: DateTime.now(),
+      );
+    }
+
+    _orders[index] = order.copyWith(status: OrderStatus.cancelled, cancelledAt: DateTime.now(), refund: refund);
+    notifyListeners();
+  }
+
+  void requestRefund(String orderId, RefundModel refund) {
+    final index = _orders.indexWhere((o) => o.orderId == orderId);
+    if (index == -1) return;
+    _orders[index] = _orders[index].copyWith(refund: refund);
+    notifyListeners();
+  }
+
+  bool hasActiveRefund(String orderId) {
+    final order = findById(orderId);
+    if (order?.refund == null) return false;
+    final s = RefundUtils.computeStatus(order!.refund!);
+    return s != RefundStatus.completed && s != RefundStatus.rejected;
   }
 
   OrderModel? findById(String orderId) {
@@ -34,37 +72,25 @@ class OrdersProvider extends ChangeNotifier {
 
   OrderModel? get mostRelevantOrder {
     if (_orders.isEmpty) return null;
-    final ongoing = _orders.where(
-      (o) => [
-        OrderStatus.placed,
-        OrderStatus.confirmed,
-        OrderStatus.preparing,
-        OrderStatus.outForDelivery,
-      ].contains(o.status),
-    );
+    final ongoing = _orders.where((o) => [
+      OrderStatus.placed,
+      OrderStatus.confirmed,
+      OrderStatus.preparing,
+      OrderStatus.outForDelivery,
+    ].contains(o.status));
     if (ongoing.isNotEmpty) return ongoing.first;
     return _orders.first;
   }
 
-  void placeOrder(OrderModel order) {
-    _orders.insert(0, order);
-    notifyListeners();
-  }
-
-  void cancelOrder(String orderId) {
-    final index = _orders.indexWhere((o) => o.orderId == orderId);
-    if (index == -1) return;
-    _orders[index] = _orders[index].copyWith(
-      status: OrderStatus.cancelled,
-      cancelledAt: DateTime.now(),
-    );
-    notifyListeners();
+  int get totalPoints {
+    return _orders.fold<int>(0, (sum, order) => sum + OrderUtils.calculatePoints(order.total));
   }
 
   void _seedDemoOrders() {
     final address = DummyAddresses.managed.first;
     final delivery = DummyData.deliveryOptions.first;
-    final payment = DummyData.paymentMethods.first;
+    final codPayment = DummyData.paymentMethods.firstWhere((m) => m.id == 'cod');
+    final bkashPayment = DummyData.paymentMethods.firstWhere((m) => m.id == 'bkash');
     final now = DateTime.now();
 
     _orders.addAll([
@@ -89,7 +115,7 @@ class OrdersProvider extends ChangeNotifier {
         ],
         address: address,
         deliveryOption: delivery,
-        paymentMethod: payment,
+        paymentMethod: codPayment,
         platformFee: 20,
         status: OrderStatus.outForDelivery,
       ),
@@ -114,12 +140,10 @@ class OrdersProvider extends ChangeNotifier {
         ],
         address: address,
         deliveryOption: delivery,
-        paymentMethod: payment,
+        paymentMethod: codPayment,
         platformFee: 0,
         status: OrderStatus.delivered,
-        deliveredAt: now.subtract(
-          const Duration(days: 2, hours: 1, minutes: 35),
-        ),
+        deliveredAt: now.subtract(const Duration(days: 2, hours: 1, minutes: 35)),
       ),
       OrderModel(
         orderId: '#MH752118',
@@ -142,7 +166,7 @@ class OrdersProvider extends ChangeNotifier {
         ],
         address: address,
         deliveryOption: delivery,
-        paymentMethod: payment,
+        paymentMethod: codPayment,
         platformFee: 0,
         status: OrderStatus.preparing,
       ),
@@ -167,12 +191,46 @@ class OrdersProvider extends ChangeNotifier {
         ],
         address: address,
         deliveryOption: delivery,
-        paymentMethod: payment,
+        paymentMethod: bkashPayment,
         platformFee: 0,
         status: OrderStatus.cancelled,
-        cancelledAt: now.subtract(
-          const Duration(days: 9, hours: 3, minutes: 45),
+        cancelledAt: now.subtract(const Duration(minutes: 45)),
+        // Refund already in-progress — demos Flow 3/4 (Cancelled + Paid, view existing status).
+        refund: RefundModel(
+          refundId: '#RF556231',
+          orderId: '#MH742009',
+          reason: 'Order cancelled',
+          methodId: 'wallet',
+          methodLabel: 'MeatHub Wallet',
+          amount: 920,
+          requestedAt: now.subtract(const Duration(minutes: 45)),
         ),
+      ),
+      OrderModel(
+        orderId: '#MH731102',
+        placedAt: now.subtract(const Duration(days: 1)),
+        items: [
+          CartItemModel(
+            product: const ProductModel(
+              id: 'demo_chicken_curry_cut',
+              name: 'Chicken Curry Cut',
+              image: AppAssets.chickenCurryCut,
+              category: 'Chicken',
+              price: '220',
+              originalPrice: '220',
+              unit: '1 kg',
+              rating: 4.7,
+              reviewCount: 156,
+            ),
+            weightGrams: 1000,
+          ),
+        ],
+        address: address,
+        deliveryOption: delivery,
+        paymentMethod: codPayment,
+        platformFee: 0,
+        // Demos Flow 1 — Not Delivered, eligible for Request Refund.
+        status: OrderStatus.deliveryFailed,
       ),
     ]);
   }
