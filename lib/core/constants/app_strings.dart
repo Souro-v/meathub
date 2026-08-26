@@ -732,4 +732,64 @@ class AppStrings {
   static const String noProductsFoundTitle = 'No products found';
   static const String noProductsFoundDesc =
       'Try a different category or search.';
+
+  // Order Details (dynamic status-based actions)
+  static const String orderDetailsTitle = 'Order Details';
+  static const String processRefund = 'Process Refund';
+  static const String refundCompleted = 'Refund Completed';
+  static const String refundInProgress = 'Refund in Progress';
+  static const String viewRefundDetails = 'View Refund Details';
+  static const String viewRefundStatus = 'View Refund Status';
+
+  // Report an Issue (redesigned)
+  static const String facingAProblemTitle = 'Facing a problem?';
+  static const String facingAProblemDesc = "Let us know what happened. We'll look into it and get back to you as soon as possible.";
+  static const String selectAnIssueType = 'Select an issue type';
+  static const String orderDetailsOptional = 'Order Details (Optional)';
+  static const String selectOrderLabel = 'Select Order';
+  static const String selectOrderOptional = 'Select Order (Optional)';
+  static const String choose = 'Choose';
+  static const String tellUsMore = 'Tell us more';
+  static const String describeIssuePlaceholder = 'Describe your issue in detail...';
+  static const String addClearPhotosDesc = 'Add clear photos to help us understand the issue better.';
+  static const String tapToAddPhotos = 'Tap to add photos';
+  static const String upToFivePhotos = 'You can add up to 5 photos';
+  static const String submitIssue = 'Submit Issue';
+  static const String reviewedWithin24h = 'Your issue will be reviewed by our support team. We usually respond within 24 hours.';
+
+  // Issue Submitted confirmation
+  static const String issueSubmittedTitle = 'Issue submitted successfully';
+  static const String issueIdLabel = 'Issue ID';
+  static const String underReview = 'Under Review';
+  static const String expectedResponseInfo = 'Our support team typically responds within 24 hours.';
+
+  // Refund Request (redesigned)
+  static const String requestYourRefundTitle = 'Request your refund';
+  static const String requestYourRefundDesc = "We'll review your request and initiate the refund if eligible.";
+  static const String reasonOrderNotDelivered = 'Order not delivered';
+  static const String reasonOrderNotDeliveredDesc = 'Your order was not delivered to you.';
+  static const String reasonOrderCancelled = 'Order cancelled';
+  static const String reasonOrderCancelledDesc = 'I want to cancel my order.';
+  static const String reasonOther = 'Other reason';
+  static const String reasonOtherDesc = 'Any other reason for refund.';
+  static const String codNoOnlinePaymentNote = 'This order was Cash on Delivery — no online payment was collected, so it can only be refunded to your MeatHub Wallet.';
+  static const String meatHubWalletLabel = 'MeatHub Wallet';
+  static const String instantRefundToWallet = 'Instant refund to your MeatHub Wallet';
+  static const String originalPaymentMethodLabel = 'Original Payment Method';
+  static const String refundToOriginalMethod = 'Refund to your original payment method';
+  static const String additionalDetailsOptional = 'Additional Details (Optional)';
+  static const String addAdditionalInfoPlaceholder = 'Add any additional information...';
+  static const String submitRefundRequestBtn = 'Submit Refund Request';
+  static const String alreadyHasActiveRefund = 'A refund is already in progress for this order.';
+
+  // Refund Status
+  static const String refundStatusTitle = 'Refund Status';
+  static const String refundRequestSubmittedTitle = 'Refund request submitted';
+  static const String refundIdLabel = 'Refund ID';
+  static const String refundAmountLabel = 'Refund Amount';
+  static const String refundMethodResultLabel = 'Refund Method';
+  static const String refundRejectedTitle = 'Refund Rejected';
+
+  // Help & Support quick entry
+  static const String reportAnIssueMenuDesc = "Let us know if you're facing any problem";
 }
