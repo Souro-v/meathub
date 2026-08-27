@@ -46,6 +46,7 @@ class _OrdersScreenState extends State<OrdersScreen> {
   }
 
   bool _matchesTab(OrderModel order) {
+    final status = order.effectiveStatus;
     switch (_selectedTab) {
       case _OrderTab.all:
         return true;
@@ -55,13 +56,18 @@ class _OrdersScreenState extends State<OrdersScreen> {
           OrderStatus.confirmed,
           OrderStatus.preparing,
           OrderStatus.outForDelivery,
-        ].contains(order.status);
+        ].contains(status);
       case _OrderTab.delivered:
-        return order.status == OrderStatus.delivered;
+        return status == OrderStatus.delivered;
       case _OrderTab.cancelled:
-        return order.status == OrderStatus.cancelled;
+        return [
+          OrderStatus.cancelled,
+          OrderStatus.deliveryFailed,
+          OrderStatus.refundPending,
+          OrderStatus.refunded,
+        ].contains(status);
       case _OrderTab.returned:
-        return order.status == OrderStatus.returned;
+        return status == OrderStatus.returned;
     }
   }
 
@@ -108,10 +114,10 @@ class _OrdersScreenState extends State<OrdersScreen> {
                         final order = filtered[index];
                         return OrderListCard(
                           order: order,
-                          onViewDetails: () => _openTrackOrder(context, order),
-                          onTrackOrder: () => _openTrackOrder(context, order),
+                          onViewDetails: () => Navigator.of(
+                            context,
+                          ).push(AppRoutes.orderDetailsRoute(order.orderId)),
                           onOrderAgain: () => _orderAgain(context, order),
-                          onCancelOrder: () => _confirmCancel(context, order),
                         );
                       },
                     ),
@@ -344,20 +350,6 @@ class _OrdersScreenState extends State<OrdersScreen> {
     );
   }
 
-  void _openTrackOrder(BuildContext context, OrderModel order) {
-    Navigator.of(context).push(
-      AppRoutes.trackOrderRoute(
-        orderId: order.orderId,
-        placedAt: order.placedAt,
-        items: order.items,
-        address: order.address,
-        deliveryOption: order.deliveryOption,
-        paymentMethod: order.paymentMethod,
-        platformFee: order.platformFee,
-      ),
-    );
-  }
-
   void _orderAgain(BuildContext context, OrderModel order) {
     final cart = context.read<CartProvider>();
 
@@ -369,33 +361,6 @@ class _OrdersScreenState extends State<OrdersScreen> {
       SnackBar(
         content: Text('${order.items.length} item(s) added to cart'),
         backgroundColor: AppColors.primary,
-      ),
-    );
-  }
-
-  void _confirmCancel(BuildContext context, OrderModel order) {
-    showDialog(
-      context: context,
-      builder: (dialogContext) => AlertDialog(
-        title: const Text(AppStrings.cancelOrderConfirmTitle),
-        content: const Text(AppStrings.cancelOrderConfirmDesc),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(dialogContext),
-            child: const Text(AppStrings.no),
-          ),
-          TextButton(
-            onPressed: () {
-              context.read<OrdersProvider>().cancelOrder(order.orderId);
-
-              Navigator.pop(dialogContext);
-            },
-            child: const Text(
-              AppStrings.yesCancel,
-              style: TextStyle(color: AppColors.error),
-            ),
-          ),
-        ],
       ),
     );
   }
