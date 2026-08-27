@@ -23,13 +23,16 @@ import '../../screens/checkout/payment_screen.dart';
 import '../../screens/checkout/place_order_screen.dart';
 import '../../screens/help/faq_screen.dart';
 import '../../screens/help/help_category_screen.dart';
+import '../../screens/help/issue_submitted_screen.dart';
 import '../../screens/help/live_chat_screen.dart';
 import '../../screens/help/manage_order_screen.dart';
 import '../../screens/help/refund_request_screen.dart';
+import '../../screens/help/refund_status_screen.dart';
 import '../../screens/help/report_issue_screen.dart';
 import '../../screens/help/ticket_detail_screen.dart';
 import '../../screens/help/ticket_list_screen.dart';
 import '../../screens/notification/notification_screen.dart';
+import '../../screens/orders/order_details_screen.dart';
 import '../../screens/orders/track_order_screen.dart';
 import '../../screens/product/product_details_screen.dart';
 import '../../screens/profile/about/contact_us_detail_screen.dart';
@@ -255,6 +258,24 @@ class AppRoutes {
   static Route<dynamic> categoryProductsRoute(String categoryKey) {
     return MaterialPageRoute(
       builder: (_) => CategoryProductsScreen(categoryKey: categoryKey),
+    );
+  }
+
+  static Route<dynamic> orderDetailsRoute(String orderId) {
+    return MaterialPageRoute(
+      builder: (_) => OrderDetailsScreen(orderId: orderId),
+    );
+  }
+
+  static Route<dynamic> issueSubmittedRoute(String ticketId) {
+    return MaterialPageRoute(
+      builder: (_) => IssueSubmittedScreen(ticketId: ticketId),
+    );
+  }
+
+  static Route<dynamic> refundStatusRoute(String orderId) {
+    return MaterialPageRoute(
+      builder: (_) => RefundStatusScreen(orderId: orderId),
     );
   }
 }

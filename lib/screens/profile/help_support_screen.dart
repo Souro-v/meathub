@@ -316,6 +316,8 @@ class _HelpSupportScreenState extends State<HelpSupportScreen> {
                     ],
                   ),
                   const SizedBox(height: 20),
+                  _buildReportIssueBanner(),
+                  const SizedBox(height: 12),
                   _buildMyTicketsBanner(),
                   const SizedBox(height: 16),
                   _buildFooterBanner(),
@@ -546,6 +548,67 @@ class _HelpSupportScreenState extends State<HelpSupportScreen> {
             style: TextStyle(fontSize: 12.5, color: AppColors.textSecondary),
           ),
         ],
+      ),
+    );
+  }
+
+  Widget _buildReportIssueBanner() {
+    return InkWell(
+      onTap: () => Navigator.of(context).push(AppRoutes.reportIssueRoute()),
+      borderRadius: BorderRadius.circular(18),
+      child: Container(
+        padding: const EdgeInsets.all(14),
+        decoration: BoxDecoration(
+          color: AppColors.white,
+          borderRadius: BorderRadius.circular(18),
+          border: Border.all(color: AppColors.divider),
+        ),
+        child: Row(
+          children: [
+            Container(
+              width: 44,
+              height: 44,
+              decoration: const BoxDecoration(
+                color: AppColors.primarySoft,
+                shape: BoxShape.circle,
+              ),
+              child: const Icon(
+                Icons.report_problem_outlined,
+                color: AppColors.primary,
+                size: 20,
+              ),
+            ),
+            const SizedBox(width: 12),
+            const Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    AppStrings.reportAnIssueTitle,
+                    style: TextStyle(
+                      fontSize: 14,
+                      fontWeight: FontWeight.w700,
+                      color: AppColors.textDark,
+                    ),
+                  ),
+                  SizedBox(height: 2),
+                  Text(
+                    AppStrings.reportAnIssueMenuDesc,
+                    style: TextStyle(
+                      fontSize: 11.5,
+                      color: AppColors.textSecondary,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            const Icon(
+              Icons.chevron_right,
+              size: 18,
+              color: AppColors.textHint,
+            ),
+          ],
+        ),
       ),
     );
   }
