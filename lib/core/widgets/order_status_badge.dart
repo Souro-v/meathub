@@ -4,60 +4,30 @@ import 'package:meathub/models/order_model.dart';
 
 class OrderStatusBadge extends StatelessWidget {
   final OrderStatus status;
-
   const OrderStatusBadge({super.key, required this.status});
 
   _StatusStyle get _style {
     switch (status) {
       case OrderStatus.outForDelivery:
-        return _StatusStyle(
-          icon: Icons.local_shipping,
-          label: 'Out for Delivery',
-          fg: AppColors.success,
-          bg: AppColors.successSoft,
-        );
+        return _StatusStyle(icon: Icons.local_shipping, label: 'Out for Delivery', fg: AppColors.success, bg: AppColors.successSoft);
       case OrderStatus.delivered:
-        return _StatusStyle(
-          icon: Icons.check_circle,
-          label: 'Delivered',
-          fg: AppColors.success,
-          bg: AppColors.successSoft,
-        );
+        return _StatusStyle(icon: Icons.check_circle, label: 'Delivered', fg: AppColors.success, bg: AppColors.successSoft);
       case OrderStatus.preparing:
-        return _StatusStyle(
-          icon: Icons.access_time_filled,
-          label: 'Preparing',
-          fg: const Color(0xFFB26A00),
-          bg: const Color(0xFFFFF1D6),
-        );
+        return _StatusStyle(icon: Icons.access_time_filled, label: 'Preparing', fg: const Color(0xFFB26A00), bg: const Color(0xFFFFF1D6));
       case OrderStatus.confirmed:
-        return _StatusStyle(
-          icon: Icons.check_circle_outline,
-          label: 'Confirmed',
-          fg: AppColors.primary,
-          bg: AppColors.primarySoft,
-        );
+        return _StatusStyle(icon: Icons.check_circle_outline, label: 'Confirmed', fg: AppColors.primary, bg: AppColors.primarySoft);
       case OrderStatus.placed:
-        return _StatusStyle(
-          icon: Icons.receipt_long,
-          label: 'Placed',
-          fg: AppColors.primary,
-          bg: AppColors.primarySoft,
-        );
+        return _StatusStyle(icon: Icons.receipt_long, label: 'Placed', fg: AppColors.primary, bg: AppColors.primarySoft);
+      case OrderStatus.deliveryFailed:
+        return _StatusStyle(icon: Icons.error_outline, label: 'Delivery Failed', fg: AppColors.error, bg: const Color(0xFFFCE4E4));
       case OrderStatus.cancelled:
-        return _StatusStyle(
-          icon: Icons.cancel_outlined,
-          label: 'Cancelled',
-          fg: AppColors.textHint,
-          bg: AppColors.surface,
-        );
+        return _StatusStyle(icon: Icons.cancel_outlined, label: 'Cancelled', fg: AppColors.textHint, bg: AppColors.surface);
+      case OrderStatus.refundPending:
+        return _StatusStyle(icon: Icons.autorenew, label: 'Refund Pending', fg: AppColors.primary, bg: AppColors.primarySoft);
+      case OrderStatus.refunded:
+        return _StatusStyle(icon: Icons.account_balance_wallet_outlined, label: 'Refunded', fg: AppColors.success, bg: AppColors.successSoft);
       case OrderStatus.returned:
-        return _StatusStyle(
-          icon: Icons.assignment_return_outlined,
-          label: 'Returned',
-          fg: const Color(0xFF6A4FBF),
-          bg: const Color(0xFFEEE9FB),
-        );
+        return _StatusStyle(icon: Icons.assignment_return_outlined, label: 'Returned', fg: const Color(0xFF6A4FBF), bg: const Color(0xFFEEE9FB));
     }
   }
 
@@ -66,23 +36,13 @@ class OrderStatusBadge extends StatelessWidget {
     final s = _style;
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
-      decoration: BoxDecoration(
-        color: s.bg,
-        borderRadius: BorderRadius.circular(20),
-      ),
+      decoration: BoxDecoration(color: s.bg, borderRadius: BorderRadius.circular(20)),
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
           Icon(s.icon, size: 13, color: s.fg),
           const SizedBox(width: 5),
-          Text(
-            s.label,
-            style: TextStyle(
-              fontSize: 11.5,
-              fontWeight: FontWeight.w700,
-              color: s.fg,
-            ),
-          ),
+          Text(s.label, style: TextStyle(fontSize: 11.5, fontWeight: FontWeight.w700, color: s.fg)),
         ],
       ),
     );
@@ -94,11 +54,5 @@ class _StatusStyle {
   final String label;
   final Color fg;
   final Color bg;
-
-  _StatusStyle({
-    required this.icon,
-    required this.label,
-    required this.fg,
-    required this.bg,
-  });
+  _StatusStyle({required this.icon, required this.label, required this.fg, required this.bg});
 }
