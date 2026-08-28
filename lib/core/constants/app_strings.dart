@@ -792,4 +792,18 @@ class AppStrings {
 
   // Help & Support quick entry
   static const String reportAnIssueMenuDesc = "Let us know if you're facing any problem";
+  // Refund Status (redesign additions)
+  static const String refundProgressTitle = 'Refund Progress';
+  static const String refundDetailsTitle = 'Refund Details';
+  static const String estimatedTimeFieldLabel = 'Estimated Time';
+  static const String noteFieldLabel = 'Note';
+  static const String refundNotificationNote = 'You will receive a notification once the refund is completed.';
+  static const String howRefundsWorkTitle = 'How refunds work';
+  static const String howRefundsWorkDesc =
+      'Refund requests are first reviewed by our team, then approved and processed. '
+      'MeatHub Wallet refunds are usually instant, while refunds to your original payment '
+      "method can take 2-5 business days depending on your bank or provider.";
+
+  // All FAQs (redesign additions)
+  static const String cantFindWhatYouNeed = "Can't find what you need?";
 }
