@@ -21,6 +21,7 @@ import '../../screens/checkout/checkout_screen.dart';
 import '../../screens/checkout/order_success_screen.dart';
 import '../../screens/checkout/payment_screen.dart';
 import '../../screens/checkout/place_order_screen.dart';
+import '../../screens/help/faq_category_screen.dart';
 import '../../screens/help/faq_screen.dart';
 import '../../screens/help/help_category_screen.dart';
 import '../../screens/help/issue_submitted_screen.dart';
@@ -276,6 +277,12 @@ class AppRoutes {
   static Route<dynamic> refundStatusRoute(String orderId) {
     return MaterialPageRoute(
       builder: (_) => RefundStatusScreen(orderId: orderId),
+    );
+  }
+
+  static Route<dynamic> faqCategoryRoute(String categoryKey) {
+    return MaterialPageRoute(
+      builder: (_) => FaqCategoryScreen(categoryKey: categoryKey),
     );
   }
 }
