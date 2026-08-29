@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:meathub/providers/coupon_provider.dart';
 import 'package:meathub/providers/orders_provider.dart';
+import 'package:meathub/providers/search_history_provider.dart';
 import 'package:meathub/providers/ticket_provider.dart';
 import 'package:meathub/providers/user_provider.dart';
 import 'package:provider/provider.dart';
@@ -22,6 +23,7 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => UserProvider()),
         ChangeNotifierProvider(create: (_) => CouponProvider()),
         ChangeNotifierProvider(create: (_) => TicketProvider()),
+        ChangeNotifierProvider(create: (_) => SearchHistoryProvider()),
       ],
       child: MaterialApp(
         title: 'MeatHub',
