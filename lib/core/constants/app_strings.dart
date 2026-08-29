@@ -806,4 +806,28 @@ class AppStrings {
 
   // All FAQs (redesign additions)
   static const String cantFindWhatYouNeed = "Can't find what you need?";
+  // Search
+  static const String searchForMeatCutsHint = 'Search for meat, cuts, categories...';
+  static const String recentSearchesTitle = 'Recent Searches';
+  static const String clearAllLabel = 'Clear All';
+  static const String popularSearchesTitle = 'Popular Searches';
+  static const String popularTag = 'Popular';
+  static const String searchSuggestionsTitle = 'Search Suggestions';
+  static const String searchByCategoryTitle = 'Search by Category';
+  static const String didYouMeanLabel = 'Did you mean?';
+  static const String viewAllResultsPrefix = 'View All';
+  static const String resultsSuffix = 'Results';
+  static const String productsTabLabel = 'Products';
+  static const String categoriesTabLabel = 'Categories';
+  static const String productsCountSuffix = 'Products';
+  static const String searchNoResultsFoundTitle = 'No Results Found';
+  static const String searchNoResultsDescPrefix = "We couldn't find any products matching";
+  static const String tryTheseTipsTitle = 'Try these tips';
+  static const String tipCheckSpelling = 'Check the spelling';
+  static const String tipMoreGeneralKeywords = 'Try more general keywords';
+  static const String tipDifferentProductNames = 'Try different product or cut names';
+  static const String clearSearchLabel = 'Clear Search';
+  static const String exploreCategoriesTitle = 'Explore Categories';
+  static const String findBestMeatsTitle = 'Find the best meats';
+  static const String findBestMeatsDesc = 'Search from 100% halal fresh meat.';
 }
