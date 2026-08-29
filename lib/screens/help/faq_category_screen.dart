@@ -5,14 +5,22 @@ import 'package:meathub/data/dummy_faq_full.dart';
 import 'package:meathub/models/faq_full_item_model.dart';
 import 'package:meathub/screens/help/live_chat_screen.dart';
 
+import '../../data/dummy_faq_categories.dart';
+import '../../models/faq_category_config_model.dart';
+
 class FaqCategoryScreen extends StatelessWidget {
   final String categoryKey;
+
   const FaqCategoryScreen({super.key, required this.categoryKey});
 
   @override
   Widget build(BuildContext context) {
-    final config = DummyFaqCategories.all.firstWhere((c) => c.key == categoryKey);
-    final faqs = DummyFaqFull.all.where((f) => f.category == categoryKey).toList();
+    final config = DummyFaqCategories.all.firstWhere(
+      (c) => c.key == categoryKey,
+    );
+    final faqs = DummyFaqFull.all
+        .where((f) => f.category == categoryKey)
+        .toList();
 
     return Scaffold(
       backgroundColor: AppColors.background,
@@ -26,9 +34,15 @@ class FaqCategoryScreen extends StatelessWidget {
                 itemCount: faqs.length + 1,
                 itemBuilder: (context, index) {
                   if (index == faqs.length) {
-                    return Padding(padding: const EdgeInsets.only(top: 8), child: _buildStillNeedHelp(context));
+                    return Padding(
+                      padding: const EdgeInsets.only(top: 8),
+                      child: _buildStillNeedHelp(context),
+                    );
                   }
-                  return _FaqCategoryTile(faq: faqs[index], expandByDefault: index == 0);
+                  return _FaqCategoryTile(
+                    faq: faqs[index],
+                    expandByDefault: index == 0,
+                  );
                 },
               ),
             ),
@@ -38,7 +52,11 @@ class FaqCategoryScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildTopBar(BuildContext context, FaqCategoryConfigModel config, int count) {
+  Widget _buildTopBar(
+    BuildContext context,
+    FaqCategoryConfigModel config,
+    int count,
+  ) {
     return Padding(
       padding: const EdgeInsets.fromLTRB(8, 8, 16, 0),
       child: Row(
@@ -47,19 +65,44 @@ class FaqCategoryScreen extends StatelessWidget {
           InkWell(
             onTap: () => Navigator.of(context).maybePop(),
             borderRadius: BorderRadius.circular(20),
-            child: const Padding(padding: EdgeInsets.all(8), child: Icon(Icons.arrow_back, size: 22, color: AppColors.textDark)),
+            child: const Padding(
+              padding: EdgeInsets.all(8),
+              child: Icon(
+                Icons.arrow_back,
+                size: 22,
+                color: AppColors.textDark,
+              ),
+            ),
           ),
-          Expanded(child: Text(config.title, style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w800, color: AppColors.textDark))),
+          Expanded(
+            child: Text(
+              config.title,
+              style: const TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.w800,
+                color: AppColors.textDark,
+              ),
+            ),
+          ),
           Column(
             children: [
               Container(
                 width: 40,
                 height: 40,
-                decoration: BoxDecoration(color: config.bg, shape: BoxShape.circle),
+                decoration: BoxDecoration(
+                  color: config.bg,
+                  shape: BoxShape.circle,
+                ),
                 child: Icon(config.icon, size: 19, color: config.color),
               ),
               const SizedBox(height: 3),
-              Text('$count Questions', style: const TextStyle(fontSize: 10.5, color: AppColors.textHint)),
+              Text(
+                '$count Questions',
+                style: const TextStyle(
+                  fontSize: 10.5,
+                  color: AppColors.textHint,
+                ),
+              ),
             ],
           ),
         ],
@@ -69,27 +112,52 @@ class FaqCategoryScreen extends StatelessWidget {
 
   Widget _buildStillNeedHelp(BuildContext context) {
     return InkWell(
-      onTap: () => Navigator.of(context).push(MaterialPageRoute(builder: (_) => const LiveChatScreen())),
+      onTap: () => Navigator.of(
+        context,
+      ).push(MaterialPageRoute(builder: (_) => const LiveChatScreen())),
       borderRadius: BorderRadius.circular(16),
       child: Container(
         padding: const EdgeInsets.all(14),
-        decoration: BoxDecoration(color: AppColors.primarySoft, borderRadius: BorderRadius.circular(16)),
+        decoration: BoxDecoration(
+          color: AppColors.primarySoft,
+          borderRadius: BorderRadius.circular(16),
+        ),
         child: Row(
           children: [
             Container(
               width: 40,
               height: 40,
-              decoration: const BoxDecoration(color: AppColors.white, shape: BoxShape.circle),
-              child: const Icon(Icons.mail_outline, color: AppColors.primary, size: 19),
+              decoration: const BoxDecoration(
+                color: AppColors.white,
+                shape: BoxShape.circle,
+              ),
+              child: const Icon(
+                Icons.mail_outline,
+                color: AppColors.primary,
+                size: 19,
+              ),
             ),
             const SizedBox(width: 12),
             const Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(AppStrings.stillNeedHelp, style: TextStyle(fontSize: 14, fontWeight: FontWeight.w700, color: AppColors.textDark)),
+                  Text(
+                    AppStrings.stillNeedHelp,
+                    style: TextStyle(
+                      fontSize: 14,
+                      fontWeight: FontWeight.w700,
+                      color: AppColors.textDark,
+                    ),
+                  ),
                   SizedBox(height: 2),
-                  Text(AppStrings.chatWithSupportTeam, style: TextStyle(fontSize: 12, color: AppColors.textSecondary)),
+                  Text(
+                    AppStrings.chatWithSupportTeam,
+                    style: TextStyle(
+                      fontSize: 12,
+                      color: AppColors.textSecondary,
+                    ),
+                  ),
                 ],
               ),
             ),
@@ -104,6 +172,7 @@ class FaqCategoryScreen extends StatelessWidget {
 class _FaqCategoryTile extends StatefulWidget {
   final FaqFullItemModel faq;
   final bool expandByDefault;
+
   const _FaqCategoryTile({required this.faq, required this.expandByDefault});
 
   @override
@@ -127,7 +196,9 @@ class _FaqCategoryTileState extends State<_FaqCategoryTile> {
       decoration: BoxDecoration(
         color: _expanded ? AppColors.primarySoft : AppColors.white,
         borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: _expanded ? AppColors.primary : AppColors.divider),
+        border: Border.all(
+          color: _expanded ? AppColors.primary : AppColors.divider,
+        ),
       ),
       child: InkWell(
         onTap: () => setState(() => _expanded = !_expanded),
@@ -139,21 +210,43 @@ class _FaqCategoryTileState extends State<_FaqCategoryTile> {
               Row(
                 children: [
                   Expanded(
-                    child: Text(widget.faq.question, style: TextStyle(fontSize: 13.5, fontWeight: FontWeight.w700, color: _expanded ? AppColors.primary : AppColors.textDark)),
+                    child: Text(
+                      widget.faq.question,
+                      style: TextStyle(
+                        fontSize: 13.5,
+                        fontWeight: FontWeight.w700,
+                        color: _expanded
+                            ? AppColors.primary
+                            : AppColors.textDark,
+                      ),
+                    ),
                   ),
                   AnimatedRotation(
                     turns: _expanded ? 0.5 : 0,
                     duration: const Duration(milliseconds: 200),
-                    child: Icon(Icons.keyboard_arrow_down, size: 20, color: _expanded ? AppColors.primary : AppColors.textHint),
+                    child: Icon(
+                      Icons.keyboard_arrow_down,
+                      size: 20,
+                      color: _expanded ? AppColors.primary : AppColors.textHint,
+                    ),
                   ),
                 ],
               ),
               AnimatedCrossFade(
                 duration: const Duration(milliseconds: 200),
-                crossFadeState: _expanded ? CrossFadeState.showFirst : CrossFadeState.showSecond,
+                crossFadeState: _expanded
+                    ? CrossFadeState.showFirst
+                    : CrossFadeState.showSecond,
                 firstChild: Padding(
                   padding: const EdgeInsets.only(top: 8, right: 20),
-                  child: Text(widget.faq.answer, style: const TextStyle(fontSize: 12.5, color: AppColors.textSecondary, height: 1.5)),
+                  child: Text(
+                    widget.faq.answer,
+                    style: const TextStyle(
+                      fontSize: 12.5,
+                      color: AppColors.textSecondary,
+                      height: 1.5,
+                    ),
+                  ),
                 ),
                 secondChild: const SizedBox.shrink(),
               ),
