@@ -144,15 +144,28 @@ class HomeScreen extends StatelessWidget {
               borderRadius: BorderRadius.circular(14),
               child: Container(
                 padding: const EdgeInsets.symmetric(horizontal: 14),
-                decoration: BoxDecoration(color: AppColors.surface, borderRadius: BorderRadius.circular(14)),
+                decoration: BoxDecoration(
+                  color: AppColors.surface,
+                  borderRadius: BorderRadius.circular(14),
+                ),
                 child: Row(
                   children: [
-                    const Icon(Icons.search, color: AppColors.textHint, size: 20),
+                    const Icon(
+                      Icons.search,
+                      color: AppColors.textHint,
+                      size: 20,
+                    ),
                     const SizedBox(width: 8),
                     const Expanded(
                       child: Padding(
                         padding: EdgeInsets.symmetric(vertical: 14),
-                        child: Text(AppStrings.searchHint, style: TextStyle(color: AppColors.textHint, fontSize: 13.5)),
+                        child: Text(
+                          AppStrings.searchHint,
+                          style: TextStyle(
+                            color: AppColors.textHint,
+                            fontSize: 13.5,
+                          ),
+                        ),
                       ),
                     ),
                   ],
@@ -163,12 +176,18 @@ class HomeScreen extends StatelessWidget {
           const SizedBox(width: 10),
           InkWell(
             onTap: () => ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(content: Text('Filter — ${AppStrings.comingSoon}'), duration: const Duration(seconds: 2)),
+              SnackBar(
+                content: Text('Filter — ${AppStrings.comingSoon}'),
+                duration: const Duration(seconds: 2),
+              ),
             ),
             borderRadius: BorderRadius.circular(10),
             child: Container(
               padding: const EdgeInsets.all(14),
-              decoration: BoxDecoration(color: AppColors.primary, borderRadius: BorderRadius.circular(10)),
+              decoration: BoxDecoration(
+                color: AppColors.primary,
+                borderRadius: BorderRadius.circular(10),
+              ),
               child: const Icon(Icons.tune, color: AppColors.white, size: 16),
             ),
           ),
@@ -193,7 +212,11 @@ class HomeScreen extends StatelessWidget {
               separatorBuilder: (_, _) => const SizedBox(width: 14),
               itemBuilder: (context, index) => CategoryItem(
                 category: DummyData.categories[index],
-                onTap: () => Navigator.of(context).push(AppRoutes.categoryProductsRoute(DummyData.categories[index].name)),
+                onTap: () => Navigator.of(context).push(
+                  AppRoutes.categoryProductsRoute(
+                    DummyData.categories[index].name,
+                  ),
+                ),
               ),
             ),
           ),

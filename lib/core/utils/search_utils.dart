@@ -6,7 +6,11 @@ class SearchUtils {
   SearchUtils._();
 
   static bool _matchesAllWords(String haystack, String query) {
-    final words = query.toLowerCase().trim().split(RegExp(r'\s+')).where((w) => w.isNotEmpty);
+    final words = query
+        .toLowerCase()
+        .trim()
+        .split(RegExp(r'\s+'))
+        .where((w) => w.isNotEmpty);
     final h = haystack.toLowerCase();
     return words.every((w) => h.contains(w));
   }
@@ -22,12 +26,10 @@ class SearchUtils {
   static List<CategoryModel> searchCategories(String query) {
     if (query.trim().isEmpty) return [];
     final q = query.toLowerCase().trim();
-    return DummyData.categories.where((c) => c.name.toLowerCase().contains(q)).toList();
+    return DummyData.categories
+        .where((c) => c.name.toLowerCase().contains(q))
+        .toList();
   }
-
-  /// Real catalog-driven suggestions — product names sharing at least one
-  /// word with the query. Used both to refine ambiguous searches and to
-  /// recover from near-miss typos.
   static List<String> didYouMeanSuggestions(String query) {
     final q = query.trim().toLowerCase();
     if (q.length < 2) return [];
@@ -43,7 +45,8 @@ class SearchUtils {
       }
     }
 
-    final list = candidates.toList()..sort((a, b) => a.length.compareTo(b.length));
+    final list = candidates.toList()
+      ..sort((a, b) => a.length.compareTo(b.length));
     return list.take(3).toList();
   }
 }
