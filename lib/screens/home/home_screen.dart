@@ -19,7 +19,7 @@ class HomeScreen extends StatelessWidget {
         child: CustomScrollView(
           slivers: [
             SliverToBoxAdapter(child: _buildHeader(context)),
-            SliverToBoxAdapter(child: _buildSearchBar()),
+            SliverToBoxAdapter(child: _buildSearchBar(context)),
             SliverToBoxAdapter(
               child: Padding(
                 padding: const EdgeInsets.fromLTRB(16, 16, 16, 0),
@@ -133,43 +133,46 @@ class HomeScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildSearchBar() {
+  Widget _buildSearchBar(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.fromLTRB(16, 16, 16, 0),
-      child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 14),
-        decoration: BoxDecoration(
-          color: AppColors.surface,
-          borderRadius: BorderRadius.circular(14),
-        ),
-        child: Row(
-          children: [
-            const Icon(Icons.search, color: AppColors.textHint, size: 20),
-            const SizedBox(width: 8),
-            const Expanded(
-              child: TextField(
-                decoration: InputDecoration(
-                  hintText: AppStrings.searchHint,
-                  hintStyle: TextStyle(
-                    color: AppColors.textHint,
-                    fontSize: 13.5,
-                  ),
-                  border: InputBorder.none,
-                  isDense: true,
-                  contentPadding: EdgeInsets.symmetric(vertical: 14),
+      child: Row(
+        children: [
+          Expanded(
+            child: InkWell(
+              onTap: () => Navigator.of(context).pushNamed(AppRoutes.search),
+              borderRadius: BorderRadius.circular(14),
+              child: Container(
+                padding: const EdgeInsets.symmetric(horizontal: 14),
+                decoration: BoxDecoration(color: AppColors.surface, borderRadius: BorderRadius.circular(14)),
+                child: Row(
+                  children: [
+                    const Icon(Icons.search, color: AppColors.textHint, size: 20),
+                    const SizedBox(width: 8),
+                    const Expanded(
+                      child: Padding(
+                        padding: EdgeInsets.symmetric(vertical: 14),
+                        child: Text(AppStrings.searchHint, style: TextStyle(color: AppColors.textHint, fontSize: 13.5)),
+                      ),
+                    ),
+                  ],
                 ),
               ),
             ),
-            Container(
-              padding: const EdgeInsets.all(8),
-              decoration: BoxDecoration(
-                color: AppColors.primary,
-                borderRadius: BorderRadius.circular(10),
-              ),
+          ),
+          const SizedBox(width: 10),
+          InkWell(
+            onTap: () => ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(content: Text('Filter — ${AppStrings.comingSoon}'), duration: const Duration(seconds: 2)),
+            ),
+            borderRadius: BorderRadius.circular(10),
+            child: Container(
+              padding: const EdgeInsets.all(14),
+              decoration: BoxDecoration(color: AppColors.primary, borderRadius: BorderRadius.circular(10)),
               child: const Icon(Icons.tune, color: AppColors.white, size: 16),
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
