@@ -8,6 +8,8 @@ import 'package:meathub/models/order_model.dart';
 import 'package:meathub/providers/cart_provider.dart';
 import 'package:meathub/providers/orders_provider.dart';
 
+import '../../core/widgets/empty_state_view.dart';
+
 enum _OrderTab { all, ongoing, delivered, cancelled, returned }
 
 class OrdersScreen extends StatefulWidget {
@@ -105,7 +107,9 @@ class _OrdersScreenState extends State<OrdersScreen> {
             ),
             const SizedBox(height: 14),
             Expanded(
-              child: filtered.isEmpty
+              child: allOrders.isEmpty
+                  ? _buildNoOrdersYetState(context)
+                  : filtered.isEmpty
                   ? _buildEmptyState()
                   : ListView.builder(
                       padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
@@ -287,6 +291,18 @@ class _OrdersScreenState extends State<OrdersScreen> {
           ],
         ),
       ),
+    );
+  }
+
+  Widget _buildNoOrdersYetState(BuildContext context) {
+    return EmptyStateView(
+      icon: Icons.receipt_long_outlined,
+      title: AppStrings.noOrdersYetTitle,
+      description: AppStrings.noOrdersYetDesc,
+      buttonLabel: AppStrings.startShopping,
+      onButtonTap: () => Navigator.of(
+        context,
+      ).pushNamedAndRemoveUntil(AppRoutes.main, (route) => false, arguments: 0),
     );
   }
 
