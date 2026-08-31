@@ -5,7 +5,9 @@ import 'package:meathub/core/constants/app_strings.dart';
 import 'package:meathub/screens/wishlist/wishlist_card.dart';
 import 'package:meathub/providers/wishlist_provider.dart';
 
+import '../../core/routes/app_routes.dart' show AppRoutes;
 import '../../core/utils/pricing_utils.dart';
+import '../../core/widgets/empty_state_view.dart';
 import '../../providers/cart_provider.dart';
 
 class WishlistScreen extends StatefulWidget {
@@ -182,43 +184,15 @@ class _WishlistScreenState extends State<WishlistScreen> {
   }
 
   Widget _buildEmptyState() {
-    return Center(
-      child: Padding(
-        padding: const EdgeInsets.all(32),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Container(
-              width: 90,
-              height: 90,
-              decoration: const BoxDecoration(
-                shape: BoxShape.circle,
-                color: AppColors.primarySoft,
-              ),
-              child: const Icon(
-                Icons.favorite_border,
-                size: 40,
-                color: AppColors.primary,
-              ),
-            ),
-            const SizedBox(height: 16),
-            const Text(
-              AppStrings.wishlistEmptyTitle,
-              style: TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.w700,
-                color: AppColors.textDark,
-              ),
-            ),
-            const SizedBox(height: 6),
-            const Text(
-              AppStrings.wishlistEmptyDesc,
-              textAlign: TextAlign.center,
-              style: TextStyle(fontSize: 13, color: AppColors.textSecondary),
-            ),
-          ],
-        ),
-      ),
+    return EmptyStateView(
+      icon: Icons.favorite_border,
+      title: AppStrings.wishlistEmptyTitle,
+      description: AppStrings.wishlistEmptyDesc,
+      buttonLabel: AppStrings.exploreProducts,
+      buttonIcon: Icons.explore_outlined,
+      onButtonTap: () => Navigator.of(
+        context,
+      ).pushNamedAndRemoveUntil(AppRoutes.main, (route) => false, arguments: 0),
     );
   }
 
