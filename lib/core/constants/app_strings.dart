@@ -157,9 +157,9 @@ class AppStrings {
   static const String moveAllToCart = 'Move All to Cart';
   static const String itemsLabel = 'Items';
   static const String estimatedTotal = 'Estimated Total';
-  static const String wishlistEmptyTitle = 'Your wishlist is empty';
+  static const String wishlistEmptyTitle = 'Your Wishlist is Empty';
   static const String wishlistEmptyDesc =
-      'Tap the heart icon on any product to save it here.';
+      'Save your favorite products here and find them easily later.';
 
   // Product Details
   static const String productDetails = 'Product Details';
@@ -191,9 +191,10 @@ class AppStrings {
   static const String orderNoteSubtitle = 'Any special instructions?';
   static const String safeSecureTitle = '100% Safe & Secure';
   static const String safeSecureDesc = 'Your payment is protected';
-  static const String proceedToCheckout = 'Proceed to Checkout';
-  static const String cartEmptyTitle = 'Your cart is empty';
-  static const String cartEmptyDesc = 'Add fresh meat products to get started.';
+  static const String proceedToCheckout = 'Proceed to Check';
+  static const String cartEmptyTitle = 'Your Cart is Empty';
+  static const String cartEmptyDesc =
+      "Looks like you haven't added any fresh products yet.";
 
   // Checkout
   static const String checkout = 'Checkout';
@@ -743,44 +744,57 @@ class AppStrings {
 
   // Report an Issue (redesigned)
   static const String facingAProblemTitle = 'Facing a problem?';
-  static const String facingAProblemDesc = "Let us know what happened. We'll look into it and get back to you as soon as possible.";
+  static const String facingAProblemDesc =
+      "Let us know what happened. We'll look into it and get back to you as soon as possible.";
   static const String selectAnIssueType = 'Select an issue type';
   static const String orderDetailsOptional = 'Order Details (Optional)';
   static const String selectOrderLabel = 'Select Order';
   static const String selectOrderOptional = 'Select Order (Optional)';
   static const String choose = 'Choose';
   static const String tellUsMore = 'Tell us more';
-  static const String describeIssuePlaceholder = 'Describe your issue in detail...';
-  static const String addClearPhotosDesc = 'Add clear photos to help us understand the issue better.';
+  static const String describeIssuePlaceholder =
+      'Describe your issue in detail...';
+  static const String addClearPhotosDesc =
+      'Add clear photos to help us understand the issue better.';
   static const String tapToAddPhotos = 'Tap to add photos';
   static const String upToFivePhotos = 'You can add up to 5 photos';
   static const String submitIssue = 'Submit Issue';
-  static const String reviewedWithin24h = 'Your issue will be reviewed by our support team. We usually respond within 24 hours.';
+  static const String reviewedWithin24h =
+      'Your issue will be reviewed by our support team. We usually respond within 24 hours.';
 
   // Issue Submitted confirmation
   static const String issueSubmittedTitle = 'Issue submitted successfully';
   static const String issueIdLabel = 'Issue ID';
   static const String underReview = 'Under Review';
-  static const String expectedResponseInfo = 'Our support team typically responds within 24 hours.';
+  static const String expectedResponseInfo =
+      'Our support team typically responds within 24 hours.';
 
   // Refund Request (redesigned)
   static const String requestYourRefundTitle = 'Request your refund';
-  static const String requestYourRefundDesc = "We'll review your request and initiate the refund if eligible.";
+  static const String requestYourRefundDesc =
+      "We'll review your request and initiate the refund if eligible.";
   static const String reasonOrderNotDelivered = 'Order not delivered';
-  static const String reasonOrderNotDeliveredDesc = 'Your order was not delivered to you.';
+  static const String reasonOrderNotDeliveredDesc =
+      'Your order was not delivered to you.';
   static const String reasonOrderCancelled = 'Order cancelled';
   static const String reasonOrderCancelledDesc = 'I want to cancel my order.';
   static const String reasonOther = 'Other reason';
   static const String reasonOtherDesc = 'Any other reason for refund.';
-  static const String codNoOnlinePaymentNote = 'This order was Cash on Delivery — no online payment was collected, so it can only be refunded to your MeatHub Wallet.';
+  static const String codNoOnlinePaymentNote =
+      'This order was Cash on Delivery — no online payment was collected, so it can only be refunded to your MeatHub Wallet.';
   static const String meatHubWalletLabel = 'MeatHub Wallet';
-  static const String instantRefundToWallet = 'Instant refund to your MeatHub Wallet';
+  static const String instantRefundToWallet =
+      'Instant refund to your MeatHub Wallet';
   static const String originalPaymentMethodLabel = 'Original Payment Method';
-  static const String refundToOriginalMethod = 'Refund to your original payment method';
-  static const String additionalDetailsOptional = 'Additional Details (Optional)';
-  static const String addAdditionalInfoPlaceholder = 'Add any additional information...';
+  static const String refundToOriginalMethod =
+      'Refund to your original payment method';
+  static const String additionalDetailsOptional =
+      'Additional Details (Optional)';
+  static const String addAdditionalInfoPlaceholder =
+      'Add any additional information...';
   static const String submitRefundRequestBtn = 'Submit Refund Request';
-  static const String alreadyHasActiveRefund = 'A refund is already in progress for this order.';
+  static const String alreadyHasActiveRefund =
+      'A refund is already in progress for this order.';
 
   // Refund Status
   static const String refundStatusTitle = 'Refund Status';
@@ -791,13 +805,16 @@ class AppStrings {
   static const String refundRejectedTitle = 'Refund Rejected';
 
   // Help & Support quick entry
-  static const String reportAnIssueMenuDesc = "Let us know if you're facing any problem";
+  static const String reportAnIssueMenuDesc =
+      "Let us know if you're facing any problem";
+
   // Refund Status (redesign additions)
   static const String refundProgressTitle = 'Refund Progress';
   static const String refundDetailsTitle = 'Refund Details';
   static const String estimatedTimeFieldLabel = 'Estimated Time';
   static const String noteFieldLabel = 'Note';
-  static const String refundNotificationNote = 'You will receive a notification once the refund is completed.';
+  static const String refundNotificationNote =
+      'You will receive a notification once the refund is completed.';
   static const String howRefundsWorkTitle = 'How refunds work';
   static const String howRefundsWorkDesc =
       'Refund requests are first reviewed by our team, then approved and processed. '
@@ -806,8 +823,10 @@ class AppStrings {
 
   // All FAQs (redesign additions)
   static const String cantFindWhatYouNeed = "Can't find what you need?";
+
   // Search
-  static const String searchForMeatCutsHint = 'Search for meat, cuts, categories...';
+  static const String searchForMeatCutsHint =
+      'Search for meat, cuts, categories...';
   static const String recentSearchesTitle = 'Recent Searches';
   static const String clearAllLabel = 'Clear All';
   static const String popularSearchesTitle = 'Popular Searches';
@@ -821,13 +840,20 @@ class AppStrings {
   static const String categoriesTabLabel = 'Categories';
   static const String productsCountSuffix = 'Products';
   static const String searchNoResultsFoundTitle = 'No Results Found';
-  static const String searchNoResultsDescPrefix = "We couldn't find any products matching";
+  static const String searchNoResultsDescPrefix =
+      "We couldn't find any products matching";
   static const String tryTheseTipsTitle = 'Try these tips';
   static const String tipCheckSpelling = 'Check the spelling';
   static const String tipMoreGeneralKeywords = 'Try more general keywords';
-  static const String tipDifferentProductNames = 'Try different product or cut names';
+  static const String tipDifferentProductNames =
+      'Try different product or cut names';
   static const String clearSearchLabel = 'Clear Search';
   static const String exploreCategoriesTitle = 'Explore Categories';
   static const String findBestMeatsTitle = 'Find the best meats';
   static const String findBestMeatsDesc = 'Search from 100% halal fresh meat.';
+
+  static const String startShopping = 'Start Shopping';
+  static const String exploreProducts = 'Explore Products';
+  static const String noOrdersYetTitle = 'No Orders Yet';
+  static const String noOrdersYetDesc = 'Your fresh meat orders will appear here.';
 }
