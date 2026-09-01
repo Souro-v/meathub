@@ -67,6 +67,8 @@ class RefundUtils {
   }
 
   static String estimatedTimeLabel(RefundModel refund) {
-    return refund.methodId == 'wallet' ? 'Instant (within minutes)' : '2-5 business days';
+    return refund.methodId == 'wallet'
+        ? 'Instant (within minutes)'
+        : '2-5 business days';
   }
 }

@@ -106,7 +106,7 @@ class _RefundRequestScreenState extends State<RefundRequestScreen> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           const HeroInfoBanner(
-                            icon: Icons.account_balance_wallet_outlined,
+                            icon: Icons.wallet,
                             title: AppStrings.requestYourRefundTitle,
                             description: AppStrings.requestYourRefundDesc,
                           ),
