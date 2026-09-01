@@ -11,9 +11,10 @@ class SearchHistoryProvider extends ChangeNotifier {
     if (trimmed.isEmpty) return;
     _recent.removeWhere((t) => t.toLowerCase() == trimmed.toLowerCase());
     _recent.insert(0, trimmed);
-    if (_recent.length > _maxItems)
+    if (_recent.length > _maxItems) {
       _recent.removeRange(_maxItems, _recent.length);
-    notifyListeners();
+      notifyListeners();
+    }
   }
 
   void remove(String term) {

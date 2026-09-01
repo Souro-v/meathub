@@ -6,6 +6,7 @@ class DummySearchData {
     'Chicken',
     'Mutton',
     'Mince',
+    'Prawn'
   ];
 
   static const List<String> searchSuggestions = [
@@ -14,6 +15,6 @@ class DummySearchData {
     'Mutton Leg Piece',
     'Beef Mince',
     'Rui Fish',
-    'White Eggs',
+    'Eggs',
   ];
 }
