@@ -368,7 +368,6 @@ class _OrdersScreenState extends State<OrdersScreen> {
 
   void _orderAgain(BuildContext context, OrderModel order) {
     final cart = context.read<CartProvider>();
-
     for (final item in order.items) {
       cart.addItem(item.product, item.weightGrams, item.quantity);
     }

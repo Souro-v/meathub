@@ -11,7 +11,6 @@ import 'package:meathub/core/widgets/order_note_tile.dart';
 import 'package:meathub/models/coupon_model.dart';
 import 'package:meathub/providers/cart_provider.dart';
 import 'package:meathub/providers/coupon_provider.dart';
-
 import '../../core/widgets/empty_state_view.dart';
 
 class CartScreen extends StatelessWidget {
@@ -21,7 +20,6 @@ class CartScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final cart = context.watch<CartProvider>();
     final couponProvider = context.watch<CouponProvider>();
-
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (couponProvider.consumeJustApplied() &&
           couponProvider.appliedCoupon != null) {
@@ -165,7 +163,7 @@ class CartScreen extends StatelessWidget {
 
   Widget _buildEmptyState(BuildContext context) {
     return EmptyStateView(
-      icon: Icons.shopping_cart_outlined,
+      icon: Icons.add_shopping_cart_outlined,
       title: AppStrings.cartEmptyTitle,
       description: AppStrings.cartEmptyDesc,
       buttonLabel: AppStrings.startShopping,
