@@ -25,7 +25,9 @@ class _SplashScreenState extends State<SplashScreen> {
 
     final isConnected = await ConnectivityUtils.isConnected();
     if (!isConnected) {
-      Navigator.of(context).pushReplacement(AppRoutes.noInternetRoute(AppRoutes.onboarding));
+      Navigator.of(
+        context,
+      ).pushReplacement(AppRoutes.noInternetRoute(AppRoutes.onboarding));
       return;
     }
 
@@ -38,20 +40,13 @@ class _SplashScreenState extends State<SplashScreen> {
       body: Stack(
         fit: StackFit.expand,
         children: [
-          Image.asset(
-            AppAssets.splashBg,
-            fit: BoxFit.cover,
-          ),
+          Image.asset(AppAssets.splashBg, fit: BoxFit.cover),
           SafeArea(
             child: Column(
               children: [
                 const Spacer(flex: 4),
 
-                Image.asset(
-                  AppAssets.appLogo,
-                  width: 150,
-                  height: 150,
-                ),
+                Image.asset(AppAssets.appLogo, width: 150, height: 150),
                 const SizedBox(height: 16),
 
                 RichText(
@@ -127,7 +122,9 @@ class _SplashScreenState extends State<SplashScreen> {
                   height: 26,
                   child: CircularProgressIndicator(
                     strokeWidth: 2.5,
-                    valueColor: AlwaysStoppedAnimation<Color>(AppColors.primary),
+                    valueColor: AlwaysStoppedAnimation<Color>(
+                      AppColors.primary,
+                    ),
                   ),
                 ),
                 const SizedBox(height: 8),
@@ -182,10 +179,6 @@ class _Divider extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: 1,
-      height: 40,
-      color: AppColors.divider,
-    );
+    return Container(width: 1, height: 40, color: AppColors.divider);
   }
 }

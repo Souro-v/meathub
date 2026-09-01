@@ -291,6 +291,7 @@ class AppRoutes {
       builder: (_) => FaqCategoryScreen(categoryKey: categoryKey),
     );
   }
+
   static Route<dynamic> paymentFailedRoute({
     required List<CartItemModel> items,
     required DeliveryOptionModel deliveryOption,
@@ -310,10 +311,19 @@ class AppRoutes {
   }
 
   static Route<dynamic> noInternetRoute(String nextRoute) {
-    return MaterialPageRoute(builder: (_) => NoInternetScreen(nextRoute: nextRoute));
+    return MaterialPageRoute(
+      builder: (_) => NoInternetScreen(nextRoute: nextRoute),
+    );
   }
 
-  static Route<dynamic> errorRoute({String? title, String? description, VoidCallback? onRetry}) {
-    return MaterialPageRoute(builder: (_) => ErrorScreen(title: title, description: description, onRetry: onRetry));
+  static Route<dynamic> errorRoute({
+    String? title,
+    String? description,
+    VoidCallback? onRetry,
+  }) {
+    return MaterialPageRoute(
+      builder: (_) =>
+          ErrorScreen(title: title, description: description, onRetry: onRetry),
+    );
   }
 }
