@@ -5,6 +5,8 @@ import 'package:meathub/core/widgets/notification_card.dart';
 import 'package:meathub/data/dummy_notifications.dart';
 import 'package:meathub/models/notification_model.dart';
 
+import '../../core/widgets/empty_state_view.dart';
+
 class NotificationScreen extends StatefulWidget {
   const NotificationScreen({super.key});
 
@@ -42,23 +44,29 @@ class _NotificationScreenState extends State<NotificationScreen> {
             _buildTabs(),
             const SizedBox(height: 20),
             Expanded(
-              child: ListView(
-                padding: const EdgeInsets.fromLTRB(16, 0, 16, 24),
-                children: [
-                  const Text(
-                    AppStrings.today,
-                    style: TextStyle(
-                      fontSize: 13,
-                      fontWeight: FontWeight.w600,
-                      color: AppColors.textHint,
+              child: _notifications.isEmpty
+                  ? const EmptyStateView(
+                      icon: Icons.notifications_none,
+                      title: AppStrings.noNotificationsYetTitle,
+                      description: AppStrings.noNotificationsYetDesc,
+                    )
+                  : ListView(
+                      padding: const EdgeInsets.fromLTRB(16, 0, 16, 24),
+                      children: [
+                        const Text(
+                          AppStrings.today,
+                          style: TextStyle(
+                            fontSize: 13,
+                            fontWeight: FontWeight.w600,
+                            color: AppColors.textHint,
+                          ),
+                        ),
+                        const SizedBox(height: 12),
+                        ..._notifications.map(
+                          (n) => NotificationCard(notification: n),
+                        ),
+                      ],
                     ),
-                  ),
-                  const SizedBox(height: 12),
-                  ..._notifications.map(
-                    (n) => NotificationCard(notification: n),
-                  ),
-                ],
-              ),
             ),
           ],
         ),
@@ -99,17 +107,18 @@ class _NotificationScreenState extends State<NotificationScreen> {
               ),
             ),
           ),
-          GestureDetector(
-            onTap: _markAllAsRead,
-            child: const Text(
-              AppStrings.markAllAsRead,
-              style: TextStyle(
-                fontSize: 12.5,
-                fontWeight: FontWeight.w600,
-                color: AppColors.primary,
+          if (_notifications.isNotEmpty)
+            GestureDetector(
+              onTap: _markAllAsRead,
+              child: const Text(
+                AppStrings.markAllAsRead,
+                style: TextStyle(
+                  fontSize: 12.5,
+                  fontWeight: FontWeight.w600,
+                  color: AppColors.primary,
+                ),
               ),
             ),
-          ),
         ],
       ),
     );
