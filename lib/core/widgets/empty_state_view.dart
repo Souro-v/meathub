@@ -5,8 +5,8 @@ class EmptyStateView extends StatelessWidget {
   final IconData icon;
   final String title;
   final String description;
-  final String buttonLabel;
-  final VoidCallback onButtonTap;
+  final String? buttonLabel;
+  final VoidCallback? onButtonTap;
   final IconData buttonIcon;
 
   const EmptyStateView({
@@ -14,8 +14,8 @@ class EmptyStateView extends StatelessWidget {
     required this.icon,
     required this.title,
     required this.description,
-    required this.buttonLabel,
-    required this.onButtonTap,
+    this.buttonLabel,
+    this.onButtonTap,
     this.buttonIcon = Icons.storefront_outlined,
   });
 
@@ -56,27 +56,29 @@ class EmptyStateView extends StatelessWidget {
                 height: 1.5,
               ),
             ),
-            const SizedBox(height: 26),
-            SizedBox(
-              width: 220,
-              child: ElevatedButton.icon(
-                onPressed: onButtonTap,
-                icon: Icon(buttonIcon, size: 17),
-                label: Text(buttonLabel),
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: AppColors.primary,
-                  foregroundColor: AppColors.white,
-                  minimumSize: const Size(0, 52),
-                  textStyle: const TextStyle(
-                    fontSize: 14.5,
-                    fontWeight: FontWeight.w700,
-                  ),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(14),
+            if (buttonLabel != null && onButtonTap != null) ...[
+              const SizedBox(height: 26),
+              SizedBox(
+                width: 220,
+                child: ElevatedButton.icon(
+                  onPressed: onButtonTap,
+                  icon: Icon(buttonIcon, size: 17),
+                  label: Text(buttonLabel!),
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: AppColors.primary,
+                    foregroundColor: AppColors.white,
+                    minimumSize: const Size(0, 52),
+                    textStyle: const TextStyle(
+                      fontSize: 14.5,
+                      fontWeight: FontWeight.w700,
+                    ),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(14),
+                    ),
                   ),
                 ),
               ),
-            ),
+            ],
           ],
         ),
       ),

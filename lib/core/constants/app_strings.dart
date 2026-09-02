@@ -856,4 +856,23 @@ class AppStrings {
   static const String exploreProducts = 'Explore Products';
   static const String noOrdersYetTitle = 'No Orders Yet';
   static const String noOrdersYetDesc = 'Your fresh meat orders will appear here.';
+  // No Notifications
+  static const String noNotificationsYetTitle = 'No Notifications Yet';
+  static const String noNotificationsYetDesc = "We'll let you know when there's something important.";
+
+  // Payment Failed
+  static const String paymentFailedTitle = 'Payment Failed';
+  static const String paymentFailedDesc = "We couldn't complete your payment. Please try again.";
+  static const String paymentNotCompletedNote = "Don't worry. Your payment has not been completed.";
+  static const String paymentFailedAgainMessage = 'Payment failed again. Please try a different method.';
+  static const String tryAgain = 'Try Again';
+  static const String chooseAnotherPaymentMethod = 'Choose Another Payment Method';
+  static const String backToOrder = 'Back to Order';
+
+  // Reusable Error States
+  static const String noInternetTitle = 'No Internet Connection';
+  static const String noInternetDesc = 'Please check your internet connection and try again.';
+  static const String stillNoConnectionMessage = 'Still no connection. Please check your Wi-Fi or mobile data.';
+  static const String somethingWentWrongTitle = 'Something Went Wrong';
+  static const String somethingWentWrongDesc = "We couldn't load this page. Please try again.";
 }
