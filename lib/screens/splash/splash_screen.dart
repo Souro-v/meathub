@@ -3,6 +3,7 @@ import 'package:meathub/core/constants/app_assets.dart';
 import 'package:meathub/core/constants/app_colors.dart';
 import 'package:meathub/core/constants/app_strings.dart';
 import '../../core/routes/app_routes.dart';
+import '../../core/utils/connectivity_utils.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -21,6 +22,13 @@ class _SplashScreenState extends State<SplashScreen> {
   Future<void> _navigateToNext() async {
     await Future.delayed(const Duration(seconds: 3));
     if (!mounted) return;
+
+    final isConnected = await ConnectivityUtils.isConnected();
+    if (!isConnected) {
+      Navigator.of(context).pushReplacement(AppRoutes.noInternetRoute(AppRoutes.onboarding));
+      return;
+    }
+
     Navigator.of(context).pushReplacementNamed(AppRoutes.onboarding);
   }
 
