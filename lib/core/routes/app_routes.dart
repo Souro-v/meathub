@@ -19,8 +19,11 @@ import '../../screens/cart/cart_screen.dart';
 import '../../screens/category/category_products_screen.dart';
 import '../../screens/checkout/checkout_screen.dart';
 import '../../screens/checkout/order_success_screen.dart';
+import '../../screens/checkout/payment_failed_screen.dart';
 import '../../screens/checkout/payment_screen.dart';
 import '../../screens/checkout/place_order_screen.dart';
+import '../../screens/common/error_screen.dart';
+import '../../screens/common/no_internet_screen.dart';
 import '../../screens/help/faq_category_screen.dart';
 import '../../screens/help/faq_screen.dart';
 import '../../screens/help/help_category_screen.dart';
@@ -287,5 +290,30 @@ class AppRoutes {
     return MaterialPageRoute(
       builder: (_) => FaqCategoryScreen(categoryKey: categoryKey),
     );
+  }
+  static Route<dynamic> paymentFailedRoute({
+    required List<CartItemModel> items,
+    required DeliveryOptionModel deliveryOption,
+    required ManagedAddressModel address,
+    required double platformFee,
+    required PaymentMethodModel paymentMethod,
+  }) {
+    return MaterialPageRoute(
+      builder: (_) => PaymentFailedScreen(
+        items: items,
+        deliveryOption: deliveryOption,
+        address: address,
+        platformFee: platformFee,
+        paymentMethod: paymentMethod,
+      ),
+    );
+  }
+
+  static Route<dynamic> noInternetRoute(String nextRoute) {
+    return MaterialPageRoute(builder: (_) => NoInternetScreen(nextRoute: nextRoute));
+  }
+
+  static Route<dynamic> errorRoute({String? title, String? description, VoidCallback? onRetry}) {
+    return MaterialPageRoute(builder: (_) => ErrorScreen(title: title, description: description, onRetry: onRetry));
   }
 }

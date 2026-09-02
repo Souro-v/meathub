@@ -12,6 +12,7 @@ import 'package:meathub/models/delivery_option_model.dart';
 import 'package:meathub/models/payment_method_model.dart';
 import 'package:meathub/providers/cart_provider.dart';
 
+import '../../core/utils/order_submission_utils.dart';
 import '../../core/utils/order_utils.dart';
 import '../../models/order_model.dart';
 import '../../providers/orders_provider.dart';
@@ -567,37 +568,28 @@ class _PlaceOrderScreenState extends State<PlaceOrderScreen> {
   }
 
   void _placeOrder(BuildContext context) {
-    final orderId = OrderUtils.generateOrderId();
-    final placedAt = DateTime.now();
+    final success = OrderSubmissionUtils.attemptPayment(widget.paymentMethod);
 
-    final order = OrderModel(
-      orderId: orderId,
-      placedAt: placedAt,
+    if (!success) {
+      Navigator.of(context).pushReplacement(
+        AppRoutes.paymentFailedRoute(
+          items: widget.items,
+          deliveryOption: widget.deliveryOption,
+          address: widget.address,
+          platformFee: widget.platformFee,
+          paymentMethod: widget.paymentMethod,
+        ),
+      );
+      return;
+    }
+
+    OrderSubmissionUtils.submitOrderAndNavigate(
+      context,
       items: widget.items,
       address: widget.address,
       deliveryOption: widget.deliveryOption,
       paymentMethod: widget.paymentMethod,
       platformFee: widget.platformFee,
-      status: OrderStatus.outForDelivery,
-    );
-    context.read<OrdersProvider>().placeOrder(order);
-
-    final cart = context.read<CartProvider>();
-    for (final item in widget.items) {
-      cart.removeItem(item.cartId);
-    }
-
-    Navigator.of(context).pushAndRemoveUntil(
-      AppRoutes.orderSuccessRoute(
-        orderId: orderId,
-        placedAt: placedAt,
-        items: widget.items,
-        deliveryOption: widget.deliveryOption,
-        address: widget.address,
-        platformFee: widget.platformFee,
-        paymentMethod: widget.paymentMethod,
-      ),
-      (route) => false,
     );
   }
 }
