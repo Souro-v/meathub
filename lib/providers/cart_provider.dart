@@ -1,14 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:meathub/core/utils/fee_utils.dart';
 import 'package:meathub/models/cart_item_model.dart';
 import 'package:meathub/models/product_model.dart';
 
 class CartProvider extends ChangeNotifier {
   final List<CartItemModel> _items = [];
   String _orderNote = '';
-
-  static const double _freeDeliveryThreshold = 2400;
-  static const double _standardDeliveryFee = 60;
-  static const double _platformFeeAmount = 40;
 
   List<CartItemModel> get items => List.unmodifiable(_items);
 
@@ -20,24 +17,24 @@ class CartProvider extends ChangeNotifier {
 
   double get subtotal => _items.fold(0, (sum, item) => sum + item.totalPrice);
 
-  double get platformFee => _platformFeeAmount;
+  double get platformFee => FeeUtils.platformFee;
 
-  double get deliveryFee =>
-      (_items.isEmpty || subtotal >= _freeDeliveryThreshold)
+  double get deliveryFee => _items.isEmpty
       ? 0
-      : _standardDeliveryFee;
+      : FeeUtils.deliveryFeeFor(
+          deliveryOptionId: 'standard',
+          subtotal: subtotal,
+        );
 
   double get total => _items.isEmpty ? 0 : subtotal + deliveryFee + platformFee;
 
-  double get amountLeftForFreeDelivery {
-    final left = _freeDeliveryThreshold - subtotal;
-    return left > 0 ? left : 0;
-  }
+  double get amountLeftForFreeDelivery =>
+      FeeUtils.amountLeftForFreeDelivery(subtotal);
 
-  double get freeDeliveryProgress =>
-      (subtotal / _freeDeliveryThreshold).clamp(0, 1);
+  double get freeDeliveryProgress => FeeUtils.freeDeliveryProgress(subtotal);
 
-  bool get qualifiesForFreeDelivery => subtotal >= _freeDeliveryThreshold;
+  bool get qualifiesForFreeDelivery =>
+      subtotal >= FeeUtils.freeDeliveryThreshold;
 
   void addItem(ProductModel product, double weightGrams, int quantity) {
     final index = _items.indexWhere(
