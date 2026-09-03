@@ -9,6 +9,10 @@ import 'package:meathub/models/address_model.dart';
 import 'package:meathub/models/cart_item_model.dart';
 import 'package:meathub/models/delivery_option_model.dart';
 import 'package:meathub/models/payment_method_model.dart';
+import 'package:provider/provider.dart';
+
+import '../../models/order_model.dart';
+import '../../providers/orders_provider.dart';
 
 class OrderSuccessScreen extends StatefulWidget {
   final String orderId;
@@ -38,11 +42,12 @@ class _OrderSuccessScreenState extends State<OrderSuccessScreen> {
   late final ConfettiController _confettiController;
   late final String _deliveryWindow;
 
-  double get _subtotal =>
-      widget.items.fold(0, (sum, item) => sum + item.totalPrice);
+  OrderModel get _order =>
+      context.read<OrdersProvider>().findById(widget.orderId)!;
 
-  double get _total =>
-      _subtotal + widget.deliveryOption.fee + widget.platformFee;
+  double get _subtotal => _order.subtotal;
+
+  double get _total => _order.total;
 
   @override
   void initState() {
@@ -117,7 +122,8 @@ class _OrderSuccessScreenState extends State<OrderSuccessScreen> {
                       orderId: widget.orderId,
                       items: widget.items,
                       subtotal: _subtotal,
-                      deliveryFee: widget.deliveryOption.fee,
+                      discount: _order.discount,
+                      deliveryFee: _order.deliveryFee,
                       platformFee: widget.platformFee,
                       total: _total,
                     ),
@@ -307,6 +313,7 @@ class _OrderSuccessScreenState extends State<OrderSuccessScreen> {
                 deliveryOption: widget.deliveryOption,
                 paymentMethod: widget.paymentMethod,
                 platformFee: widget.platformFee,
+                discount: _order.discount,
               ),
             ),
             icon: const Icon(Icons.arrow_forward, size: 14),

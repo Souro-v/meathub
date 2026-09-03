@@ -14,6 +14,8 @@ import 'package:meathub/models/cart_item_model.dart';
 import 'package:meathub/models/delivery_option_model.dart';
 import 'package:meathub/models/payment_method_model.dart';
 
+import '../../core/utils/fee_utils.dart';
+
 class TrackOrderScreen extends StatelessWidget {
   final String orderId;
   final DateTime placedAt;
@@ -22,6 +24,7 @@ class TrackOrderScreen extends StatelessWidget {
   final DeliveryOptionModel deliveryOption;
   final PaymentMethodModel paymentMethod;
   final double platformFee;
+  final double discount;
 
   const TrackOrderScreen({
     super.key,
@@ -32,11 +35,17 @@ class TrackOrderScreen extends StatelessWidget {
     required this.deliveryOption,
     required this.paymentMethod,
     required this.platformFee,
+    this.discount = 0,
   });
 
   double get _subtotal => items.fold(0, (sum, item) => sum + item.totalPrice);
 
-  double get _total => _subtotal + deliveryOption.fee + platformFee;
+  double get _deliveryFee => FeeUtils.deliveryFeeFor(
+    deliveryOptionId: deliveryOption.id,
+    subtotal: _subtotal,
+  );
+
+  double get _total => _subtotal - discount + _deliveryFee + platformFee;
 
   @override
   Widget build(BuildContext context) {
