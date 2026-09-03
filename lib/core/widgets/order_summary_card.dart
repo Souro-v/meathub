@@ -7,6 +7,7 @@ import 'package:meathub/models/cart_item_model.dart';
 class OrderSummaryCard extends StatefulWidget {
   final List<CartItemModel> items;
   final double subtotal;
+  final double discount;
   final double deliveryFee;
   final double platformFee;
   final double total;
@@ -16,6 +17,7 @@ class OrderSummaryCard extends StatefulWidget {
     super.key,
     required this.items,
     required this.subtotal,
+    this.discount = 0,
     required this.deliveryFee,
     required this.platformFee,
     required this.total,
@@ -98,6 +100,14 @@ class _OrderSummaryCardState extends State<OrderSummaryCard> {
             '${AppStrings.subtotal} ($totalQuantity ${AppStrings.itemsLabel})',
             '৳${widget.subtotal.toStringAsFixed(0)}',
           ),
+          if (widget.discount > 0) ...[
+            const SizedBox(height: 8),
+            _row(
+              AppStrings.couponDiscountLabel,
+              '- ৳${widget.discount.toStringAsFixed(0)}',
+              valueColor: AppColors.success,
+            ),
+          ],
           const SizedBox(height: 8),
           _row(
             AppStrings.deliveryFee,

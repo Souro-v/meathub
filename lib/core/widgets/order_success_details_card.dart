@@ -9,6 +9,7 @@ class OrderSuccessDetailsCard extends StatelessWidget {
   final String orderId;
   final List<CartItemModel> items;
   final double subtotal;
+  final double discount;
   final double deliveryFee;
   final double platformFee;
   final double total;
@@ -18,6 +19,7 @@ class OrderSuccessDetailsCard extends StatelessWidget {
     required this.orderId,
     required this.items,
     required this.subtotal,
+    this.discount = 0,
     required this.deliveryFee,
     required this.platformFee,
     required this.total,
@@ -83,6 +85,14 @@ class OrderSuccessDetailsCard extends StatelessWidget {
           const Divider(color: AppColors.divider),
           const SizedBox(height: 6),
           _row(AppStrings.subtotal, '৳${subtotal.toStringAsFixed(0)}'),
+          if (discount > 0) ...[
+            const SizedBox(height: 8),
+            _row(
+              AppStrings.couponDiscountLabel,
+              '- ৳${discount.toStringAsFixed(0)}',
+              valueColor: AppColors.success,
+            ),
+          ],
           const SizedBox(height: 8),
           _row(
             AppStrings.deliveryFee,
