@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:meathub/core/constants/app_assets.dart';
+import 'package:meathub/core/utils/fee_utils.dart';
 import 'package:meathub/core/utils/order_utils.dart';
 import 'package:meathub/core/utils/refund_utils.dart';
 import 'package:meathub/data/dummy_addresses.dart';
@@ -23,9 +24,6 @@ class OrdersProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  /// Cancels the order. If it was prepaid (not COD), automatically starts
-  /// a refund — matching "cancelling a paid order triggers the refund
-  /// process according to payment method".
   void cancelOrder(String orderId) {
     final index = _orders.indexWhere((o) => o.orderId == orderId);
     if (index == -1) return;
@@ -44,7 +42,11 @@ class OrdersProvider extends ChangeNotifier {
       );
     }
 
-    _orders[index] = order.copyWith(status: OrderStatus.cancelled, cancelledAt: DateTime.now(), refund: refund);
+    _orders[index] = order.copyWith(
+      status: OrderStatus.cancelled,
+      cancelledAt: DateTime.now(),
+      refund: refund,
+    );
     notifyListeners();
   }
 
@@ -72,25 +74,34 @@ class OrdersProvider extends ChangeNotifier {
 
   OrderModel? get mostRelevantOrder {
     if (_orders.isEmpty) return null;
-    final ongoing = _orders.where((o) => [
-      OrderStatus.placed,
-      OrderStatus.confirmed,
-      OrderStatus.preparing,
-      OrderStatus.outForDelivery,
-    ].contains(o.status));
+    final ongoing = _orders.where(
+      (o) => [
+        OrderStatus.placed,
+        OrderStatus.confirmed,
+        OrderStatus.preparing,
+        OrderStatus.outForDelivery,
+      ].contains(o.status),
+    );
     if (ongoing.isNotEmpty) return ongoing.first;
     return _orders.first;
   }
 
   int get totalPoints {
-    return _orders.fold<int>(0, (sum, order) => sum + OrderUtils.calculatePoints(order.total));
+    return _orders.fold<int>(
+      0,
+      (sum, order) => sum + OrderUtils.calculatePoints(order.total),
+    );
   }
 
   void _seedDemoOrders() {
     final address = DummyAddresses.managed.first;
     final delivery = DummyData.deliveryOptions.first;
-    final codPayment = DummyData.paymentMethods.firstWhere((m) => m.id == 'cod');
-    final bkashPayment = DummyData.paymentMethods.firstWhere((m) => m.id == 'bkash');
+    final codPayment = DummyData.paymentMethods.firstWhere(
+      (m) => m.id == 'cod',
+    );
+    final bkashPayment = DummyData.paymentMethods.firstWhere(
+      (m) => m.id == 'bkash',
+    );
     final now = DateTime.now();
 
     _orders.addAll([
@@ -116,7 +127,7 @@ class OrdersProvider extends ChangeNotifier {
         address: address,
         deliveryOption: delivery,
         paymentMethod: codPayment,
-        platformFee: 20,
+        platformFee: FeeUtils.platformFee,
         status: OrderStatus.outForDelivery,
       ),
       OrderModel(
@@ -141,9 +152,11 @@ class OrdersProvider extends ChangeNotifier {
         address: address,
         deliveryOption: delivery,
         paymentMethod: codPayment,
-        platformFee: 0,
+        platformFee: FeeUtils.platformFee,
         status: OrderStatus.delivered,
-        deliveredAt: now.subtract(const Duration(days: 2, hours: 1, minutes: 35)),
+        deliveredAt: now.subtract(
+          const Duration(days: 2, hours: 1, minutes: 35),
+        ),
       ),
       OrderModel(
         orderId: '#MH752118',
@@ -167,7 +180,7 @@ class OrdersProvider extends ChangeNotifier {
         address: address,
         deliveryOption: delivery,
         paymentMethod: codPayment,
-        platformFee: 0,
+        platformFee: FeeUtils.platformFee,
         status: OrderStatus.preparing,
       ),
       OrderModel(
@@ -192,17 +205,17 @@ class OrdersProvider extends ChangeNotifier {
         address: address,
         deliveryOption: delivery,
         paymentMethod: bkashPayment,
-        platformFee: 0,
+        platformFee: FeeUtils.platformFee,
         status: OrderStatus.cancelled,
         cancelledAt: now.subtract(const Duration(minutes: 45)),
-        // Refund already in-progress — demos Flow 3/4 (Cancelled + Paid, view existing status).
+        // Amount = subtotal 920 + delivery 60 (below free-delivery threshold) + platform 20.
         refund: RefundModel(
           refundId: '#RF556231',
           orderId: '#MH742009',
           reason: 'Order cancelled',
           methodId: 'wallet',
           methodLabel: 'MeatHub Wallet',
-          amount: 920,
+          amount: 1000,
           requestedAt: now.subtract(const Duration(minutes: 45)),
         ),
       ),
@@ -228,8 +241,7 @@ class OrdersProvider extends ChangeNotifier {
         address: address,
         deliveryOption: delivery,
         paymentMethod: codPayment,
-        platformFee: 0,
-        // Demos Flow 1 — Not Delivered, eligible for Request Refund.
+        platformFee: FeeUtils.platformFee,
         status: OrderStatus.deliveryFailed,
       ),
     ]);
