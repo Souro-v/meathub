@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:meathub/core/constants/app_colors.dart';
 import 'package:meathub/core/constants/app_strings.dart';
 import 'package:meathub/core/routes/app_routes.dart';
@@ -10,12 +9,12 @@ import 'package:meathub/models/address_model.dart';
 import 'package:meathub/models/cart_item_model.dart';
 import 'package:meathub/models/delivery_option_model.dart';
 import 'package:meathub/models/payment_method_model.dart';
-import 'package:meathub/providers/cart_provider.dart';
-
+import 'package:provider/provider.dart';
+import '../../core/utils/coupon_utils.dart';
+import '../../core/utils/fee_utils.dart';
 import '../../core/utils/order_submission_utils.dart';
-import '../../core/utils/order_utils.dart';
-import '../../models/order_model.dart';
-import '../../providers/orders_provider.dart';
+import '../../models/coupon_model.dart';
+import '../../providers/coupon_provider.dart';
 
 class PlaceOrderScreen extends StatefulWidget {
   final List<CartItemModel> items;
@@ -40,11 +39,21 @@ class PlaceOrderScreen extends StatefulWidget {
 class _PlaceOrderScreenState extends State<PlaceOrderScreen> {
   bool _agreedTerms = true;
 
-  double get _subtotal =>
-      widget.items.fold(0, (sum, item) => sum + item.totalPrice);
+  double get _subtotal => widget.items.fold(0, (sum, item) => sum + item.totalPrice);
 
-  double get _total =>
-      _subtotal + widget.deliveryOption.fee + widget.platformFee;
+  double get _discount {
+    final coupon = context.read<CouponProvider>().appliedCoupon;
+    if (coupon == null) return 0;
+    if (CouponUtils.validate(coupon, widget.items, _subtotal).isNotEmpty) return 0;
+    if (coupon.type == CouponType.freeDelivery) {
+      return FeeUtils.deliveryFeeFor(deliveryOptionId: widget.deliveryOption.id, subtotal: _subtotal);
+    }
+    return CouponUtils.calculateDiscount(coupon, widget.items, _subtotal);
+  }
+
+  double get _deliveryFee => FeeUtils.deliveryFeeFor(deliveryOptionId: widget.deliveryOption.id, subtotal: _subtotal);
+
+  double get _total => _subtotal - _discount + _deliveryFee + widget.platformFee;
 
   @override
   Widget build(BuildContext context) {
@@ -65,7 +74,8 @@ class _PlaceOrderScreenState extends State<PlaceOrderScreen> {
                     OrderSummaryCard(
                       items: widget.items,
                       subtotal: _subtotal,
-                      deliveryFee: widget.deliveryOption.fee,
+                      discount: _discount,
+                      deliveryFee: _deliveryFee,
                       platformFee: widget.platformFee,
                       total: _total,
                     ),
