@@ -5,10 +5,17 @@ import 'package:meathub/models/delivery_option_model.dart';
 
 class DeliveryOptionTile extends StatelessWidget {
   final DeliveryOptionModel option;
+  final double fee;
   final bool selected;
   final VoidCallback onTap;
 
-  const DeliveryOptionTile({super.key, required this.option, required this.selected, required this.onTap});
+  const DeliveryOptionTile({
+    super.key,
+    required this.option,
+    required this.fee,
+    required this.selected,
+    required this.onTap,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -21,16 +28,25 @@ class DeliveryOptionTile extends StatelessWidget {
         decoration: BoxDecoration(
           color: selected ? AppColors.primarySoft : AppColors.white,
           borderRadius: BorderRadius.circular(14),
-          border: Border.all(color: selected ? AppColors.primary : AppColors.divider),
+          border: Border.all(
+            color: selected ? AppColors.primary : AppColors.divider,
+          ),
         ),
         child: Row(
           children: [
-            Icon(selected ? Icons.radio_button_checked : Icons.radio_button_off, color: selected ? AppColors.primary : AppColors.divider, size: 20),
+            Icon(
+              selected ? Icons.radio_button_checked : Icons.radio_button_off,
+              color: selected ? AppColors.primary : AppColors.divider,
+              size: 20,
+            ),
             const SizedBox(width: 10),
             Container(
               width: 40,
               height: 40,
-              decoration: const BoxDecoration(color: AppColors.white, shape: BoxShape.circle),
+              decoration: const BoxDecoration(
+                color: AppColors.white,
+                shape: BoxShape.circle,
+              ),
               child: Icon(option.icon, size: 18, color: AppColors.primary),
             ),
             const SizedBox(width: 12),
@@ -38,15 +54,32 @@ class DeliveryOptionTile extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(option.title, style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w700, color: AppColors.textDark)),
+                  Text(
+                    option.title,
+                    style: const TextStyle(
+                      fontSize: 14,
+                      fontWeight: FontWeight.w700,
+                      color: AppColors.textDark,
+                    ),
+                  ),
                   const SizedBox(height: 2),
-                  Text(option.subtitle, style: const TextStyle(fontSize: 12, color: AppColors.textHint)),
+                  Text(
+                    option.subtitle,
+                    style: const TextStyle(
+                      fontSize: 12,
+                      color: AppColors.textHint,
+                    ),
+                  ),
                 ],
               ),
             ),
             Text(
-              option.fee == 0 ? AppStrings.freeLabel : '৳${option.fee.toStringAsFixed(0)}',
-              style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w800, color: AppColors.primary),
+              fee == 0 ? AppStrings.freeLabel : '৳${fee.toStringAsFixed(0)}',
+              style: const TextStyle(
+                fontSize: 14,
+                fontWeight: FontWeight.w800,
+                color: AppColors.primary,
+              ),
             ),
           ],
         ),
