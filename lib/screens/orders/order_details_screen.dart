@@ -409,6 +409,7 @@ class OrderDetailsScreen extends StatelessWidget {
                 deliveryOption: order.deliveryOption,
                 paymentMethod: order.paymentMethod,
                 platformFee: order.platformFee,
+                discount: order.discount,
               ),
             ),
           ),

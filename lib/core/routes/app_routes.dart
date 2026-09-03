@@ -208,6 +208,7 @@ class AppRoutes {
     required DeliveryOptionModel deliveryOption,
     required PaymentMethodModel paymentMethod,
     required double platformFee,
+    double discount = 0,
   }) {
     return MaterialPageRoute(
       builder: (_) => TrackOrderScreen(
@@ -218,6 +219,7 @@ class AppRoutes {
         deliveryOption: deliveryOption,
         paymentMethod: paymentMethod,
         platformFee: platformFee,
+        discount: discount,
       ),
     );
   }
