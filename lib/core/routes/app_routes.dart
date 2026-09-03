@@ -29,7 +29,6 @@ import '../../screens/help/faq_screen.dart';
 import '../../screens/help/help_category_screen.dart';
 import '../../screens/help/issue_submitted_screen.dart';
 import '../../screens/help/live_chat_screen.dart';
-import '../../screens/help/manage_order_screen.dart';
 import '../../screens/help/refund_request_screen.dart';
 import '../../screens/help/refund_status_screen.dart';
 import '../../screens/help/report_issue_screen.dart';
@@ -255,12 +254,6 @@ class AppRoutes {
   static Route<dynamic> refundRequestRoute(String orderId) {
     return MaterialPageRoute(
       builder: (_) => RefundRequestScreen(orderId: orderId),
-    );
-  }
-
-  static Route<dynamic> manageOrderRoute(String orderId) {
-    return MaterialPageRoute(
-      builder: (_) => ManageOrderScreen(orderId: orderId),
     );
   }
 
