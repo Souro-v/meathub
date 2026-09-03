@@ -30,7 +30,10 @@ class _FaqScreenState extends State<FaqScreen> {
   @override
   void initState() {
     super.initState();
-    _searchController.addListener(() => setState(() => _query = _searchController.text.trim().toLowerCase()));
+    _searchController.addListener(
+      () =>
+          setState(() => _query = _searchController.text.trim().toLowerCase()),
+    );
   }
 
   @override
@@ -41,28 +44,35 @@ class _FaqScreenState extends State<FaqScreen> {
 
   List<FaqFullItemModel> get _filtered {
     return DummyFaqFull.all.where((f) {
-      final matchesCategory = _selectedCategory == 'all' || f.category == _selectedCategory;
+      final matchesCategory =
+          _selectedCategory == 'all' || f.category == _selectedCategory;
       if (!matchesCategory) return false;
       if (_query.isEmpty) return true;
-      return f.question.toLowerCase().contains(_query) || f.answer.toLowerCase().contains(_query);
+      return f.question.toLowerCase().contains(_query) ||
+          f.answer.toLowerCase().contains(_query);
     }).toList();
   }
 
   void _trackOrder(BuildContext context) {
     final order = context.read<OrdersProvider>().mostRelevantOrder;
     if (order == null) {
-      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('No active orders currently.')));
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('No active orders currently.')),
+      );
       return;
     }
-    Navigator.of(context).push(AppRoutes.trackOrderRoute(
-      orderId: order.orderId,
-      placedAt: order.placedAt,
-      items: order.items,
-      address: order.address,
-      deliveryOption: order.deliveryOption,
-      paymentMethod: order.paymentMethod,
-      platformFee: order.platformFee,
-    ));
+    Navigator.of(context).push(
+      AppRoutes.trackOrderRoute(
+        orderId: order.orderId,
+        placedAt: order.placedAt,
+        items: order.items,
+        address: order.address,
+        deliveryOption: order.deliveryOption,
+        paymentMethod: order.paymentMethod,
+        platformFee: order.platformFee,
+        discount: order.discount,
+      ),
+    );
   }
 
   @override
@@ -76,7 +86,10 @@ class _FaqScreenState extends State<FaqScreen> {
           children: [
             _buildTopBar(context),
             const SizedBox(height: 10),
-            Padding(padding: const EdgeInsets.symmetric(horizontal: 16), child: _buildSearchBar()),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              child: _buildSearchBar(),
+            ),
             const SizedBox(height: 12),
             _buildCategoryTabs(),
             const SizedBox(height: 12),
@@ -84,15 +97,18 @@ class _FaqScreenState extends State<FaqScreen> {
               child: faqs.isEmpty
                   ? _buildEmptyState()
                   : ListView.builder(
-                padding: const EdgeInsets.fromLTRB(16, 0, 16, 20),
-                itemCount: faqs.length,
-                itemBuilder: (context, index) => _FaqTile(
-                  key: ValueKey(faqs[index].question),
-                  faq: faqs[index],
-                  initiallyExpanded: index == 0 && _query.isEmpty && _selectedCategory == 'all',
-                  onTrackOrder: () => _trackOrder(context),
-                ),
-              ),
+                      padding: const EdgeInsets.fromLTRB(16, 0, 16, 20),
+                      itemCount: faqs.length,
+                      itemBuilder: (context, index) => _FaqTile(
+                        key: ValueKey(faqs[index].question),
+                        faq: faqs[index],
+                        initiallyExpanded:
+                            index == 0 &&
+                            _query.isEmpty &&
+                            _selectedCategory == 'all',
+                        onTrackOrder: () => _trackOrder(context),
+                      ),
+                    ),
             ),
           ],
         ),
@@ -109,7 +125,14 @@ class _FaqScreenState extends State<FaqScreen> {
           InkWell(
             onTap: () => Navigator.of(context).maybePop(),
             borderRadius: BorderRadius.circular(20),
-            child: const Padding(padding: EdgeInsets.all(8), child: Icon(Icons.arrow_back, size: 22, color: AppColors.textDark)),
+            child: const Padding(
+              padding: EdgeInsets.all(8),
+              child: Icon(
+                Icons.arrow_back,
+                size: 22,
+                color: AppColors.textDark,
+              ),
+            ),
           ),
           Expanded(
             child: Padding(
@@ -117,9 +140,22 @@ class _FaqScreenState extends State<FaqScreen> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: const [
-                  Text(AppStrings.allFaqsTitle, style: TextStyle(fontSize: 19, fontWeight: FontWeight.w800, color: AppColors.textDark)),
+                  Text(
+                    AppStrings.allFaqsTitle,
+                    style: TextStyle(
+                      fontSize: 19,
+                      fontWeight: FontWeight.w800,
+                      color: AppColors.textDark,
+                    ),
+                  ),
                   SizedBox(height: 2),
-                  Text(AppStrings.allFaqsSubtitle, style: TextStyle(fontSize: 12.5, color: AppColors.textSecondary)),
+                  Text(
+                    AppStrings.allFaqsSubtitle,
+                    style: TextStyle(
+                      fontSize: 12.5,
+                      color: AppColors.textSecondary,
+                    ),
+                  ),
                 ],
               ),
             ),
@@ -132,7 +168,11 @@ class _FaqScreenState extends State<FaqScreen> {
   Widget _buildSearchBar() {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 14),
-      decoration: BoxDecoration(color: AppColors.surface, borderRadius: BorderRadius.circular(14), border: Border.all(color: AppColors.divider)),
+      decoration: BoxDecoration(
+        color: AppColors.surface,
+        borderRadius: BorderRadius.circular(14),
+        border: Border.all(color: AppColors.divider),
+      ),
       child: Row(
         children: [
           const Icon(Icons.search, color: AppColors.textHint, size: 20),
@@ -171,8 +211,18 @@ class _FaqScreenState extends State<FaqScreen> {
               duration: const Duration(milliseconds: 180),
               padding: const EdgeInsets.symmetric(horizontal: 16),
               alignment: Alignment.center,
-              decoration: BoxDecoration(color: selected ? AppColors.primary : AppColors.surface, borderRadius: BorderRadius.circular(20)),
-              child: Text(tab['label']!, style: TextStyle(fontSize: 12.5, fontWeight: FontWeight.w700, color: selected ? AppColors.white : AppColors.textDark)),
+              decoration: BoxDecoration(
+                color: selected ? AppColors.primary : AppColors.surface,
+                borderRadius: BorderRadius.circular(20),
+              ),
+              child: Text(
+                tab['label']!,
+                style: TextStyle(
+                  fontSize: 12.5,
+                  fontWeight: FontWeight.w700,
+                  color: selected ? AppColors.white : AppColors.textDark,
+                ),
+              ),
             ),
           );
         },
@@ -190,13 +240,30 @@ class _FaqScreenState extends State<FaqScreen> {
             Container(
               width: 70,
               height: 70,
-              decoration: const BoxDecoration(shape: BoxShape.circle, color: AppColors.surface),
-              child: const Icon(Icons.search_off, size: 30, color: AppColors.textHint),
+              decoration: const BoxDecoration(
+                shape: BoxShape.circle,
+                color: AppColors.surface,
+              ),
+              child: const Icon(
+                Icons.search_off,
+                size: 30,
+                color: AppColors.textHint,
+              ),
             ),
             const SizedBox(height: 14),
-            const Text(AppStrings.noHelpResultsTitle, style: TextStyle(fontSize: 15, fontWeight: FontWeight.w700, color: AppColors.textDark)),
+            const Text(
+              AppStrings.noHelpResultsTitle,
+              style: TextStyle(
+                fontSize: 15,
+                fontWeight: FontWeight.w700,
+                color: AppColors.textDark,
+              ),
+            ),
             const SizedBox(height: 4),
-            const Text(AppStrings.noHelpResultsDesc, style: TextStyle(fontSize: 12.5, color: AppColors.textSecondary)),
+            const Text(
+              AppStrings.noHelpResultsDesc,
+              style: TextStyle(fontSize: 12.5, color: AppColors.textSecondary),
+            ),
           ],
         ),
       ),
@@ -209,7 +276,12 @@ class _FaqTile extends StatefulWidget {
   final bool initiallyExpanded;
   final VoidCallback onTrackOrder;
 
-  const _FaqTile({super.key, required this.faq, required this.initiallyExpanded, required this.onTrackOrder});
+  const _FaqTile({
+    super.key,
+    required this.faq,
+    required this.initiallyExpanded,
+    required this.onTrackOrder,
+  });
 
   @override
   State<_FaqTile> createState() => _FaqTileState();
@@ -229,7 +301,11 @@ class _FaqTileState extends State<_FaqTile> {
     return Container(
       margin: const EdgeInsets.only(bottom: 12),
       padding: const EdgeInsets.symmetric(horizontal: 16),
-      decoration: BoxDecoration(color: AppColors.white, borderRadius: BorderRadius.circular(16), border: Border.all(color: AppColors.divider)),
+      decoration: BoxDecoration(
+        color: AppColors.white,
+        borderRadius: BorderRadius.circular(16),
+        border: Border.all(color: AppColors.divider),
+      ),
       child: InkWell(
         onTap: () => setState(() => _expanded = !_expanded),
         child: Padding(
@@ -239,23 +315,45 @@ class _FaqTileState extends State<_FaqTile> {
             children: [
               Row(
                 children: [
-                  Expanded(child: Text(widget.faq.question, style: const TextStyle(fontSize: 13.5, fontWeight: FontWeight.w700, color: AppColors.textDark))),
+                  Expanded(
+                    child: Text(
+                      widget.faq.question,
+                      style: const TextStyle(
+                        fontSize: 13.5,
+                        fontWeight: FontWeight.w700,
+                        color: AppColors.textDark,
+                      ),
+                    ),
+                  ),
                   AnimatedRotation(
                     turns: _expanded ? 0.5 : 0,
                     duration: const Duration(milliseconds: 200),
-                    child: const Icon(Icons.keyboard_arrow_down, size: 20, color: AppColors.textHint),
+                    child: const Icon(
+                      Icons.keyboard_arrow_down,
+                      size: 20,
+                      color: AppColors.textHint,
+                    ),
                   ),
                 ],
               ),
               AnimatedCrossFade(
                 duration: const Duration(milliseconds: 200),
-                crossFadeState: _expanded ? CrossFadeState.showFirst : CrossFadeState.showSecond,
+                crossFadeState: _expanded
+                    ? CrossFadeState.showFirst
+                    : CrossFadeState.showSecond,
                 firstChild: Padding(
                   padding: const EdgeInsets.only(top: 8, right: 20),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(widget.faq.answer, style: const TextStyle(fontSize: 12.5, color: AppColors.textSecondary, height: 1.5)),
+                      Text(
+                        widget.faq.answer,
+                        style: const TextStyle(
+                          fontSize: 12.5,
+                          color: AppColors.textSecondary,
+                          height: 1.5,
+                        ),
+                      ),
                       if (widget.faq.showTrackOrderCta) ...[
                         const SizedBox(height: 10),
                         OutlinedButton.icon(
@@ -265,11 +363,19 @@ class _FaqTileState extends State<_FaqTile> {
                           style: OutlinedButton.styleFrom(
                             foregroundColor: AppColors.primary,
                             side: const BorderSide(color: AppColors.primary),
-                            padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 14,
+                              vertical: 8,
+                            ),
                             minimumSize: Size.zero,
                             tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                            textStyle: const TextStyle(fontSize: 12, fontWeight: FontWeight.w700),
-                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                            textStyle: const TextStyle(
+                              fontSize: 12,
+                              fontWeight: FontWeight.w700,
+                            ),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10),
+                            ),
                           ),
                         ),
                       ],
