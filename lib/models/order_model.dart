@@ -1,3 +1,4 @@
+import 'package:meathub/core/utils/fee_utils.dart';
 import 'package:meathub/core/utils/refund_utils.dart';
 import 'package:meathub/models/address_model.dart';
 import 'package:meathub/models/cart_item_model.dart';
@@ -30,6 +31,8 @@ class OrderModel {
   final DateTime? deliveredAt;
   final DateTime? cancelledAt;
   final RefundModel? refund;
+  final double discount;
+  final String? couponCode;
 
   const OrderModel({
     required this.orderId,
@@ -43,17 +46,24 @@ class OrderModel {
     this.deliveredAt,
     this.cancelledAt,
     this.refund,
+    this.discount = 0,
+    this.couponCode,
   });
 
   double get subtotal => items.fold(0, (sum, item) => sum + item.totalPrice);
-  double get total => subtotal + deliveryOption.fee + platformFee;
+
   int get totalQuantity => items.fold(0, (sum, item) => sum + item.quantity);
+
   bool get isCod => paymentMethod.id == 'cod';
 
-  /// The status actually shown across the UI. Stays as [status] until a
-  /// refund is attached, then reflects the refund's own (time-simulated)
-  /// progress — so "Cancelled"/"Delivery Failed" naturally becomes
-  /// "Refund Pending" → "Refunded" without needing manual status updates.
+  /// Single source of truth for delivery fee — same rule Cart/Checkout use.
+  double get deliveryFee => FeeUtils.deliveryFeeFor(
+    deliveryOptionId: deliveryOption.id,
+    subtotal: subtotal,
+  );
+
+  double get total => subtotal - discount + deliveryFee + platformFee;
+
   OrderStatus get effectiveStatus {
     if (refund == null) return status;
     final refundStatus = RefundUtils.computeStatus(refund!);
@@ -80,6 +90,8 @@ class OrderModel {
       deliveredAt: deliveredAt ?? this.deliveredAt,
       cancelledAt: cancelledAt ?? this.cancelledAt,
       refund: refund ?? this.refund,
+      discount: discount,
+      couponCode: couponCode,
     );
   }
 }

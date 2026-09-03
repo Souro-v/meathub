@@ -2,30 +2,30 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:meathub/core/routes/app_routes.dart';
+import 'package:meathub/core/utils/coupon_utils.dart';
+import 'package:meathub/core/utils/fee_utils.dart';
 import 'package:meathub/core/utils/order_utils.dart';
 import 'package:meathub/models/address_model.dart';
 import 'package:meathub/models/cart_item_model.dart';
+import 'package:meathub/models/coupon_model.dart';
 import 'package:meathub/models/delivery_option_model.dart';
 import 'package:meathub/models/order_model.dart';
 import 'package:meathub/models/payment_method_model.dart';
 import 'package:meathub/providers/cart_provider.dart';
+import 'package:meathub/providers/coupon_provider.dart';
 import 'package:meathub/providers/orders_provider.dart';
 
 class OrderSubmissionUtils {
   OrderSubmissionUtils._();
 
-  /// Simulates a real payment gateway result — no backend exists yet.
-  /// COD always "succeeds" (no online charge attempted). Online methods
-  /// have a ~60% demo success rate so the Payment Failed screen is
-  /// actually reachable for testing. Replace with a real gateway call
-  /// once one is integrated.
   static bool attemptPayment(PaymentMethodModel method) {
     if (method.id == 'cod') return true;
     return Random().nextDouble() > 0.4;
   }
 
-  /// Creates the order, clears the submitted items from the cart, and
-  /// navigates to Order Success — clearing the checkout stack behind it.
+  /// Creates the order (capturing whatever coupon is currently applied),
+  /// clears the submitted items from the cart, clears the spent coupon,
+  /// and navigates to Order Success.
   static void submitOrderAndNavigate(
       BuildContext context, {
         required List<CartItemModel> items,
@@ -36,6 +36,19 @@ class OrderSubmissionUtils {
       }) {
     final orderId = OrderUtils.generateOrderId();
     final placedAt = DateTime.now();
+    final subtotal = items.fold<double>(0, (sum, item) => sum + item.totalPrice);
+
+    final couponProvider = context.read<CouponProvider>();
+    final coupon = couponProvider.appliedCoupon;
+    double discount = 0;
+    String? couponCode;
+
+    if (coupon != null && CouponUtils.validate(coupon, items, subtotal).isEmpty) {
+      couponCode = coupon.code;
+      discount = coupon.type == CouponType.freeDelivery
+          ? FeeUtils.deliveryFeeFor(deliveryOptionId: deliveryOption.id, subtotal: subtotal)
+          : CouponUtils.calculateDiscount(coupon, items, subtotal);
+    }
 
     final order = OrderModel(
       orderId: orderId,
@@ -46,8 +59,12 @@ class OrderSubmissionUtils {
       paymentMethod: paymentMethod,
       platformFee: platformFee,
       status: OrderStatus.outForDelivery,
+      discount: discount,
+      couponCode: couponCode,
     );
     context.read<OrdersProvider>().placeOrder(order);
+
+    if (couponCode != null) couponProvider.remove();
 
     final cart = context.read<CartProvider>();
     for (final item in items) {
