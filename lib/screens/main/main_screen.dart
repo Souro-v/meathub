@@ -6,6 +6,7 @@ import 'package:meathub/providers/cart_provider.dart';
 import 'package:meathub/screens/cart/cart_screen.dart';
 import 'package:meathub/screens/home/home_screen.dart';
 
+import '../category/categories_screen.dart';
 import '../profile/profile_screen.dart';
 
 class MainScreen extends StatefulWidget {
@@ -28,7 +29,7 @@ class _MainScreenState extends State<MainScreen> {
 
   final List<Widget> _tabs = const [
     HomeScreen(),
-    _ComingSoonTab(label: 'Categories'),
+    CategoriesScreen(),
     CartScreen(),
     OrdersScreen(),
     ProfileScreen(),
@@ -94,20 +95,20 @@ class _MainScreenState extends State<MainScreen> {
   }
 }
 
-class _ComingSoonTab extends StatelessWidget {
-  final String label;
-
-  const _ComingSoonTab({required this.label});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: Center(
-        child: Text(
-          '$label — Coming soon',
-          style: const TextStyle(fontSize: 15, color: AppColors.textHint),
-        ),
-      ),
-    );
-  }
-}
+// class _ComingSoonTab extends StatelessWidget {
+//   final String label;
+//
+//   const _ComingSoonTab({required this.label});
+//
+//   @override
+//   Widget build(BuildContext context) {
+//     return Scaffold(
+//       body: Center(
+//         child: Text(
+//           '$label — Coming soon',
+//           style: const TextStyle(fontSize: 15, color: AppColors.textHint),
+//         ),
+//       ),
+//     );
+//   }
+// }
