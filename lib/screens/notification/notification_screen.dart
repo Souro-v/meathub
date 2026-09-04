@@ -31,6 +31,10 @@ class _NotificationScreenState extends State<NotificationScreen> {
           .toList();
     });
   }
+  List<NotificationModel> get _filteredNotifications {
+    if (_selectedTab == 1) return _notifications.where((n) => n.isPromotional).toList();
+    return _notifications;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -44,7 +48,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
             _buildTabs(),
             const SizedBox(height: 20),
             Expanded(
-              child: _notifications.isEmpty
+              child: _filteredNotifications.isEmpty
                   ? const EmptyStateView(
                       icon: Icons.notifications_none,
                       title: AppStrings.noNotificationsYetTitle,
