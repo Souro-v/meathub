@@ -8,6 +8,7 @@ class NotificationModel {
   final String description;
   final String time;
   final bool isUnread;
+  final bool isPromotional;
 
   const NotificationModel({
     required this.icon,
@@ -17,6 +18,7 @@ class NotificationModel {
     required this.description,
     required this.time,
     this.isUnread = false,
+    this.isPromotional = false,
   });
 
   NotificationModel copyWith({bool? isUnread}) {
@@ -28,6 +30,7 @@ class NotificationModel {
       description: description,
       time: time,
       isUnread: isUnread ?? this.isUnread,
+      isPromotional: isPromotional,
     );
   }
 }

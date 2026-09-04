@@ -25,5 +25,16 @@ class DummyNotifications {
       time: '09:15 AM',
       isUnread: true,
     ),
+    NotificationModel(
+      icon: Icons.sell_outlined,
+      iconColor: Color(0xFF6A4FBF),
+      iconBg: Color(0xFFEEE9FB),
+      title: 'Weekend Special Offer!',
+      description:
+          'Get up to 15% OFF on selected items. Offer valid till Sunday.',
+      time: 'Yesterday, 06:30 PM',
+      isUnread: false,
+      isPromotional: true,
+    ),
   ];
 }
