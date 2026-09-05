@@ -3,6 +3,7 @@ import 'package:meathub/core/constants/app_assets.dart';
 import 'package:meathub/core/constants/app_colors.dart';
 import 'package:meathub/core/constants/app_strings.dart';
 import '../../core/routes/app_routes.dart';
+import '../../core/services/auth_service.dart';
 import '../../core/utils/connectivity_utils.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -28,6 +29,11 @@ class _SplashScreenState extends State<SplashScreen> {
       Navigator.of(
         context,
       ).pushReplacement(AppRoutes.noInternetRoute(AppRoutes.onboarding));
+      return;
+    }
+
+    if (AuthService.currentUser != null) {
+      Navigator.of(context).pushReplacementNamed(AppRoutes.main);
       return;
     }
 
