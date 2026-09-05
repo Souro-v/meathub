@@ -3,14 +3,16 @@ import 'package:meathub/core/constants/app_colors.dart';
 
 class CustomButton extends StatelessWidget {
   final String label;
-  final VoidCallback onPressed;
+  final VoidCallback? onPressed;
   final IconData? icon;
+  final bool isLoading;
 
   const CustomButton({
     super.key,
     required this.label,
     required this.onPressed,
     this.icon,
+    this.isLoading = false,
   });
 
   @override
@@ -18,23 +20,41 @@ class CustomButton extends StatelessWidget {
     return SizedBox(
       width: double.infinity,
       child: ElevatedButton(
-        onPressed: onPressed,
+        onPressed: isLoading ? null : onPressed,
         style: ElevatedButton.styleFrom(
           backgroundColor: AppColors.primary,
           foregroundColor: AppColors.white,
+          disabledBackgroundColor: AppColors.primary.withValues(alpha: 0.6),
           minimumSize: const Size(0, 54),
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(14),
+          ),
         ),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text(label, style: const TextStyle(fontSize: 15, fontWeight: FontWeight.w700)),
-            if (icon != null) ...[
-              const SizedBox(width: 8),
-              Icon(icon, size: 18),
-            ],
-          ],
-        ),
+        child: isLoading
+            ? const SizedBox(
+                width: 22,
+                height: 22,
+                child: CircularProgressIndicator(
+                  strokeWidth: 2.4,
+                  valueColor: AlwaysStoppedAnimation(AppColors.white),
+                ),
+              )
+            : Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    label,
+                    style: const TextStyle(
+                      fontSize: 15,
+                      fontWeight: FontWeight.w700,
+                    ),
+                  ),
+                  if (icon != null) ...[
+                    const SizedBox(width: 8),
+                    Icon(icon, size: 18),
+                  ],
+                ],
+              ),
       ),
     );
   }
