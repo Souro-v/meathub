@@ -1,13 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:meathub/core/constants/app_colors.dart';
 import 'package:meathub/core/constants/app_strings.dart';
+import 'package:meathub/core/routes/app_routes.dart';
+import 'package:meathub/core/services/auth_service.dart';
 import 'package:meathub/core/widgets/auth_header.dart';
 import 'package:meathub/core/widgets/auth_scaffold.dart';
-import 'package:meathub/core/widgets/country_code_chip.dart';
 import 'package:meathub/core/widgets/custom_button.dart';
 import 'package:meathub/core/widgets/or_divider.dart';
 import 'package:meathub/core/widgets/social_button.dart';
-import '../../core/routes/app_routes.dart';
+import 'package:meathub/providers/user_provider.dart';
+
 import '../../core/widgets/custom_textfield.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -18,7 +21,62 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+  final _emailController = TextEditingController();
+  final _passwordController = TextEditingController();
   bool _rememberMe = false;
+  bool _isSubmitting = false;
+
+  @override
+  void dispose() {
+    _emailController.dispose();
+    _passwordController.dispose();
+    super.dispose();
+  }
+
+  Future<void> _handleSignIn() async {
+    final email = _emailController.text.trim();
+    final password = _passwordController.text;
+
+    if (email.isEmpty || !email.contains('@')) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Please enter a valid email address')),
+      );
+      return;
+    }
+    if (password.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Please enter your password')),
+      );
+      return;
+    }
+
+    setState(() => _isSubmitting = true);
+    final error = await AuthService.signIn(email: email, password: password);
+    if (!mounted) return;
+    setState(() => _isSubmitting = false);
+
+    if (error != null) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text(error), backgroundColor: AppColors.error),
+      );
+      return;
+    }
+
+    final user = AuthService.currentUser;
+    if (user != null) {
+      context.read<UserProvider>().updateProfile(
+        name: (user.displayName != null && user.displayName!.isNotEmpty)
+            ? user.displayName
+            : null,
+        email: user.email,
+      );
+    }
+
+    if (!mounted) return;
+    Navigator.of(
+      context,
+    ).pushNamedAndRemoveUntil(AppRoutes.main, (route) => false);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -63,16 +121,17 @@ class _LoginScreenState extends State<LoginScreen> {
           ),
           const SizedBox(height: 24),
           CustomTextField(
-            icon: Icons.call_outlined,
-            hint: AppStrings.mobileNumberHint,
-            keyboardType: TextInputType.phone,
-            suffix: const CountryCodeChip(),
+            icon: Icons.mail_outline,
+            hint: AppStrings.emailAddressHint,
+            keyboardType: TextInputType.emailAddress,
+            controller: _emailController,
           ),
           const SizedBox(height: 14),
-          const CustomTextField(
+          CustomTextField(
             icon: Icons.lock_outline,
             hint: AppStrings.passwordHint,
             isPassword: true,
+            controller: _passwordController,
           ),
           const SizedBox(height: 12),
           Row(
@@ -112,7 +171,11 @@ class _LoginScreenState extends State<LoginScreen> {
             ],
           ),
           const SizedBox(height: 20),
-          CustomButton(label: AppStrings.signIn, onPressed: () {}),
+          CustomButton(
+            label: AppStrings.signIn,
+            onPressed: _handleSignIn,
+            isLoading: _isSubmitting,
+          ),
           const SizedBox(height: 20),
           const OrDivider(),
           const SizedBox(height: 16),

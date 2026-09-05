@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:meathub/core/constants/app_colors.dart';
 import 'package:meathub/core/constants/app_strings.dart';
+import 'package:meathub/core/routes/app_routes.dart';
+import 'package:meathub/core/services/auth_service.dart';
 import 'package:meathub/core/widgets/auth_header.dart';
 import 'package:meathub/core/widgets/auth_scaffold.dart';
 import 'package:meathub/core/widgets/country_code_chip.dart';
@@ -9,7 +11,6 @@ import 'package:meathub/core/widgets/custom_button.dart';
 import 'package:meathub/core/widgets/or_divider.dart';
 import 'package:meathub/core/widgets/social_button.dart';
 import 'package:meathub/providers/user_provider.dart';
-import 'package:meathub/screens/auth/login_screen.dart';
 
 import '../../core/widgets/custom_textfield.dart';
 
@@ -28,6 +29,7 @@ class _SignupScreenState extends State<SignupScreen> {
   final _confirmPasswordController = TextEditingController();
 
   bool _agreeTerms = false;
+  bool _isSubmitting = false;
 
   @override
   void dispose() {
@@ -39,12 +41,25 @@ class _SignupScreenState extends State<SignupScreen> {
     super.dispose();
   }
 
-  void _handleSignUp() {
+  Future<void> _handleSignUp() async {
     final name = _nameController.text.trim();
 
     if (name.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text('Please enter your full name')),
+      );
+      return;
+    }
+    final email = _emailController.text.trim();
+    if (email.isEmpty || !email.contains('@')) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Please enter a valid email address')),
+      );
+      return;
+    }
+    if (_passwordController.text.length < 6) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Password must be at least 6 characters')),
       );
       return;
     }
@@ -61,19 +76,32 @@ class _SignupScreenState extends State<SignupScreen> {
       return;
     }
 
+    setState(() => _isSubmitting = true);
+    final error = await AuthService.signUp(
+      email: email,
+      password: _passwordController.text,
+      name: name,
+    );
+    if (!mounted) return;
+    setState(() => _isSubmitting = false);
+
+    if (error != null) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text(error), backgroundColor: AppColors.error),
+      );
+      return;
+    }
+
     context.read<UserProvider>().updateProfile(
       name: name,
       phone: _phoneController.text.trim().isEmpty
           ? null
           : _phoneController.text.trim(),
-      email: _emailController.text.trim().isEmpty
-          ? null
-          : _emailController.text.trim(),
+      email: email,
     );
 
-    Navigator.of(
-      context,
-    ).pushReplacement(MaterialPageRoute(builder: (_) => const LoginScreen()));
+    if (!mounted) return;
+    Navigator.of(context).pushReplacementNamed(AppRoutes.login);
   }
 
   @override
@@ -209,7 +237,11 @@ class _SignupScreenState extends State<SignupScreen> {
             ],
           ),
           const SizedBox(height: 20),
-          CustomButton(label: AppStrings.signUp, onPressed: _handleSignUp),
+          CustomButton(
+            label: AppStrings.signUp,
+            onPressed: _handleSignUp,
+            isLoading: _isSubmitting,
+          ),
           const SizedBox(height: 20),
           const OrDivider(),
           const SizedBox(height: 16),
@@ -253,9 +285,9 @@ class _SignupScreenState extends State<SignupScreen> {
                   ),
                 ),
                 TextButton(
-                  onPressed: () => Navigator.of(context).pushReplacement(
-                    MaterialPageRoute(builder: (_) => const LoginScreen()),
-                  ),
+                  onPressed: () => Navigator.of(
+                    context,
+                  ).pushReplacementNamed(AppRoutes.login),
                   style: TextButton.styleFrom(
                     padding: EdgeInsets.zero,
                     minimumSize: const Size(0, 0),
