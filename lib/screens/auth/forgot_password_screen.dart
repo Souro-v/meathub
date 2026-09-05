@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:meathub/core/constants/app_colors.dart';
 import 'package:meathub/core/constants/app_strings.dart';
+import 'package:meathub/core/services/auth_service.dart';
 import 'package:meathub/core/widgets/auth_header.dart';
 import 'package:meathub/core/widgets/auth_scaffold.dart';
 import 'package:meathub/core/widgets/country_code_chip.dart';
@@ -16,6 +17,55 @@ class ForgotPasswordScreen extends StatefulWidget {
 
 class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
   int _selectedTab = 0; // 0 = mobile, 1 = email
+  final _controller = TextEditingController();
+  bool _isSubmitting = false;
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  Future<void> _handleSendResetLink() async {
+    if (_selectedTab == 0) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text(
+            "Password reset via mobile number isn't available yet. Please use your email.",
+          ),
+        ),
+      );
+      return;
+    }
+
+    final email = _controller.text.trim();
+    if (email.isEmpty || !email.contains('@')) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Please enter a valid email address')),
+      );
+      return;
+    }
+
+    setState(() => _isSubmitting = true);
+    final error = await AuthService.sendPasswordReset(email);
+    if (!mounted) return;
+    setState(() => _isSubmitting = false);
+
+    if (error != null) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text(error), backgroundColor: AppColors.error),
+      );
+      return;
+    }
+
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(
+        content: Text('Reset link sent! Please check your email.'),
+        backgroundColor: AppColors.primary,
+      ),
+    );
+    Navigator.of(context).maybePop();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -96,13 +146,18 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
               suffix: const CountryCodeChip(),
             )
           else
-            const CustomTextField(
+            CustomTextField(
               icon: Icons.mail_outline,
               hint: AppStrings.emailAddressHint,
               keyboardType: TextInputType.emailAddress,
+              controller: _controller,
             ),
           const SizedBox(height: 20),
-          CustomButton(label: AppStrings.sendResetLink, onPressed: () {}),
+          CustomButton(
+            label: AppStrings.sendResetLink,
+            onPressed: _handleSendResetLink,
+            isLoading: _isSubmitting,
+          ),
           const SizedBox(height: 16),
           Container(
             padding: const EdgeInsets.all(14),
