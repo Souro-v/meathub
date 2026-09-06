@@ -885,4 +885,43 @@ class AppStrings {
   static const String somethingWentWrongTitle = 'Something Went Wrong';
   static const String somethingWentWrongDesc =
       "We couldn't load this page. Please try again.";
+
+  // Wallet & Credits
+  static const String walletCreditsTitle = 'Wallet & Credits';
+  static const String walletCreditsSubtitle = 'Your MeatHub Wallet balance and history';
+  static const String walletBalanceLabel = 'Wallet Balance';
+  static const String walletUsageNote = 'Refunds to your MeatHub Wallet appear here and can be used towards future orders.';
+  static const String transactionHistoryTitle = 'Transaction History';
+  static const String noTransactionsYet = 'No wallet transactions yet.';
+  static const String creditedLabel = 'Credited';
+
+  // Payment Methods (screen-specific)
+  static const String addNewCard = 'Add New Card';
+  static const String noSavedCardsTitle = 'No Saved Cards';
+  static const String noSavedCardsDesc = 'Add a card to speed up checkout next time.';
+  static const String cardHolderNameHint = 'Cardholder Name';
+  static const String cardNumberHint = 'Card Number';
+  static const String expiryHint = 'MM/YY';
+  static const String cvvHint = 'CVV';
+  static const String saveCard = 'Save Card';
+  static const String setAsDefaultCard = 'Set as Default';
+  static const String cardRemoved = 'Card removed';
+  static const String demoCardNote = 'This is a demo — cards are not charged or verified with a real payment processor.';
+
+  // Change Password (screen-specific)
+  static const String currentPasswordHint = 'Current Password';
+  static const String newPasswordFieldHint = 'New Password';
+  static const String confirmNewPasswordFieldHint = 'Confirm New Password';
+  static const String updatePassword = 'Update Password';
+  static const String passwordUpdatedSuccess = 'Password updated successfully';
+
+  // Notification Preferences (screen-specific)
+  static const String orderUpdatesLabel = 'Order Updates';
+  static const String orderUpdatesDesc = 'Order confirmation, delivery status and more';
+  static const String promotionalOffersLabel = 'Promotional Offers';
+  static const String promotionalOffersDesc = 'Discounts, coupons and special deals';
+  static const String deliveryAlertsLabel = 'Delivery Alerts';
+  static const String deliveryAlertsDesc = 'Rider arrival and delivery updates';
+  static const String appUpdatesLabel = 'App Updates';
+  static const String appUpdatesDesc = 'New features and announcements';
 }
