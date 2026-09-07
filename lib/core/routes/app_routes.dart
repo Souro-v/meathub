@@ -38,6 +38,7 @@ import '../../screens/notification/notification_screen.dart';
 import '../../screens/orders/order_details_screen.dart';
 import '../../screens/orders/track_order_screen.dart';
 import '../../screens/product/product_details_screen.dart';
+import '../../screens/profile/about/change_password_screen.dart';
 import '../../screens/profile/about/contact_us_detail_screen.dart';
 import '../../screens/profile/about/healthier_future_detail_screen.dart';
 import '../../screens/profile/about/our_mission_detail_screen.dart';
@@ -53,6 +54,9 @@ import '../../screens/profile/edit_profile_screen.dart';
 import '../../screens/profile/help_support_screen.dart';
 import '../../screens/profile/how_it_works_screen.dart';
 import '../../screens/profile/meathub_guarantee_screen.dart';
+import '../../screens/profile/notification_preferences_screen.dart';
+import '../../screens/profile/payment_methods_screen.dart';
+import '../../screens/profile/wallet_credits_screen.dart';
 import '../../screens/search/search_screen.dart';
 import '../../screens/wishlist/wishlist_screen.dart';
 
@@ -93,6 +97,10 @@ class AppRoutes {
   static const String healthierFutureDetail = '/about/healthier-future';
   static const String thankYouDetail = '/about/thank-you';
   static const String search = '/search';
+  static const String paymentMethods = '/payment-methods';
+  static const String walletCredits = '/wallet-credits';
+  static const String changePassword = '/change-password';
+  static const String notificationPreferences = '/notification-preferences';
 
   static Map<String, WidgetBuilder> routes = {
     splash: (context) => const SplashScreen(),
@@ -131,6 +139,10 @@ class AppRoutes {
     healthierFutureDetail: (context) => const HealthierFutureDetailScreen(),
     thankYouDetail: (context) => const ThankYouDetailScreen(),
     search: (context) => const SearchScreen(),
+    paymentMethods: (context) => const PaymentMethodsScreen(),
+    walletCredits: (context) => const WalletCreditsScreen(),
+    changePassword: (context) => const ChangePasswordScreen(),
+    notificationPreferences: (context) => const NotificationPreferencesScreen(),
   };
 
   static Route<dynamic> productDetailsRoute(ProductModel product) {
