@@ -93,6 +93,28 @@ class OrdersProvider extends ChangeNotifier {
     );
   }
 
+  double get walletBalance {
+    double total = 0;
+    for (final order in _orders) {
+      final refund = order.refund;
+      if (refund != null &&
+          refund.methodId == 'wallet' &&
+          RefundUtils.computeStatus(refund) == RefundStatus.completed) {
+        total += refund.amount;
+      }
+    }
+    return total;
+  }
+
+  List<OrderModel> get walletTransactions {
+    return _orders.where((o) {
+      final refund = o.refund;
+      return refund != null &&
+          refund.methodId == 'wallet' &&
+          RefundUtils.computeStatus(refund) == RefundStatus.completed;
+    }).toList();
+  }
+
   void _seedDemoOrders() {
     final address = DummyAddresses.managed.first;
     final delivery = DummyData.deliveryOptions.first;
