@@ -47,6 +47,25 @@ class AuthService {
 
   static Future<void> signOut() => _auth.signOut();
 
+  static Future<String?> changePassword({
+    required String currentPassword,
+    required String newPassword,
+  }) async {
+    try {
+      final user = _auth.currentUser;
+      if (user == null || user.email == null) return 'No signed-in user found.';
+      final cred = EmailAuthProvider.credential(
+        email: user.email!,
+        password: currentPassword,
+      );
+      await user.reauthenticateWithCredential(cred);
+      await user.updatePassword(newPassword);
+      return null;
+    } on FirebaseAuthException catch (e) {
+      return _mapError(e);
+    }
+  }
+
   static String _mapError(FirebaseAuthException e) {
     switch (e.code) {
       case 'email-already-in-use':
