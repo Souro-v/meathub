@@ -565,8 +565,7 @@ class ProfileScreen extends StatelessWidget {
         icon: Icons.credit_card,
         title: AppStrings.paymentMethodsMenuTitle,
         subtitle: AppStrings.paymentMethodsMenuDesc,
-        onTap: () =>
-            _showComingSoon(context, AppStrings.paymentMethodsMenuTitle),
+        onTap: () => Navigator.of(context).pushNamed(AppRoutes.paymentMethods),
       ),
       ProfileMenuTile(
         icon: Icons.confirmation_num_outlined,

@@ -99,7 +99,7 @@ class _HelpSupportScreenState extends State<HelpSupportScreen> {
         );
         break;
       case 'wallet':
-        _showComingSoon(topic.title.replaceAll('\n', ' '));
+        Navigator.of(context).pushNamed(AppRoutes.walletCredits);
         break;
       default:
         Navigator.of(context).push(AppRoutes.reportIssueRoute());
