@@ -9,6 +9,7 @@ import 'package:meathub/data/dummy_addresses.dart';
 import 'package:meathub/providers/user_provider.dart';
 import 'package:meathub/screens/address/address_selection_screen.dart';
 
+import '../../core/routes/app_routes.dart';
 import '../../core/widgets/custom_textfield.dart';
 
 class EditProfileScreen extends StatefulWidget {
@@ -160,15 +161,6 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
             ),
           ),
         ],
-      ),
-    );
-  }
-
-  void _showComingSoon(String label) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text('$label — ${AppStrings.comingSoon}'),
-        duration: const Duration(seconds: 2),
       ),
     );
   }
@@ -474,7 +466,9 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
             icon: Icons.notifications_outlined,
             title: AppStrings.notificationPreferences,
             subtitle: AppStrings.notificationPreferencesDesc,
-            onTap: () => _showComingSoon(AppStrings.notificationPreferences),
+            onTap: () => Navigator.of(
+              context,
+            ).pushNamed(AppRoutes.notificationPreferences),
           ),
         ],
       ),
@@ -507,7 +501,8 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
             icon: Icons.lock_outline,
             title: AppStrings.changePassword,
             subtitle: AppStrings.changePasswordDesc,
-            onTap: () => _showComingSoon(AppStrings.changePassword),
+            onTap: () =>
+                Navigator.of(context).pushNamed(AppRoutes.changePassword),
           ),
         ],
       ),
