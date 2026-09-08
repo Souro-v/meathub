@@ -12,6 +12,7 @@ import 'package:meathub/core/widgets/or_divider.dart';
 import 'package:meathub/core/widgets/social_button.dart';
 import 'package:meathub/providers/user_provider.dart';
 
+import '../../core/services/analytics_service.dart';
 import '../../core/widgets/custom_textfield.dart';
 
 class SignupScreen extends StatefulWidget {
@@ -91,7 +92,7 @@ class _SignupScreenState extends State<SignupScreen> {
       );
       return;
     }
-
+    await AnalyticsService.logSignUp();
     context.read<UserProvider>().updateProfile(
       name: name,
       phone: _phoneController.text.trim().isEmpty

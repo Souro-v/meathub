@@ -11,6 +11,7 @@ import 'package:meathub/core/widgets/or_divider.dart';
 import 'package:meathub/core/widgets/social_button.dart';
 import 'package:meathub/providers/user_provider.dart';
 
+import '../../core/services/analytics_service.dart';
 import '../../core/widgets/custom_textfield.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -61,7 +62,7 @@ class _LoginScreenState extends State<LoginScreen> {
       );
       return;
     }
-
+    await AnalyticsService.logLogin();
     final user = AuthService.currentUser;
     if (user != null) {
       context.read<UserProvider>().updateProfile(

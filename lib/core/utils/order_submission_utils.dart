@@ -15,6 +15,8 @@ import 'package:meathub/providers/cart_provider.dart';
 import 'package:meathub/providers/coupon_provider.dart';
 import 'package:meathub/providers/orders_provider.dart';
 
+import '../services/analytics_service.dart';
+
 class OrderSubmissionUtils {
   OrderSubmissionUtils._();
 
@@ -27,26 +29,33 @@ class OrderSubmissionUtils {
   /// clears the submitted items from the cart, clears the spent coupon,
   /// and navigates to Order Success.
   static void submitOrderAndNavigate(
-      BuildContext context, {
-        required List<CartItemModel> items,
-        required ManagedAddressModel address,
-        required DeliveryOptionModel deliveryOption,
-        required PaymentMethodModel paymentMethod,
-        required double platformFee,
-      }) {
+    BuildContext context, {
+    required List<CartItemModel> items,
+    required ManagedAddressModel address,
+    required DeliveryOptionModel deliveryOption,
+    required PaymentMethodModel paymentMethod,
+    required double platformFee,
+  }) {
     final orderId = OrderUtils.generateOrderId();
     final placedAt = DateTime.now();
-    final subtotal = items.fold<double>(0, (sum, item) => sum + item.totalPrice);
+    final subtotal = items.fold<double>(
+      0,
+      (sum, item) => sum + item.totalPrice,
+    );
 
     final couponProvider = context.read<CouponProvider>();
     final coupon = couponProvider.appliedCoupon;
     double discount = 0;
     String? couponCode;
 
-    if (coupon != null && CouponUtils.validate(coupon, items, subtotal).isEmpty) {
+    if (coupon != null &&
+        CouponUtils.validate(coupon, items, subtotal).isEmpty) {
       couponCode = coupon.code;
       discount = coupon.type == CouponType.freeDelivery
-          ? FeeUtils.deliveryFeeFor(deliveryOptionId: deliveryOption.id, subtotal: subtotal)
+          ? FeeUtils.deliveryFeeFor(
+              deliveryOptionId: deliveryOption.id,
+              subtotal: subtotal,
+            )
           : CouponUtils.calculateDiscount(coupon, items, subtotal);
     }
 
@@ -63,6 +72,7 @@ class OrderSubmissionUtils {
       couponCode: couponCode,
     );
     context.read<OrdersProvider>().placeOrder(order);
+    AnalyticsService.logPurchase(orderId: orderId, total: order.total);
 
     if (couponCode != null) couponProvider.remove();
 
@@ -81,7 +91,7 @@ class OrderSubmissionUtils {
         platformFee: platformFee,
         paymentMethod: paymentMethod,
       ),
-          (route) => false,
+      (route) => false,
     );
   }
 }
