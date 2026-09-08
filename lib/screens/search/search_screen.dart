@@ -16,6 +16,7 @@ import 'package:meathub/models/category_model.dart';
 import 'package:meathub/models/product_model.dart';
 import 'package:meathub/providers/cart_provider.dart';
 import 'package:meathub/providers/search_history_provider.dart';
+import 'package:speech_to_text/speech_to_text.dart' as stt;
 
 enum _SearchTab { all, products, categories }
 
@@ -31,6 +32,8 @@ class _SearchScreenState extends State<SearchScreen> {
   final FocusNode _focusNode = FocusNode();
   String _query = '';
   _SearchTab _tab = _SearchTab.all;
+  final stt.SpeechToText _speech = stt.SpeechToText();
+  bool _isListening = false;
 
   @override
   void initState() {
@@ -68,6 +71,44 @@ class _SearchScreenState extends State<SearchScreen> {
     _controller.clear();
     setState(() => _query = '');
     _focusNode.requestFocus();
+  }
+
+  Future<void> _toggleListening() async {
+    if (_isListening) {
+      await _speech.stop();
+      setState(() => _isListening = false);
+      return;
+    }
+
+    final available = await _speech.initialize(
+      onStatus: (status) {
+        if (status == 'done' || status == 'notListening') {
+          setState(() => _isListening = false);
+        }
+      },
+      onError: (error) => setState(() => _isListening = false),
+    );
+
+    if (!available) {
+      if (!mounted) return;
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Voice search is not available on this device.'),
+        ),
+      );
+      return;
+    }
+
+    setState(() => _isListening = true);
+    _speech.listen(
+      onResult: (result) {
+        _controller.text = result.recognizedWords;
+        _controller.selection = TextSelection.fromPosition(
+          TextPosition(offset: _controller.text.length),
+        );
+        setState(() => _query = result.recognizedWords);
+      },
+    );
   }
 
   void _onSelectProduct(ProductModel product) {
@@ -198,21 +239,16 @@ class _SearchScreenState extends State<SearchScreen> {
                     )
                   else
                     InkWell(
-                      onTap: () => ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(
-                          content: Text(
-                            'Voice search — ${AppStrings.comingSoon}',
-                          ),
-                          duration: const Duration(seconds: 2),
-                        ),
-                      ),
+                      onTap: _toggleListening,
                       borderRadius: BorderRadius.circular(16),
-                      child: const Padding(
-                        padding: EdgeInsets.all(4),
+                      child: Padding(
+                        padding: const EdgeInsets.all(4),
                         child: Icon(
-                          Icons.mic_none,
+                          _isListening ? Icons.mic : Icons.mic_none,
                           size: 20,
-                          color: AppColors.textHint,
+                          color: _isListening
+                              ? AppColors.primary
+                              : AppColors.textHint,
                         ),
                       ),
                     ),
