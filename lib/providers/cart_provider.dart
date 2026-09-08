@@ -3,6 +3,8 @@ import 'package:meathub/core/utils/fee_utils.dart';
 import 'package:meathub/models/cart_item_model.dart';
 import 'package:meathub/models/product_model.dart';
 
+import '../core/services/analytics_service.dart';
+
 class CartProvider extends ChangeNotifier {
   final List<CartItemModel> _items = [];
   String _orderNote = '';
@@ -51,6 +53,11 @@ class CartProvider extends ChangeNotifier {
         ),
       );
     }
+    AnalyticsService.logAddToCart(
+      itemId: product.id,
+      itemName: product.name,
+      price: double.tryParse(product.price) ?? 0,
+    );
     notifyListeners();
   }
 
