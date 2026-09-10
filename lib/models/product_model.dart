@@ -43,13 +43,43 @@ class ProductModel {
   }
 
   /// Curated badge (BEST SELLER / NEW) if set, else auto discount badge.
-  String? get computedBadge => badgeLabel ?? (hasDiscount ? '$discountPercent% OFF' : null);
+  String? get computedBadge =>
+      badgeLabel ?? (hasDiscount ? '$discountPercent% OFF' : null);
 
-  List<String> get images => (gallery != null && gallery!.isNotEmpty) ? gallery! : [image];
+  List<String> get images =>
+      (gallery != null && gallery!.isNotEmpty) ? gallery! : [image];
 
   String get fullDescription =>
       description ??
-          'Premium halal $category sourced from trusted farms. Freshly cut after order '
-              'confirmation. Hygienically packed and delivered in insulated packaging to '
-              'ensure maximum freshness.';
+      'Premium halal $category sourced from trusted farms. Freshly cut after order '
+          'confirmation. Hygienically packed and delivered in insulated packaging to '
+          'ensure maximum freshness.';
+
+  Map<String, dynamic> toJson() => {
+    'id': id,
+    'name': name,
+    'image': image,
+    'category': category,
+    'price': price,
+    'originalPrice': originalPrice,
+    'unit': unit,
+    'rating': rating,
+    'reviewCount': reviewCount,
+    'subCategory': subCategory,
+    'badgeLabel': badgeLabel,
+  };
+
+  factory ProductModel.fromJson(Map<String, dynamic> json) => ProductModel(
+    id: json['id'] as String,
+    name: json['name'] as String,
+    image: json['image'] as String,
+    category: json['category'] as String,
+    price: json['price'] as String,
+    originalPrice: json['originalPrice'] as String,
+    unit: json['unit'] as String,
+    rating: (json['rating'] as num).toDouble(),
+    reviewCount: json['reviewCount'] as int,
+    subCategory: json['subCategory'] as String? ?? '',
+    badgeLabel: json['badgeLabel'] as String?,
+  );
 }
