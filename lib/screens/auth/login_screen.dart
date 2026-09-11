@@ -12,6 +12,7 @@ import 'package:meathub/core/widgets/social_button.dart';
 import 'package:meathub/providers/user_provider.dart';
 
 import '../../core/services/analytics_service.dart';
+import '../../core/services/app_data_sync_service.dart';
 import '../../core/widgets/custom_textfield.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -74,9 +75,9 @@ class _LoginScreenState extends State<LoginScreen> {
     }
 
     if (!mounted) return;
-    Navigator.of(
-      context,
-    ).pushNamedAndRemoveUntil(AppRoutes.main, (route) => false);
+    await AppDataSyncService.loadAll(context);
+    if (!mounted) return;
+    Navigator.of(context).pushNamedAndRemoveUntil(AppRoutes.main, (route) => false);
   }
 
   @override

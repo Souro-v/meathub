@@ -3,6 +3,7 @@ import 'package:meathub/core/constants/app_assets.dart';
 import 'package:meathub/core/constants/app_colors.dart';
 import 'package:meathub/core/constants/app_strings.dart';
 import '../../core/routes/app_routes.dart';
+import '../../core/services/app_data_sync_service.dart';
 import '../../core/services/auth_service.dart';
 import '../../core/utils/connectivity_utils.dart';
 
@@ -33,6 +34,8 @@ class _SplashScreenState extends State<SplashScreen> {
     }
 
     if (AuthService.currentUser != null) {
+      await AppDataSyncService.loadAll(context);
+      if (!mounted) return;
       Navigator.of(context).pushReplacementNamed(AppRoutes.main);
       return;
     }
