@@ -29,4 +29,18 @@ class CartItemModel {
   );
 
   double get totalPrice => unitPrice * quantity;
+
+  Map<String, dynamic> toJson() => {
+    'product': product.toJson(),
+    'weightGrams': weightGrams,
+    'quantity': quantity,
+  };
+
+  factory CartItemModel.fromJson(Map<String, dynamic> json) => CartItemModel(
+    product: ProductModel.fromJson(
+      Map<String, dynamic>.from(json['product'] as Map),
+    ),
+    weightGrams: (json['weightGrams'] as num).toDouble(),
+    quantity: json['quantity'] as int,
+  );
 }

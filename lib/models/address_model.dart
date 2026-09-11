@@ -73,4 +73,30 @@ class ManagedAddressModel {
       isDefault: isDefault ?? this.isDefault,
     );
   }
+
+  Map<String, dynamic> toJson() => {
+    'label': label,
+    'labelIconCodePoint': labelIcon.codePoint,
+    'labelColorValue': labelColor.toARGB32(),
+    'labelBgValue': labelBg.toARGB32(),
+    'name': name,
+    'phone': phone,
+    'address': address,
+    'isDefault': isDefault,
+  };
+
+  factory ManagedAddressModel.fromJson(Map<String, dynamic> json) =>
+      ManagedAddressModel(
+        label: json['label'] as String,
+        labelIcon: IconData(
+          json['labelIconCodePoint'] as int,
+          fontFamily: 'MaterialIcons',
+        ),
+        labelColor: Color(json['labelColorValue'] as int),
+        labelBg: Color(json['labelBgValue'] as int),
+        name: json['name'] as String,
+        phone: json['phone'] as String,
+        address: json['address'] as String,
+        isDefault: json['isDefault'] as bool? ?? false,
+      );
 }
