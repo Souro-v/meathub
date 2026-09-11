@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:meathub/core/constants/app_assets.dart';
+import 'package:meathub/core/services/firestore_service.dart';
 import 'package:meathub/core/utils/fee_utils.dart';
 import 'package:meathub/core/utils/order_utils.dart';
 import 'package:meathub/core/utils/refund_utils.dart';
@@ -13,6 +14,8 @@ import 'package:meathub/models/refund_model.dart';
 class OrdersProvider extends ChangeNotifier {
   final List<OrderModel> _orders = [];
 
+  bool _loaded = false;
+
   OrdersProvider() {
     _seedDemoOrders();
   }
@@ -22,14 +25,17 @@ class OrdersProvider extends ChangeNotifier {
   void placeOrder(OrderModel order) {
     _orders.insert(0, order);
     notifyListeners();
+    _persist();
   }
 
   void cancelOrder(String orderId) {
     final index = _orders.indexWhere((o) => o.orderId == orderId);
     if (index == -1) return;
+
     final order = _orders[index];
 
     RefundModel? refund;
+
     if (!order.isCod) {
       refund = RefundModel(
         refundId: RefundUtils.generateRefundId(),
@@ -47,20 +53,28 @@ class OrdersProvider extends ChangeNotifier {
       cancelledAt: DateTime.now(),
       refund: refund,
     );
+
     notifyListeners();
+    _persist();
   }
 
   void requestRefund(String orderId, RefundModel refund) {
     final index = _orders.indexWhere((o) => o.orderId == orderId);
     if (index == -1) return;
+
     _orders[index] = _orders[index].copyWith(refund: refund);
+
     notifyListeners();
+    _persist();
   }
 
   bool hasActiveRefund(String orderId) {
     final order = findById(orderId);
+
     if (order?.refund == null) return false;
+
     final s = RefundUtils.computeStatus(order!.refund!);
+
     return s != RefundStatus.completed && s != RefundStatus.rejected;
   }
 
@@ -74,6 +88,7 @@ class OrdersProvider extends ChangeNotifier {
 
   OrderModel? get mostRelevantOrder {
     if (_orders.isEmpty) return null;
+
     final ongoing = _orders.where(
       (o) => [
         OrderStatus.placed,
@@ -82,7 +97,11 @@ class OrdersProvider extends ChangeNotifier {
         OrderStatus.outForDelivery,
       ].contains(o.status),
     );
-    if (ongoing.isNotEmpty) return ongoing.first;
+
+    if (ongoing.isNotEmpty) {
+      return ongoing.first;
+    }
+
     return _orders.first;
   }
 
@@ -95,35 +114,74 @@ class OrdersProvider extends ChangeNotifier {
 
   double get walletBalance {
     double total = 0;
+
     for (final order in _orders) {
       final refund = order.refund;
+
       if (refund != null &&
           refund.methodId == 'wallet' &&
           RefundUtils.computeStatus(refund) == RefundStatus.completed) {
         total += refund.amount;
       }
     }
+
     return total;
   }
 
   List<OrderModel> get walletTransactions {
     return _orders.where((o) {
       final refund = o.refund;
+
       return refund != null &&
           refund.methodId == 'wallet' &&
           RefundUtils.computeStatus(refund) == RefundStatus.completed;
     }).toList();
   }
 
+  Future<void> loadFromFirestore() async {
+    if (_loaded) return;
+
+    _loaded = true;
+
+    final raw = await FirestoreService.loadList('orders');
+
+    if (raw.isNotEmpty) {
+      _orders.clear();
+
+      _orders.addAll(raw.map((e) => OrderModel.fromJson(e)));
+    } else {
+      _persist();
+    }
+
+    notifyListeners();
+  }
+
+  void _persist() {
+    FirestoreService.saveList(
+      'orders',
+      _orders.map((o) => o.toJson()).toList(),
+    );
+  }
+
+  void reset() {
+    _orders.clear();
+    _loaded = false;
+    notifyListeners();
+  }
+
   void _seedDemoOrders() {
     final address = DummyAddresses.managed.first;
+
     final delivery = DummyData.deliveryOptions.first;
+
     final codPayment = DummyData.paymentMethods.firstWhere(
       (m) => m.id == 'cod',
     );
+
     final bkashPayment = DummyData.paymentMethods.firstWhere(
       (m) => m.id == 'bkash',
     );
+
     final now = DateTime.now();
 
     _orders.addAll([
@@ -152,6 +210,7 @@ class OrdersProvider extends ChangeNotifier {
         platformFee: FeeUtils.platformFee,
         status: OrderStatus.outForDelivery,
       ),
+
       OrderModel(
         orderId: '#MH764231',
         placedAt: now.subtract(const Duration(days: 2, hours: 3)),
@@ -180,6 +239,7 @@ class OrdersProvider extends ChangeNotifier {
           const Duration(days: 2, hours: 1, minutes: 35),
         ),
       ),
+
       OrderModel(
         orderId: '#MH752118',
         placedAt: now.subtract(const Duration(hours: 1)),
@@ -205,6 +265,7 @@ class OrdersProvider extends ChangeNotifier {
         platformFee: FeeUtils.platformFee,
         status: OrderStatus.preparing,
       ),
+
       OrderModel(
         orderId: '#MH742009',
         placedAt: now.subtract(const Duration(days: 9, hours: 4)),
@@ -230,7 +291,8 @@ class OrdersProvider extends ChangeNotifier {
         platformFee: FeeUtils.platformFee,
         status: OrderStatus.cancelled,
         cancelledAt: now.subtract(const Duration(minutes: 45)),
-        // Amount = subtotal 920 + delivery 60 (below free-delivery threshold) + platform 20.
+        // Amount = subtotal 920 + delivery 60
+        // + platform 20 = 1000.
         refund: RefundModel(
           refundId: '#RF556231',
           orderId: '#MH742009',
@@ -241,6 +303,7 @@ class OrdersProvider extends ChangeNotifier {
           requestedAt: now.subtract(const Duration(minutes: 45)),
         ),
       ),
+
       OrderModel(
         orderId: '#MH731102',
         placedAt: now.subtract(const Duration(days: 1)),
