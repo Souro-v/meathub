@@ -22,4 +22,27 @@ class RefundModel {
     this.additionalDetails,
     this.rejectionReason,
   });
+  Map<String, dynamic> toJson() => {
+    'refundId': refundId,
+    'orderId': orderId,
+    'reason': reason,
+    'methodId': methodId,
+    'methodLabel': methodLabel,
+    'amount': amount,
+    'requestedAt': requestedAt.toIso8601String(),
+    'additionalDetails': additionalDetails,
+    'rejectionReason': rejectionReason,
+  };
+
+  factory RefundModel.fromJson(Map<String, dynamic> json) => RefundModel(
+    refundId: json['refundId'] as String,
+    orderId: json['orderId'] as String,
+    reason: json['reason'] as String,
+    methodId: json['methodId'] as String,
+    methodLabel: json['methodLabel'] as String,
+    amount: (json['amount'] as num).toDouble(),
+    requestedAt: DateTime.parse(json['requestedAt'] as String),
+    additionalDetails: json['additionalDetails'] as String?,
+    rejectionReason: json['rejectionReason'] as String?,
+  );
 }

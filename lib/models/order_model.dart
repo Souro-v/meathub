@@ -94,4 +94,53 @@ class OrderModel {
       couponCode: couponCode,
     );
   }
+
+  Map<String, dynamic> toJson() => {
+    'orderId': orderId,
+    'placedAt': placedAt.toIso8601String(),
+    'items': items.map((i) => i.toJson()).toList(),
+    'address': address.toJson(),
+    'deliveryOption': deliveryOption.toJson(),
+    'paymentMethod': paymentMethod.toJson(),
+    'platformFee': platformFee,
+    'status': status.name,
+    'deliveredAt': deliveredAt?.toIso8601String(),
+    'cancelledAt': cancelledAt?.toIso8601String(),
+    'refund': refund?.toJson(),
+    'discount': discount,
+    'couponCode': couponCode,
+  };
+
+  factory OrderModel.fromJson(Map<String, dynamic> json) => OrderModel(
+    orderId: json['orderId'] as String,
+    placedAt: DateTime.parse(json['placedAt'] as String),
+    items: (json['items'] as List)
+        .map((e) => CartItemModel.fromJson(Map<String, dynamic>.from(e as Map)))
+        .toList(),
+    address: ManagedAddressModel.fromJson(
+      Map<String, dynamic>.from(json['address'] as Map),
+    ),
+    deliveryOption: DeliveryOptionModel.fromJson(
+      Map<String, dynamic>.from(json['deliveryOption'] as Map),
+    ),
+    paymentMethod: PaymentMethodModel.fromJson(
+      Map<String, dynamic>.from(json['paymentMethod'] as Map),
+    ),
+    platformFee: (json['platformFee'] as num).toDouble(),
+    status: OrderStatus.values.firstWhere(
+      (s) => s.name == json['status'],
+      orElse: () => OrderStatus.placed,
+    ),
+    deliveredAt: json['deliveredAt'] != null
+        ? DateTime.parse(json['deliveredAt'] as String)
+        : null,
+    cancelledAt: json['cancelledAt'] != null
+        ? DateTime.parse(json['cancelledAt'] as String)
+        : null,
+    refund: json['refund'] != null
+        ? RefundModel.fromJson(Map<String, dynamic>.from(json['refund'] as Map))
+        : null,
+    discount: (json['discount'] as num?)?.toDouble() ?? 0,
+    couponCode: json['couponCode'] as String?,
+  );
 }
