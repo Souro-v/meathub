@@ -11,6 +11,7 @@ import 'package:meathub/providers/orders_provider.dart';
 import 'package:meathub/providers/user_provider.dart';
 import 'package:meathub/providers/wishlist_provider.dart';
 
+import '../../core/services/app_data_sync_service.dart';
 import '../../core/services/auth_service.dart';
 import '../../core/utils/image_picker_utils.dart';
 import '../../core/widgets/user_avatar.dart';
@@ -140,10 +141,8 @@ class ProfileScreen extends StatelessWidget {
                       onPressed: () async {
                         await AuthService.signOut();
                         if (!dialogContext.mounted) return;
-                        Navigator.of(dialogContext).pushNamedAndRemoveUntil(
-                          AppRoutes.login,
-                          (route) => false,
-                        );
+                        AppDataSyncService.resetAll(dialogContext);
+                        Navigator.of(dialogContext).pushNamedAndRemoveUntil(AppRoutes.login, (route) => false);
                       },
                       icon: const Icon(Icons.logout, size: 15),
                       label: const Text(AppStrings.logout),
