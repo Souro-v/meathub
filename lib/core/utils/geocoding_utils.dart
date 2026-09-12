@@ -1,16 +1,17 @@
 import 'package:geocoding/geocoding.dart';
-import 'package:geocoding/geocoding.dart' as geocoding;
 
 class GeocodingUtils {
   GeocodingUtils._();
 
+  static final Geocoding _geocoding = Geocoding();
+
   static Future<String?> addressFromCoordinates(double lat, double lng) async {
     try {
-      final List<geocoding.Placemark> placemarks = await geocoding
+      final List<Placemark> placemarks = await _geocoding
           .placemarkFromCoordinates(lat, lng);
       if (placemarks.isEmpty) return null;
 
-      final geocoding.Placemark p = placemarks.first;
+      final Placemark p = placemarks.first;
       final List<String> parts = <String?>[
         p.street,
         p.subLocality,
