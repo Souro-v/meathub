@@ -12,18 +12,25 @@ class UserProvider extends ChangeNotifier {
   bool _loaded = false;
 
   String get name => _name;
+
   String get phone => _phone;
+
   String get email => _email;
+
   DateTime? get dateOfBirth => _dateOfBirth;
+
   String? get gender => _gender;
+
   File? get photo => _photo;
+
   bool get hasPhoto => _photo != null;
 
   String get initials {
     final parts = _name.trim().split(RegExp(r'\s+'));
     if (parts.isEmpty || parts.first.isEmpty) return '';
     if (parts.length == 1) return parts.first.substring(0, 1).toUpperCase();
-    return (parts.first.substring(0, 1) + parts.last.substring(0, 1)).toUpperCase();
+    return (parts.first.substring(0, 1) + parts.last.substring(0, 1))
+        .toUpperCase();
   }
 
   Future<void> loadFromFirestore() async {
@@ -34,7 +41,8 @@ class UserProvider extends ChangeNotifier {
     _name = data['name'] as String? ?? _name;
     _phone = data['phone'] as String? ?? _phone;
     _email = data['email'] as String? ?? _email;
-    if (data['dateOfBirth'] != null) _dateOfBirth = DateTime.parse(data['dateOfBirth'] as String);
+    if (data['dateOfBirth'] != null)
+      _dateOfBirth = DateTime.parse(data['dateOfBirth'] as String);
     _gender = data['gender'] as String? ?? _gender;
     notifyListeners();
   }
