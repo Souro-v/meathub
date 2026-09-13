@@ -101,6 +101,7 @@ class AppRoutes {
   static const String walletCredits = '/wallet-credits';
   static const String changePassword = '/change-password';
   static const String notificationPreferences = '/notification-preferences';
+  static const String settings = '/settings';
 
   static Map<String, WidgetBuilder> routes = {
     splash: (context) => const SplashScreen(),
@@ -143,6 +144,7 @@ class AppRoutes {
     walletCredits: (context) => const WalletCreditsScreen(),
     changePassword: (context) => const ChangePasswordScreen(),
     notificationPreferences: (context) => const NotificationPreferencesScreen(),
+    settings: (context) => const SettingsScreen(),
   };
 
   static Route<dynamic> productDetailsRoute(ProductModel product) {
