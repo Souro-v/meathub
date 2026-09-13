@@ -142,7 +142,10 @@ class ProfileScreen extends StatelessWidget {
                         await AuthService.signOut();
                         if (!dialogContext.mounted) return;
                         AppDataSyncService.resetAll(dialogContext);
-                        Navigator.of(dialogContext).pushNamedAndRemoveUntil(AppRoutes.login, (route) => false);
+                        Navigator.of(dialogContext).pushNamedAndRemoveUntil(
+                          AppRoutes.login,
+                          (route) => false,
+                        );
                       },
                       icon: const Icon(Icons.logout, size: 15),
                       label: const Text(AppStrings.logout),
@@ -279,7 +282,7 @@ class ProfileScreen extends StatelessWidget {
             ),
           ),
           InkWell(
-            onTap: () => _showComingSoon(context, 'Settings'),
+            onTap: () => Navigator.of(context).pushNamed(AppRoutes.settings),
             borderRadius: BorderRadius.circular(20),
             child: const Padding(
               padding: EdgeInsets.all(6),

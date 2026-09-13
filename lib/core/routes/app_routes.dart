@@ -56,6 +56,7 @@ import '../../screens/profile/how_it_works_screen.dart';
 import '../../screens/profile/meathub_guarantee_screen.dart';
 import '../../screens/profile/notification_preferences_screen.dart';
 import '../../screens/profile/payment_methods_screen.dart';
+import '../../screens/profile/settings_screen.dart';
 import '../../screens/profile/wallet_credits_screen.dart';
 import '../../screens/search/search_screen.dart';
 import '../../screens/wishlist/wishlist_screen.dart';
