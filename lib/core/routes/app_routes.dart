@@ -34,6 +34,8 @@ import '../../screens/help/refund_status_screen.dart';
 import '../../screens/help/report_issue_screen.dart';
 import '../../screens/help/ticket_detail_screen.dart';
 import '../../screens/help/ticket_list_screen.dart';
+import '../../screens/legal/privacy_policy_screen.dart';
+import '../../screens/legal/terms_conditions_screen.dart';
 import '../../screens/notification/notification_screen.dart';
 import '../../screens/orders/order_details_screen.dart';
 import '../../screens/orders/track_order_screen.dart';
@@ -103,6 +105,8 @@ class AppRoutes {
   static const String changePassword = '/change-password';
   static const String notificationPreferences = '/notification-preferences';
   static const String settings = '/settings';
+  static const String termsConditions = '/terms-conditions';
+  static const String privacyPolicy = '/privacy-policy';
 
   static Map<String, WidgetBuilder> routes = {
     splash: (context) => const SplashScreen(),
@@ -146,6 +150,8 @@ class AppRoutes {
     changePassword: (context) => const ChangePasswordScreen(),
     notificationPreferences: (context) => const NotificationPreferencesScreen(),
     settings: (context) => const SettingsScreen(),
+    termsConditions: (context) => const TermsConditionsScreen(),
+    privacyPolicy: (context) => const PrivacyPolicyScreen(),
   };
 
   static Route<dynamic> productDetailsRoute(ProductModel product) {

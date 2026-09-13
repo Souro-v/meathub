@@ -1,3 +1,4 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:meathub/core/constants/app_colors.dart';
@@ -28,9 +29,21 @@ class _SignupScreenState extends State<SignupScreen> {
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
   final _confirmPasswordController = TextEditingController();
+  late final TapGestureRecognizer _termsRecognizer;
+  late final TapGestureRecognizer _privacyRecognizer;
 
   bool _agreeTerms = false;
   bool _isSubmitting = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _termsRecognizer = TapGestureRecognizer()
+      ..onTap = () =>
+          Navigator.of(context).pushNamed(AppRoutes.termsConditions);
+    _privacyRecognizer = TapGestureRecognizer()
+      ..onTap = () => Navigator.of(context).pushNamed(AppRoutes.privacyPolicy);
+  }
 
   @override
   void dispose() {
@@ -39,6 +52,8 @@ class _SignupScreenState extends State<SignupScreen> {
     _emailController.dispose();
     _passwordController.dispose();
     _confirmPasswordController.dispose();
+    _termsRecognizer.dispose();
+    _privacyRecognizer.dispose();
     super.dispose();
   }
 
@@ -207,28 +222,30 @@ class _SignupScreenState extends State<SignupScreen> {
                 child: Padding(
                   padding: const EdgeInsets.only(top: 4),
                   child: RichText(
-                    text: const TextSpan(
-                      style: TextStyle(
+                    text: TextSpan(
+                      style: const TextStyle(
                         fontSize: 12.5,
                         color: AppColors.textDark,
                         height: 1.4,
                       ),
                       children: [
-                        TextSpan(text: 'I agree to the '),
+                        const TextSpan(text: 'I agree to the '),
                         TextSpan(
                           text: 'Terms & Conditions',
-                          style: TextStyle(
+                          style: const TextStyle(
                             color: AppColors.primary,
                             fontWeight: FontWeight.w600,
                           ),
+                          recognizer: _termsRecognizer,
                         ),
-                        TextSpan(text: ' and '),
+                        const TextSpan(text: ' and '),
                         TextSpan(
                           text: 'Privacy Policy',
-                          style: TextStyle(
+                          style: const TextStyle(
                             color: AppColors.primary,
                             fontWeight: FontWeight.w600,
                           ),
+                          recognizer: _privacyRecognizer,
                         ),
                       ],
                     ),
