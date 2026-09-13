@@ -66,6 +66,19 @@ class AuthService {
     }
   }
 
+  static Future<String?> deleteAccount({required String currentPassword}) async {
+    try {
+      final user = _auth.currentUser;
+      if (user == null || user.email == null) return 'No signed-in user found.';
+      final cred = EmailAuthProvider.credential(email: user.email!, password: currentPassword);
+      await user.reauthenticateWithCredential(cred);
+      await user.delete();
+      return null;
+    } on FirebaseAuthException catch (e) {
+      return _mapError(e);
+    }
+  }
+
   static String _mapError(FirebaseAuthException e) {
     switch (e.code) {
       case 'email-already-in-use':

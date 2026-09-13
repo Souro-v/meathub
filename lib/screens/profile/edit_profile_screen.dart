@@ -10,6 +10,8 @@ import 'package:meathub/providers/user_provider.dart';
 import 'package:meathub/screens/address/address_selection_screen.dart';
 
 import '../../core/routes/app_routes.dart';
+import '../../core/services/app_data_sync_service.dart';
+import '../../core/services/auth_service.dart';
 import '../../core/widgets/custom_textfield.dart';
 
 class EditProfileScreen extends StatefulWidget {
@@ -141,27 +143,97 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
   }
 
   void _confirmDeleteAccount() {
+    final passwordController = TextEditingController();
+    bool isDeleting = false;
+    String? errorText;
+
     showDialog(
       context: context,
-      builder: (dialogContext) => AlertDialog(
-        title: const Text(AppStrings.deleteAccountConfirmTitle),
-        content: const Text(AppStrings.deleteAccountConfirmDesc),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(dialogContext),
-            child: const Text(AppStrings.no),
-          ),
-          TextButton(
-            onPressed: () => Navigator.of(
-              dialogContext,
-            ).pushNamedAndRemoveUntil('/login', (route) => false),
-            child: const Text(
-              AppStrings.deleteAccount,
-              style: TextStyle(color: AppColors.error),
-            ),
-          ),
-        ],
-      ),
+      builder: (dialogContext) {
+        return StatefulBuilder(
+          builder: (dialogContext, setDialogState) {
+            return AlertDialog(
+              title: const Text(AppStrings.deleteAccountConfirmTitle),
+              content: Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const Text(AppStrings.deleteAccountConfirmDesc),
+                  const SizedBox(height: 14),
+                  const Text(
+                    AppStrings.enterPasswordToConfirm,
+                    style: TextStyle(
+                      fontSize: 12.5,
+                      fontWeight: FontWeight.w600,
+                      color: AppColors.textDark,
+                    ),
+                  ),
+                  const SizedBox(height: 8),
+                  TextField(
+                    controller: passwordController,
+                    obscureText: true,
+                    decoration: InputDecoration(
+                      isDense: true,
+                      errorText: errorText,
+                      border: const OutlineInputBorder(),
+                    ),
+                  ),
+                ],
+              ),
+              actions: [
+                TextButton(
+                  onPressed: isDeleting
+                      ? null
+                      : () => Navigator.pop(dialogContext),
+                  child: const Text(AppStrings.no),
+                ),
+                TextButton(
+                  onPressed: isDeleting
+                      ? null
+                      : () async {
+                          if (passwordController.text.isEmpty) {
+                            setDialogState(
+                              () => errorText = 'Please enter your password',
+                            );
+                            return;
+                          }
+                          setDialogState(() {
+                            isDeleting = true;
+                            errorText = null;
+                          });
+                          final error = await AuthService.deleteAccount(
+                            currentPassword: passwordController.text,
+                          );
+                          if (error != null) {
+                            setDialogState(() {
+                              isDeleting = false;
+                              errorText = error;
+                            });
+                            return;
+                          }
+                          if (!dialogContext.mounted) return;
+                          AppDataSyncService.resetAll(dialogContext);
+                          Navigator.of(dialogContext).pushNamedAndRemoveUntil(
+                            AppRoutes.login,
+                            (route) => false,
+                          );
+                        },
+                  child: isDeleting
+                      ? const SizedBox(
+                          width: 16,
+                          height: 16,
+                          child: CircularProgressIndicator(strokeWidth: 2),
+                        )
+                      : const Text(
+                          AppStrings.deleteMyAccount,
+                          style: TextStyle(color: AppColors.error),
+                        ),
+                ),
+              ],
+            );
+          },
+        );
+      },
     );
   }
 
