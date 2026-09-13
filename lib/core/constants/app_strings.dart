@@ -888,9 +888,11 @@ class AppStrings {
 
   // Wallet & Credits
   static const String walletCreditsTitle = 'Wallet & Credits';
-  static const String walletCreditsSubtitle = 'Your MeatHub Wallet balance and history';
+  static const String walletCreditsSubtitle =
+      'Your MeatHub Wallet balance and history';
   static const String walletBalanceLabel = 'Wallet Balance';
-  static const String walletUsageNote = 'Refunds to your MeatHub Wallet appear here and can be used towards future orders.';
+  static const String walletUsageNote =
+      'Refunds to your MeatHub Wallet appear here and can be used towards future orders.';
   static const String transactionHistoryTitle = 'Transaction History';
   static const String noTransactionsYet = 'No wallet transactions yet.';
   static const String creditedLabel = 'Credited';
@@ -898,7 +900,8 @@ class AppStrings {
   // Payment Methods (screen-specific)
   static const String addNewCard = 'Add New Card';
   static const String noSavedCardsTitle = 'No Saved Cards';
-  static const String noSavedCardsDesc = 'Add a card to speed up checkout next time.';
+  static const String noSavedCardsDesc =
+      'Add a card to speed up checkout next time.';
   static const String cardHolderNameHint = 'Cardholder Name';
   static const String cardNumberHint = 'Card Number';
   static const String expiryHint = 'MM/YY';
@@ -906,7 +909,8 @@ class AppStrings {
   static const String saveCard = 'Save Card';
   static const String setAsDefaultCard = 'Set as Default';
   static const String cardRemoved = 'Card removed';
-  static const String demoCardNote = 'This is a demo — cards are not charged or verified with a real payment processor.';
+  static const String demoCardNote =
+      'This is a demo — cards are not charged or verified with a real payment processor.';
 
   // Change Password (screen-specific)
   static const String currentPasswordHint = 'Current Password';
@@ -917,11 +921,40 @@ class AppStrings {
 
   // Notification Preferences (screen-specific)
   static const String orderUpdatesLabel = 'Order Updates';
-  static const String orderUpdatesDesc = 'Order confirmation, delivery status and more';
+  static const String orderUpdatesDesc =
+      'Order confirmation, delivery status and more';
   static const String promotionalOffersLabel = 'Promotional Offers';
-  static const String promotionalOffersDesc = 'Discounts, coupons and special deals';
+  static const String promotionalOffersDesc =
+      'Discounts, coupons and special deals';
   static const String deliveryAlertsLabel = 'Delivery Alerts';
   static const String deliveryAlertsDesc = 'Rider arrival and delivery updates';
   static const String appUpdatesLabel = 'App Updates';
   static const String appUpdatesDesc = 'New features and announcements';
+
+  // Settings
+  static const String settingsTitle = 'Settings';
+  static const String settingsSubtitle = 'Manage your app preferences';
+  static const String preferencesTitle = 'Preferences';
+  static const String pushNotificationsLabel = 'Push Notifications';
+  static const String pushNotificationsDesc =
+      'Manage what you get notified about';
+  static const String languageLabel = 'Language';
+  static const String languageValue = 'English';
+  static const String storageTitle = 'Storage';
+  static const String clearCacheLabel = 'Clear Cache';
+  static const String clearCacheDesc = 'Free up space used by cached images';
+  static const String cacheClearedMessage = 'Cache cleared successfully';
+  static const String legalTitle = 'Legal';
+  static const String aboutTitle = 'About';
+  static const String appVersionLabel = 'App Version';
+  static const String appVersionValue = 'Version 1.0.0 (Build 1)';
+  static const String rateTheApp = 'Rate the App';
+  static const String rateTheAppDesc = 'Enjoying MeatHub? Let us know!';
+  static const String accountTitle = 'Account';
+  static const String manageAccountLabel = 'Manage Account';
+  static const String manageAccountDesc = 'Edit profile, password and more';
+  static const String privacyPolicyTitle = 'Privacy Policy';
+  static const String lastUpdatedLabel = 'Last updated';
+  static const String enterPasswordToConfirm = 'Enter your password to confirm';
+  static const String deleteMyAccount = 'Delete My Account';
 }
