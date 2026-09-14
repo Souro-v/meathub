@@ -30,4 +30,8 @@ class PricingUtils {
     if (baseGrams <= 0) return 0;
     return (basePrice / baseGrams) * targetGrams;
   }
+
+  static bool isPieceBased(String unit) {
+    return RegExp(r'\bpcs?\b', caseSensitive: false).hasMatch(unit);
+  }
 }

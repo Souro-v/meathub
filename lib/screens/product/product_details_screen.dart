@@ -39,8 +39,12 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
   void initState() {
     super.initState();
     _baseGrams = PricingUtils.unitToGrams(widget.product.unit);
-    _selectedGrams = _weightOptions.contains(_baseGrams) ? _baseGrams : 1000;
+    _selectedGrams = _isPieceBased
+        ? _baseGrams
+        : (_weightOptions.contains(_baseGrams) ? _baseGrams : 1000);
   }
+
+  bool get _isPieceBased => PricingUtils.isPieceBased(widget.product.unit);
 
   double get _basePrice => double.tryParse(widget.product.price) ?? 0;
 
