@@ -12,6 +12,10 @@ import 'package:meathub/models/category_config_model.dart';
 import 'package:meathub/models/product_model.dart';
 import 'package:meathub/providers/cart_provider.dart';
 
+import '../../core/utils/product_filter_criteria.dart';
+import '../../core/widgets/product_filter_sheet.dart';
+import '../../core/widgets/search_product_row.dart';
+
 enum _SortOption { popular, priceLowHigh, priceHighLow }
 
 class CategoryProductsScreen extends StatefulWidget {
@@ -28,6 +32,8 @@ class _CategoryProductsScreenState extends State<CategoryProductsScreen> {
   String _query = '';
   String _selectedChip = 'All';
   _SortOption _sort = _SortOption.popular;
+  ProductFilterCriteria _filterCriteria = const ProductFilterCriteria();
+  bool _isGridView = true;
 
   late final CategoryConfigModel _config;
   late final List<ProductModel> _categoryProducts;
@@ -56,6 +62,7 @@ class _CategoryProductsScreenState extends State<CategoryProductsScreen> {
       final matchesChip =
           _selectedChip == 'All' || p.subCategory == _selectedChip;
       if (!matchesChip) return false;
+      if (!_filterCriteria.matches(p)) return false;
       if (_query.isEmpty) return true;
       return p.name.toLowerCase().contains(_query);
     }).toList();
@@ -151,13 +158,29 @@ class _CategoryProductsScreenState extends State<CategoryProductsScreen> {
     );
   }
 
-  void _showComingSoon(String label) {
+  void _addToCart(ProductModel product) {
+    context.read<CartProvider>().addItem(
+      product,
+      PricingUtils.unitToGrams(product.unit),
+      1,
+    );
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
-        content: Text('$label — ${AppStrings.comingSoon}'),
-        duration: const Duration(seconds: 2),
+        content: Text('${product.name} added to cart'),
+        backgroundColor: AppColors.primary,
+        duration: const Duration(seconds: 1),
       ),
     );
+  }
+
+  Future<void> _openFilterSheet() async {
+    final result = await showModalBottomSheet<ProductFilterCriteria>(
+      context: context,
+      isScrollControlled: true,
+      backgroundColor: Colors.transparent,
+      builder: (_) => ProductFilterSheet(initialCriteria: _filterCriteria),
+    );
+    if (result != null) setState(() => _filterCriteria = result);
   }
 
   @override
@@ -235,9 +258,11 @@ class _CategoryProductsScreenState extends State<CategoryProductsScreen> {
                       ),
                       const SizedBox(width: 10),
                       InkWell(
-                        onTap: () => _showComingSoon('List view'),
-                        child: const Icon(
-                          Icons.grid_view_outlined,
+                        onTap: () => setState(() => _isGridView = !_isGridView),
+                        child: Icon(
+                          _isGridView
+                              ? Icons.view_list_outlined
+                              : Icons.grid_view_outlined,
                           size: 20,
                           color: AppColors.textDark,
                         ),
@@ -251,7 +276,8 @@ class _CategoryProductsScreenState extends State<CategoryProductsScreen> {
             Expanded(
               child: products.isEmpty
                   ? _buildEmptyState()
-                  : GridView.builder(
+                  : _isGridView
+                  ? GridView.builder(
                       padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
                       itemCount: products.length,
                       gridDelegate:
@@ -266,22 +292,18 @@ class _CategoryProductsScreenState extends State<CategoryProductsScreen> {
                         onTap: () => Navigator.of(
                           context,
                         ).push(AppRoutes.productDetailsRoute(products[index])),
-                        onAdd: () {
-                          context.read<CartProvider>().addItem(
-                            products[index],
-                            PricingUtils.unitToGrams(products[index].unit),
-                            1,
-                          );
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(
-                              content: Text(
-                                '${products[index].name} added to cart',
-                              ),
-                              backgroundColor: AppColors.primary,
-                              duration: const Duration(seconds: 1),
-                            ),
-                          );
-                        },
+                        onAdd: () => _addToCart(products[index]),
+                      ),
+                    )
+                  : ListView.builder(
+                      padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
+                      itemCount: products.length,
+                      itemBuilder: (context, index) => SearchProductRow(
+                        product: products[index],
+                        onTap: () => Navigator.of(
+                          context,
+                        ).push(AppRoutes.productDetailsRoute(products[index])),
+                        onAdd: () => _addToCart(products[index]),
                       ),
                     ),
             ),
@@ -399,29 +421,47 @@ class _CategoryProductsScreenState extends State<CategoryProductsScreen> {
   }
 
   Widget _buildFilterButton() {
+    final isActive = _filterCriteria.isActive;
     return InkWell(
-      onTap: () => _showComingSoon(AppStrings.filter),
+      onTap: _openFilterSheet,
       borderRadius: BorderRadius.circular(12),
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 13),
         decoration: BoxDecoration(
-          color: AppColors.surface,
+          color: isActive ? AppColors.primarySoft : AppColors.surface,
           borderRadius: BorderRadius.circular(14),
-          border: Border.all(color: AppColors.divider),
+          border: Border.all(
+            color: isActive ? AppColors.primary : AppColors.divider,
+          ),
         ),
         child: Row(
           mainAxisSize: MainAxisSize.min,
-          children: const [
-            Icon(Icons.tune, size: 16, color: AppColors.textDark),
-            SizedBox(width: 6),
+          children: [
+            Icon(
+              Icons.tune,
+              size: 16,
+              color: isActive ? AppColors.primary : AppColors.textDark,
+            ),
+            const SizedBox(width: 6),
             Text(
               AppStrings.filter,
               style: TextStyle(
                 fontSize: 12.5,
                 fontWeight: FontWeight.w600,
-                color: AppColors.textDark,
+                color: isActive ? AppColors.primary : AppColors.textDark,
               ),
             ),
+            if (isActive) ...[
+              const SizedBox(width: 6),
+              Container(
+                width: 6,
+                height: 6,
+                decoration: const BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: AppColors.primary,
+                ),
+              ),
+            ],
           ],
         ),
       ),
