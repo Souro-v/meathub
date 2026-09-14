@@ -14,7 +14,9 @@ class CartItemModel {
 
   String get cartId => '${product.id}_${weightGrams.toInt()}';
 
-  String get weightLabel => PricingUtils.formatWeight(weightGrams);
+  String get weightLabel => PricingUtils.isPieceBased(product.unit)
+      ? product.unit
+      : PricingUtils.formatWeight(weightGrams);
 
   double get unitPrice => PricingUtils.priceForWeight(
     basePrice: double.tryParse(product.price) ?? 0,

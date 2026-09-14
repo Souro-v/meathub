@@ -216,49 +216,52 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                           ),
                       ],
                     ),
-                    const SizedBox(height: 22),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        const Text(
-                          AppStrings.chooseWeight,
-                          style: TextStyle(
-                            fontSize: 15,
-                            fontWeight: FontWeight.w700,
-                            color: AppColors.textDark,
+                    if (!_isPieceBased) ...[
+                      const SizedBox(height: 22),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          const Text(
+                            AppStrings.chooseWeight,
+                            style: TextStyle(
+                              fontSize: 15,
+                              fontWeight: FontWeight.w700,
+                              color: AppColors.textDark,
+                            ),
                           ),
-                        ),
-                        GestureDetector(
-                          onTap: () => _showHowMuchDialog(context),
-                          child: Row(
-                            mainAxisSize: MainAxisSize.min,
-                            children: const [
-                              Icon(
-                                Icons.help_outline,
-                                size: 15,
-                                color: AppColors.primary,
-                              ),
-                              SizedBox(width: 4),
-                              Text(
-                                AppStrings.howMuchDoINeed,
-                                style: TextStyle(
-                                  fontSize: 12,
-                                  fontWeight: FontWeight.w600,
+                          GestureDetector(
+                            onTap: () => _showHowMuchDialog(context),
+                            child: Row(
+                              mainAxisSize: MainAxisSize.min,
+                              children: const [
+                                Icon(
+                                  Icons.help_outline,
+                                  size: 15,
                                   color: AppColors.primary,
                                 ),
-                              ),
-                            ],
+                                SizedBox(width: 4),
+                                Text(
+                                  AppStrings.howMuchDoINeed,
+                                  style: TextStyle(
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.w600,
+                                    color: AppColors.primary,
+                                  ),
+                                ),
+                              ],
+                            ),
                           ),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: 12),
-                    WeightSelector(
-                      options: _weightOptions,
-                      selectedGrams: _selectedGrams,
-                      onChanged: (grams) =>
-                          setState(() => _selectedGrams = grams),
-                    ),
+                        ],
+                      ),
+                      const SizedBox(height: 12),
+                      WeightSelector(
+                        options: _weightOptions,
+                        selectedGrams: _selectedGrams,
+                        onChanged: (grams) =>
+                            setState(() => _selectedGrams = grams),
+                      ),
+                    ] else
+                      const SizedBox(height: 22),
                     const SizedBox(height: 20),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
