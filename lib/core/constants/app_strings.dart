@@ -957,4 +957,13 @@ class AppStrings {
   static const String lastUpdatedLabel = 'Last updated';
   static const String enterPasswordToConfirm = 'Enter your password to confirm';
   static const String deleteMyAccount = 'Delete My Account';
+
+  // Product Filter
+  static const String filterProductsTitle = 'Filter Products';
+  static const String priceRangeLabel = 'Price Range';
+  static const String minimumRatingLabel = 'Minimum Rating';
+  static const String anyRatingLabel = 'Any';
+  static const String discountedItemsOnlyLabel = 'Discounted items only';
+  static const String resetFiltersLabel = 'Reset';
+  static const String applyFiltersLabel = 'Apply Filters';
 }
