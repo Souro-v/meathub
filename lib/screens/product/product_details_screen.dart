@@ -56,8 +56,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
   double get _total => _unitTotal * _quantity;
 
   List<ProductModel> get _related {
-    final all = [...DummyData.popularToday, ...DummyData.todaysFreshPicks];
-    return all
+    return DummyData.allProducts
         .where(
           (p) =>
               p.category == widget.product.category &&

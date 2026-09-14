@@ -140,19 +140,14 @@ class OrdersProvider extends ChangeNotifier {
 
   Future<void> loadFromFirestore() async {
     if (_loaded) return;
-
     _loaded = true;
-
     final raw = await FirestoreService.loadList('orders');
-
-    if (raw.isNotEmpty) {
-      _orders.clear();
-
-      _orders.addAll(raw.map((e) => OrderModel.fromJson(e)));
-    } else {
-      _persist();
-    }
-
+    // Always replace the constructor's demo/seed orders with whatever is
+    // actually in Firestore for this account — including an EMPTY list for
+    // a brand-new user. Never persist the demo seed as if it were real
+    // order history.
+    _orders.clear();
+    _orders.addAll(raw.map((e) => OrderModel.fromJson(e)));
     notifyListeners();
   }
 
