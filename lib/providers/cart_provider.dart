@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:meathub/core/services/analytics_service.dart';
 import 'package:meathub/core/services/firestore_service.dart';
@@ -9,6 +11,7 @@ class CartProvider extends ChangeNotifier {
   final List<CartItemModel> _items = [];
   String _orderNote = '';
   bool _loaded = false;
+  Timer? _persistDebounce;
 
   List<CartItemModel> get items => List.unmodifiable(_items);
 
@@ -56,10 +59,19 @@ class CartProvider extends ChangeNotifier {
   }
 
   void _persist() {
-    FirestoreService.saveMap('cart', {
-      'items': _items.map((i) => i.toJson()).toList(),
-      'orderNote': _orderNote,
+    _persistDebounce?.cancel();
+    _persistDebounce = Timer(const Duration(milliseconds: 600), () {
+      FirestoreService.saveMap('cart', {
+        'items': _items.map((i) => i.toJson()).toList(),
+        'orderNote': _orderNote,
+      });
     });
+  }
+
+  @override
+  void dispose() {
+    _persistDebounce?.cancel();
+    super.dispose();
   }
 
   void addItem(ProductModel product, double weightGrams, int quantity) {
