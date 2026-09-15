@@ -9,45 +9,87 @@ class CategoryProductCard extends StatelessWidget {
   final VoidCallback? onTap;
   final VoidCallback? onAdd;
 
-  const CategoryProductCard({super.key, required this.product, this.onTap, this.onAdd});
+  const CategoryProductCard({
+    super.key,
+    required this.product,
+    this.onTap,
+    this.onAdd,
+  });
 
   @override
   Widget build(BuildContext context) {
-    final isWishlisted = context.watch<WishlistProvider>().isWishlisted(product.id);
+    final isWishlisted = context.watch<WishlistProvider>().isWishlisted(
+      product.id,
+    );
     final badge = product.computedBadge;
     final isBestSeller = product.badgeLabel == 'BEST SELLER';
 
     return GestureDetector(
       onTap: onTap,
       child: Container(
-        decoration: BoxDecoration(color: AppColors.white, borderRadius: BorderRadius.circular(16), border: Border.all(color: AppColors.divider)),
+        decoration: BoxDecoration(
+          color: AppColors.white,
+          borderRadius: BorderRadius.circular(16),
+          border: Border.all(color: AppColors.divider),
+        ),
         clipBehavior: Clip.antiAlias,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Stack(
               children: [
-                AspectRatio(aspectRatio: 1.15, child: Image.asset(product.image, fit: BoxFit.cover, width: double.infinity)),
+                AspectRatio(
+                  aspectRatio: 1.15,
+                  child: Image.asset(
+                    product.image,
+                    fit: BoxFit.cover,
+                    width: double.infinity,
+                    cacheWidth: 300,
+                  ),
+                ),
                 if (badge != null)
                   Positioned(
                     top: 8,
                     left: 8,
                     child: Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-                      decoration: BoxDecoration(color: isBestSeller ? AppColors.textDark : AppColors.primary, borderRadius: BorderRadius.circular(6)),
-                      child: Text(badge, style: const TextStyle(fontSize: 9, fontWeight: FontWeight.w800, color: AppColors.white)),
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 8,
+                        vertical: 4,
+                      ),
+                      decoration: BoxDecoration(
+                        color: isBestSeller
+                            ? AppColors.textDark
+                            : AppColors.primary,
+                        borderRadius: BorderRadius.circular(6),
+                      ),
+                      child: Text(
+                        badge,
+                        style: const TextStyle(
+                          fontSize: 9,
+                          fontWeight: FontWeight.w800,
+                          color: AppColors.white,
+                        ),
+                      ),
                     ),
                   ),
                 Positioned(
                   top: 8,
                   right: 8,
                   child: InkWell(
-                    onTap: () => context.read<WishlistProvider>().toggle(product),
+                    onTap: () =>
+                        context.read<WishlistProvider>().toggle(product),
                     borderRadius: BorderRadius.circular(20),
                     child: Container(
                       padding: const EdgeInsets.all(6),
-                      decoration: const BoxDecoration(shape: BoxShape.circle, color: AppColors.white),
-                      child: Icon(isWishlisted ? Icons.favorite : Icons.favorite_border, size: 15, color: AppColors.primary),
+                      decoration: const BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: AppColors.white,
+                      ),
+                      child: Icon(
+                        isWishlisted ? Icons.favorite : Icons.favorite_border,
+                        size: 15,
+                        color: AppColors.primary,
+                      ),
                     ),
                   ),
                 ),
@@ -58,15 +100,40 @@ class CategoryProductCard extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(product.name, maxLines: 1, overflow: TextOverflow.ellipsis, style: const TextStyle(fontSize: 13.5, fontWeight: FontWeight.w700, color: AppColors.textDark)),
+                  Text(
+                    product.name,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: const TextStyle(
+                      fontSize: 13.5,
+                      fontWeight: FontWeight.w700,
+                      color: AppColors.textDark,
+                    ),
+                  ),
                   const SizedBox(height: 2),
-                  Text('${product.category} • ${product.unit}', style: const TextStyle(fontSize: 11, color: AppColors.textHint)),
+                  Text(
+                    '${product.category} • ${product.unit}',
+                    style: const TextStyle(
+                      fontSize: 11,
+                      color: AppColors.textHint,
+                    ),
+                  ),
                   const SizedBox(height: 4),
                   Row(
                     children: [
-                      const Icon(Icons.star, size: 12, color: Color(0xFFFFA726)),
+                      const Icon(
+                        Icons.star,
+                        size: 12,
+                        color: Color(0xFFFFA726),
+                      ),
                       const SizedBox(width: 3),
-                      Text('${product.rating} (${product.reviewCount})', style: const TextStyle(fontSize: 10.5, color: AppColors.textHint)),
+                      Text(
+                        '${product.rating} (${product.reviewCount})',
+                        style: const TextStyle(
+                          fontSize: 10.5,
+                          color: AppColors.textHint,
+                        ),
+                      ),
                     ],
                   ),
                   const SizedBox(height: 6),
@@ -75,10 +142,24 @@ class CategoryProductCard extends StatelessWidget {
                     children: [
                       Row(
                         children: [
-                          Text('৳${product.price}', style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w800, color: AppColors.primary)),
+                          Text(
+                            '৳${product.price}',
+                            style: const TextStyle(
+                              fontSize: 14,
+                              fontWeight: FontWeight.w800,
+                              color: AppColors.primary,
+                            ),
+                          ),
                           if (product.hasDiscount) ...[
                             const SizedBox(width: 5),
-                            Text('৳${product.originalPrice}', style: const TextStyle(fontSize: 10.5, color: AppColors.textHint, decoration: TextDecoration.lineThrough)),
+                            Text(
+                              '৳${product.originalPrice}',
+                              style: const TextStyle(
+                                fontSize: 10.5,
+                                color: AppColors.textHint,
+                                decoration: TextDecoration.lineThrough,
+                              ),
+                            ),
                           ],
                         ],
                       ),
@@ -87,8 +168,15 @@ class CategoryProductCard extends StatelessWidget {
                         borderRadius: BorderRadius.circular(20),
                         child: Container(
                           padding: const EdgeInsets.all(6),
-                          decoration: const BoxDecoration(shape: BoxShape.circle, color: AppColors.primary),
-                          child: const Icon(Icons.add, size: 15, color: AppColors.white),
+                          decoration: const BoxDecoration(
+                            shape: BoxShape.circle,
+                            color: AppColors.primary,
+                          ),
+                          child: const Icon(
+                            Icons.add,
+                            size: 15,
+                            color: AppColors.white,
+                          ),
                         ),
                       ),
                     ],

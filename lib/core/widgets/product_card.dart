@@ -37,6 +37,7 @@ class ProductCard extends StatelessWidget {
                     product.image,
                     fit: BoxFit.cover,
                     width: double.infinity,
+                    cacheWidth: 300,
                   ),
                 ),
                 Positioned(
