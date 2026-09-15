@@ -578,11 +578,11 @@ class DummyData {
   ];
 
   /// Full inventory across all categories — used by CategoryProductsScreen.
-  static List<ProductModel> get allProducts => [
+  static final List<ProductModel> allProducts = List.unmodifiable([
     ...popularToday,
     ...todaysFreshPicks,
     ...categoryOnlyProducts,
-  ];
+  ]);
 
   static const List<DeliveryOptionModel> deliveryOptions = [
     DeliveryOptionModel(

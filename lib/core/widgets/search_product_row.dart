@@ -42,6 +42,7 @@ class SearchProductRow extends StatelessWidget {
                     width: 68,
                     height: 68,
                     fit: BoxFit.cover,
+                    cacheWidth: 150,
                   ),
                 ),
                 if (badge != null)
