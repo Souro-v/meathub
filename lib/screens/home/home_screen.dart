@@ -28,7 +28,23 @@ class HomeScreen extends StatelessWidget {
             ),
             SliverToBoxAdapter(child: _buildCategories()),
             SliverToBoxAdapter(child: _buildPopularToday()),
-            SliverToBoxAdapter(child: _buildFreshPicks()),
+            SliverToBoxAdapter(child: _buildFreshPicksHeader()),
+            SliverPadding(
+              padding: const EdgeInsets.fromLTRB(16, 14, 16, 0),
+              sliver: SliverGrid(
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 2,
+                  mainAxisSpacing: 12,
+                  crossAxisSpacing: 12,
+                  childAspectRatio: 0.72,
+                ),
+                delegate: SliverChildBuilderDelegate(
+                  (context, index) =>
+                      ProductCard(product: DummyData.todaysFreshPicks[index]),
+                  childCount: DummyData.todaysFreshPicks.length,
+                ),
+              ),
+            ),
             const SliverToBoxAdapter(child: SizedBox(height: 24)),
           ],
         ),
@@ -257,35 +273,10 @@ class HomeScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildFreshPicks() {
+  Widget _buildFreshPicksHeader() {
     return Padding(
       padding: const EdgeInsets.fromLTRB(16, 22, 16, 0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const SectionHeader(title: AppStrings.todaysFreshPicks),
-          const SizedBox(height: 14),
-          GridView.builder(
-            shrinkWrap: true,
-            physics: const NeverScrollableScrollPhysics(),
-            itemCount: DummyData.todaysFreshPicks.length,
-            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 2,
-              mainAxisSpacing: 12,
-              crossAxisSpacing: 12,
-              childAspectRatio: 0.72,
-            ),
-            itemBuilder: (context, index) => ProductCard(
-              product: DummyData.todaysFreshPicks[index],
-              onTap: () => Navigator.of(context).push(
-                AppRoutes.productDetailsRoute(
-                  DummyData.todaysFreshPicks[index],
-                ),
-              ),
-            ),
-          ),
-        ],
-      ),
+      child: const SectionHeader(title: AppStrings.todaysFreshPicks),
     );
   }
 }

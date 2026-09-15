@@ -72,7 +72,7 @@ class WeightSelector extends StatelessWidget {
         ],
       ),
     );
-    if (result != null && result > 0) onChanged(result);
+    if (result != null && result > 0 && result <= 20000) onChanged(result);
   }
 }
 
