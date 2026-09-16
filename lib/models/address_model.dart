@@ -26,21 +26,8 @@ class RecentAddressFullModel {
   });
 }
 
-class SavedAddressModel {
-  final String title;
-  final bool isDefault;
-  final String address;
-  final String phone;
-
-  const SavedAddressModel({
-    required this.title,
-    required this.address,
-    required this.phone,
-    this.isDefault = false,
-  });
-}
-
 class ManagedAddressModel {
+  final String id;
   final String label;
   final IconData labelIcon;
   final Color labelColor;
@@ -51,6 +38,7 @@ class ManagedAddressModel {
   final bool isDefault;
 
   const ManagedAddressModel({
+    required this.id,
     required this.label,
     required this.labelIcon,
     required this.labelColor,
@@ -63,6 +51,7 @@ class ManagedAddressModel {
 
   ManagedAddressModel copyWith({bool? isDefault}) {
     return ManagedAddressModel(
+      id: id,
       label: label,
       labelIcon: labelIcon,
       labelColor: labelColor,
@@ -75,6 +64,7 @@ class ManagedAddressModel {
   }
 
   Map<String, dynamic> toJson() => {
+    'id': id,
     'label': label,
     'labelIconCodePoint': labelIcon.codePoint,
     'labelColorValue': labelColor.toARGB32(),
@@ -87,9 +77,10 @@ class ManagedAddressModel {
 
   factory ManagedAddressModel.fromJson(Map<String, dynamic> json) =>
       ManagedAddressModel(
+        id: json['id'] as String,
         label: json['label'] as String,
         labelIcon: IconData(
-          json['labelIconCodePoint'] as int,
+          json ['labelIconCodePoint'] as int,
           fontFamily: 'MaterialIcons',
         ),
         labelColor: Color(json['labelColorValue'] as int),
