@@ -966,4 +966,9 @@ class AppStrings {
   static const String discountedItemsOnlyLabel = 'Discounted items only';
   static const String resetFiltersLabel = 'Reset';
   static const String applyFiltersLabel = 'Apply Filters';
+  static const String noSavedAddressesTitle = 'No Saved Addresses';
+  static const String noSavedAddressesDesc =
+      'Add a delivery address to get started.';
+  static const String addAddressToContinue =
+      'Add a delivery address to continue';
 }
