@@ -4,21 +4,22 @@ import 'package:meathub/core/constants/app_colors.dart';
 import 'package:meathub/core/constants/app_strings.dart';
 import 'package:meathub/core/routes/app_routes.dart';
 import 'package:meathub/core/utils/coupon_utils.dart';
+import 'package:meathub/core/utils/fee_utils.dart';
 import 'package:meathub/core/widgets/checkout_item_row.dart';
 import 'package:meathub/core/widgets/checkout_step_indicator.dart';
 import 'package:meathub/core/widgets/coupon_section.dart';
 import 'package:meathub/core/widgets/delivery_option_tile.dart';
 import 'package:meathub/core/widgets/order_note_tile.dart';
-import 'package:meathub/data/dummy_addresses.dart';
 import 'package:meathub/data/dummy_data.dart';
+import 'package:meathub/models/address_model.dart';
 import 'package:meathub/models/cart_item_model.dart';
 import 'package:meathub/models/coupon_model.dart';
 import 'package:meathub/models/delivery_option_model.dart';
+import 'package:meathub/providers/addresses_provider.dart';
 import 'package:meathub/providers/coupon_provider.dart';
+import 'package:meathub/providers/user_provider.dart';
 import 'package:meathub/screens/address/address_selection_screen.dart';
 import 'package:meathub/screens/address/use_current_location_sheet.dart';
-
-import '../../core/utils/fee_utils.dart';
 
 class CheckoutScreen extends StatefulWidget {
   final List<CartItemModel> items;
@@ -30,21 +31,43 @@ class CheckoutScreen extends StatefulWidget {
 }
 
 class _CheckoutScreenState extends State<CheckoutScreen> {
-  static const double _platformFee = FeeUtils
-      .platformFee; // this screen's own value — see earlier conflict note
+  static const double _platformFee = FeeUtils.platformFee;
 
   String _selectedDeliveryId = 'standard';
 
   DeliveryOptionModel get _selectedOption =>
       DummyData.deliveryOptions.firstWhere((o) => o.id == _selectedDeliveryId);
 
+  void _openUseCurrentLocationSheet() {
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      backgroundColor: Colors.transparent,
+      builder: (_) => UseCurrentLocationSheet(
+        onLocationResolved: (resolvedAddress) {
+          final user = context.read<UserProvider>();
+          context.read<AddressesProvider>().addAddress(
+            ManagedAddressModel(
+              id: 'addr_${DateTime.now().microsecondsSinceEpoch}',
+              label: 'Current Location',
+              labelIcon: Icons.my_location,
+              labelColor: AppColors.primary,
+              labelBg: AppColors.primarySoft,
+              name: user.name,
+              phone: user.phone,
+              address: resolvedAddress,
+              isDefault: true,
+            ),
+          );
+        },
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final items = widget.items;
-    final defaultAddress = DummyAddresses.managed.firstWhere(
-      (a) => a.isDefault,
-      orElse: () => DummyAddresses.managed.first,
-    );
+    final defaultAddress = context.watch<AddressesProvider>().defaultAddress;
 
     final subtotal = items.fold<double>(
       0,
@@ -96,9 +119,12 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                       ),
                     ),
                     const SizedBox(height: 10),
-                    _buildAddressCard(context, defaultAddress),
-                    const SizedBox(height: 10),
-                    _buildUseCurrentLocationButton(context),
+                    if (defaultAddress != null) ...[
+                      _buildAddressCard(context, defaultAddress),
+                      const SizedBox(height: 10),
+                      _buildUseCurrentLocationButton(),
+                    ] else
+                      _buildNoAddressPrompt(context),
                     const SizedBox(height: 22),
                     const Text(
                       AppStrings.deliveryOptions,
@@ -136,7 +162,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                       subtotal: subtotal,
                       originalDeliveryFee: _selectedOption.fee,
                     ),
-                    OrderNoteTile(
+                    const OrderNoteTile(
                       title: AppStrings.addOrderNoteOptional,
                       placeholder: AppStrings.orderNoteExample,
                     ),
@@ -252,7 +278,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                 ),
               ),
             ),
-            _buildBottomBar(total),
+            _buildBottomBar(total, defaultAddress),
           ],
         ),
       ),
@@ -263,7 +289,6 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
     return Padding(
       padding: const EdgeInsets.fromLTRB(8, 8, 16, 0),
       child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           InkWell(
             onTap: () => Navigator.of(context).maybePop(),
@@ -325,7 +350,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
     );
   }
 
-  Widget _buildAddressCard(BuildContext context, dynamic address) {
+  Widget _buildAddressCard(BuildContext context, ManagedAddressModel address) {
     return Container(
       padding: const EdgeInsets.all(14),
       decoration: BoxDecoration(
@@ -343,11 +368,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
               color: AppColors.primarySoft,
               shape: BoxShape.circle,
             ),
-            child: const Icon(
-              Icons.location_on,
-              color: AppColors.primary,
-              size: 20,
-            ),
+            child: Icon(address.labelIcon, color: address.labelColor, size: 20),
           ),
           const SizedBox(width: 12),
           Expanded(
@@ -429,14 +450,55 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
     );
   }
 
-  Widget _buildUseCurrentLocationButton(BuildContext context) {
+  Widget _buildNoAddressPrompt(BuildContext context) {
     return InkWell(
-      onTap: () => showModalBottomSheet(
-        context: context,
-        isScrollControlled: true,
-        backgroundColor: Colors.transparent,
-        builder: (_) => const UseCurrentLocationSheet(),
+      onTap: () => Navigator.of(
+        context,
+      ).push(MaterialPageRoute(builder: (_) => const AddressSelectionScreen())),
+      borderRadius: BorderRadius.circular(14),
+      child: Container(
+        padding: const EdgeInsets.all(14),
+        decoration: BoxDecoration(
+          color: AppColors.primarySoft,
+          borderRadius: BorderRadius.circular(14),
+          border: Border.all(color: AppColors.primary),
+        ),
+        child: Row(
+          children: [
+            Container(
+              width: 40,
+              height: 40,
+              decoration: const BoxDecoration(
+                color: AppColors.white,
+                shape: BoxShape.circle,
+              ),
+              child: const Icon(
+                Icons.add_location_alt_outlined,
+                color: AppColors.primary,
+                size: 19,
+              ),
+            ),
+            const SizedBox(width: 12),
+            const Expanded(
+              child: Text(
+                AppStrings.addAddressToContinue,
+                style: TextStyle(
+                  fontSize: 13.5,
+                  fontWeight: FontWeight.w600,
+                  color: AppColors.primary,
+                ),
+              ),
+            ),
+            const Icon(Icons.chevron_right, size: 18, color: AppColors.primary),
+          ],
+        ),
       ),
+    );
+  }
+
+  Widget _buildUseCurrentLocationButton() {
+    return InkWell(
+      onTap: _openUseCurrentLocationSheet,
       borderRadius: BorderRadius.circular(14),
       child: Container(
         padding: const EdgeInsets.all(14),
@@ -489,7 +551,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
     );
   }
 
-  Widget _buildBottomBar(double total) {
+  Widget _buildBottomBar(double total, ManagedAddressModel? defaultAddress) {
     return Container(
       padding: const EdgeInsets.fromLTRB(16, 12, 16, 16),
       decoration: const BoxDecoration(
@@ -532,20 +594,20 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
           Expanded(
             flex: 2,
             child: ElevatedButton(
-              onPressed: () => Navigator.of(context).push(
-                AppRoutes.paymentRoute(
-                  items: widget.items,
-                  deliveryOption: _selectedOption,
-                  address: DummyAddresses.managed.firstWhere(
-                    (a) => a.isDefault,
-                    orElse: () => DummyAddresses.managed.first,
-                  ),
-                  platformFee: _platformFee,
-                ),
-              ),
+              onPressed: defaultAddress == null
+                  ? null
+                  : () => Navigator.of(context).push(
+                      AppRoutes.paymentRoute(
+                        items: widget.items,
+                        deliveryOption: _selectedOption,
+                        address: defaultAddress,
+                        platformFee: _platformFee,
+                      ),
+                    ),
               style: ElevatedButton.styleFrom(
                 backgroundColor: AppColors.primary,
                 foregroundColor: AppColors.white,
+                disabledBackgroundColor: AppColors.divider,
                 minimumSize: const Size(0, 52),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(14),
