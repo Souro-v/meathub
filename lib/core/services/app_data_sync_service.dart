@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:meathub/providers/addresses_provider.dart';
 import 'package:meathub/providers/cart_provider.dart';
 import 'package:meathub/providers/orders_provider.dart';
 import 'package:meathub/providers/user_provider.dart';
@@ -14,6 +15,7 @@ class AppDataSyncService {
       context.read<WishlistProvider>().loadFromFirestore(),
       context.read<OrdersProvider>().loadFromFirestore(),
       context.read<UserProvider>().loadFromFirestore(),
+      context.read<AddressesProvider>().loadFromFirestore(),
     ]);
   }
 
@@ -22,5 +24,6 @@ class AppDataSyncService {
     context.read<WishlistProvider>().reset();
     context.read<OrdersProvider>().reset();
     context.read<UserProvider>().reset();
+    context.read<AddressesProvider>().reset();
   }
 }
