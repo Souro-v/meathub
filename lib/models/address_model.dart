@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:meathub/core/constants/app_colors.dart';
 
 class RecentAddressModel {
   final IconData icon;
@@ -26,12 +27,15 @@ class RecentAddressFullModel {
   });
 }
 
+/// A small, fixed set of address "kinds" — stored as a stable string key
+/// instead of a raw IconData codePoint, so it survives JSON/Firestore
+/// round-trips and stays compatible with Flutter's icon tree-shaking.
+enum AddressIconType { home, office, family, village, currentLocation, other }
+
 class ManagedAddressModel {
   final String id;
   final String label;
-  final IconData labelIcon;
-  final Color labelColor;
-  final Color labelBg;
+  final AddressIconType iconType;
   final String name;
   final String phone;
   final String address;
@@ -40,22 +44,65 @@ class ManagedAddressModel {
   const ManagedAddressModel({
     required this.id,
     required this.label,
-    required this.labelIcon,
-    required this.labelColor,
-    required this.labelBg,
+    required this.iconType,
     required this.name,
     required this.phone,
     required this.address,
     this.isDefault = false,
   });
 
+  IconData get labelIcon {
+    switch (iconType) {
+      case AddressIconType.home:
+        return Icons.home;
+      case AddressIconType.office:
+        return Icons.apartment;
+      case AddressIconType.family:
+        return Icons.people;
+      case AddressIconType.village:
+        return Icons.cottage;
+      case AddressIconType.currentLocation:
+        return Icons.my_location;
+      case AddressIconType.other:
+        return Icons.more_horiz;
+    }
+  }
+
+  Color get labelColor {
+    switch (iconType) {
+      case AddressIconType.home:
+      case AddressIconType.currentLocation:
+        return AppColors.primary;
+      case AddressIconType.family:
+        return const Color(0xFF7B4FC9);
+      case AddressIconType.village:
+        return const Color(0xFF2E7D32);
+      case AddressIconType.office:
+      case AddressIconType.other:
+        return AppColors.textDark;
+    }
+  }
+
+  Color get labelBg {
+    switch (iconType) {
+      case AddressIconType.home:
+      case AddressIconType.currentLocation:
+        return AppColors.primarySoft;
+      case AddressIconType.family:
+        return const Color(0xFFF1E9FB);
+      case AddressIconType.village:
+        return const Color(0xFFE3F5E6);
+      case AddressIconType.office:
+      case AddressIconType.other:
+        return AppColors.surface;
+    }
+  }
+
   ManagedAddressModel copyWith({bool? isDefault}) {
     return ManagedAddressModel(
       id: id,
       label: label,
-      labelIcon: labelIcon,
-      labelColor: labelColor,
-      labelBg: labelBg,
+      iconType: iconType,
       name: name,
       phone: phone,
       address: address,
@@ -66,9 +113,7 @@ class ManagedAddressModel {
   Map<String, dynamic> toJson() => {
     'id': id,
     'label': label,
-    'labelIconCodePoint': labelIcon.codePoint,
-    'labelColorValue': labelColor.toARGB32(),
-    'labelBgValue': labelBg.toARGB32(),
+    'iconType': iconType.name,
     'name': name,
     'phone': phone,
     'address': address,
@@ -79,12 +124,10 @@ class ManagedAddressModel {
       ManagedAddressModel(
         id: json['id'] as String,
         label: json['label'] as String,
-        labelIcon: IconData(
-          json ['labelIconCodePoint'] as int,
-          fontFamily: 'MaterialIcons',
+        iconType: AddressIconType.values.firstWhere(
+          (t) => t.name == json['iconType'],
+          orElse: () => AddressIconType.other,
         ),
-        labelColor: Color(json['labelColorValue'] as int),
-        labelBg: Color(json['labelBgValue'] as int),
         name: json['name'] as String,
         phone: json['phone'] as String,
         address: json['address'] as String,

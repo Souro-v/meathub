@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:meathub/models/address_model.dart';
 
-import '../core/constants/app_colors.dart';
-
 class DummyAddresses {
   DummyAddresses._();
 
@@ -21,21 +19,21 @@ class DummyAddresses {
     ),
   ];
 
-  static const List<SavedAddressModel> saved = [
-    SavedAddressModel(
-      title: 'Home',
-      isDefault: true,
-      address:
-          'Vill: Polashbari, Post: Polashbari - 5700\nUpazila: Polashbari, District: Gaibandha',
-      phone: '017XXXXXXXX',
-    ),
-    SavedAddressModel(
-      title: "Parents' Home",
-      address:
-          'Vill: Saghata, Post: Saghata - 5720\nUpazila: Saghata, District: Gaibandha',
-      phone: '016XXXXXXXX',
-    ),
-  ];
+  // static const List<SavedAddressModel> saved = [
+  //   SavedAddressModel(
+  //     title: 'Home',
+  //     isDefault: true,
+  //     address:
+  //     'Vill: Polashbari, Post: Polashbari - 5700\nUpazila: Polashbari, District: Gaibandha',
+  //     phone: '017XXXXXXXX',
+  //   ),
+  //   SavedAddressModel(
+  //     title: "Parents' Home",
+  //     address:
+  //     'Vill: Saghata, Post: Saghata - 5720\nUpazila: Saghata, District: Gaibandha',
+  //     phone: '016XXXXXXXX',
+  //   ),
+  // ];
   static const List<RecentAddressFullModel> allRecent = [
     RecentAddressFullModel(
       title: 'Home',
@@ -93,47 +91,42 @@ class DummyAddresses {
   ];
   static const List<ManagedAddressModel> managed = [
     ManagedAddressModel(
+      id: 'addr_1',
       label: 'Home',
-      labelIcon: Icons.home,
-      labelColor: AppColors.primary,
-      labelBg: AppColors.primarySoft,
+      iconType: AddressIconType.home,
       name: 'Rafiq Hasan',
       phone: '+880 1712 345 678',
       address: '123 Green Road, Dhanmondi, Dhaka 1205, Bangladesh',
       isDefault: true,
     ),
     ManagedAddressModel(
+      id: 'addr_2',
       label: 'Office',
-      labelIcon: Icons.apartment,
-      labelColor: AppColors.textDark,
-      labelBg: AppColors.surface,
+      iconType: AddressIconType.office,
       name: 'Rafiq Hasan',
       phone: '+880 1712 345 678',
       address: '45 Gulshan Avenue, Gulshan 1, Dhaka 1212, Bangladesh',
     ),
     ManagedAddressModel(
+      id: 'addr_3',
       label: 'Parents',
-      labelIcon: Icons.people,
-      labelColor: Color(0xFF7B4FC9),
-      labelBg: Color(0xFFF1E9FB),
+      iconType: AddressIconType.family,
       name: 'Rafiq Hasan',
       phone: '+880 1712 345 678',
       address: '32 Old Airport Road, Banani, Dhaka 1213, Bangladesh',
     ),
     ManagedAddressModel(
+      id: 'addr_4',
       label: 'Village',
-      labelIcon: Icons.cottage,
-      labelColor: Color(0xFF2E7D32),
-      labelBg: Color(0xFFE3F5E6),
+      iconType: AddressIconType.village,
       name: 'Rafiq Hasan',
       phone: '+880 1712 345 678',
       address: 'Vill: Chandpur, P.O: Chandpur Bazar, P.S: Hajiganj, Chandpur',
     ),
     ManagedAddressModel(
+      id: 'addr_5',
       label: 'Other',
-      labelIcon: Icons.more_horiz,
-      labelColor: AppColors.textDark,
-      labelBg: AppColors.surface,
+      iconType: AddressIconType.other,
       name: 'Rafiq Hasan',
       phone: '+880 1712 345 678',
       address: 'House 9, Road 18, Nikunja 2, Khilkhet, Dhaka 1229, Bangladesh',
