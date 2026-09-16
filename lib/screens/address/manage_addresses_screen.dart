@@ -1,42 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:meathub/core/constants/app_colors.dart';
 import 'package:meathub/core/constants/app_strings.dart';
+import 'package:meathub/core/widgets/empty_state_view.dart';
 import 'package:meathub/core/widgets/manage_address_card.dart';
-import 'package:meathub/data/dummy_addresses.dart';
-import 'package:meathub/models/address_model.dart';
+import 'package:meathub/providers/addresses_provider.dart';
 import 'package:meathub/screens/address/add_new_address_sheet.dart';
 
-class ManageAddressesScreen extends StatefulWidget {
+class ManageAddressesScreen extends StatelessWidget {
   const ManageAddressesScreen({super.key});
 
-  @override
-  State<ManageAddressesScreen> createState() => _ManageAddressesScreenState();
-}
-
-class _ManageAddressesScreenState extends State<ManageAddressesScreen> {
-  late List<ManagedAddressModel> _addresses;
-
-  @override
-  void initState() {
-    super.initState();
-    _addresses = List.of(DummyAddresses.managed);
-  }
-
-  void _setDefault(int index) {
-    setState(() {
-      _addresses = _addresses
-          .asMap()
-          .entries
-          .map((e) => e.value.copyWith(isDefault: e.key == index))
-          .toList();
-    });
-  }
-
-  void _deleteAddress(int index) {
-    setState(() => _addresses.removeAt(index));
-  }
-
-  void _openAddAddressSheet() {
+  void _openAddAddressSheet(BuildContext context) {
     showModalBottomSheet(
       context: context,
       isScrollControlled: true,
@@ -47,6 +21,8 @@ class _ManageAddressesScreenState extends State<ManageAddressesScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final addresses = context.watch<AddressesProvider>().addresses;
+
     return Scaffold(
       backgroundColor: AppColors.background,
       body: SafeArea(
@@ -54,23 +30,33 @@ class _ManageAddressesScreenState extends State<ManageAddressesScreen> {
           children: [
             _buildTopBar(context),
             Expanded(
-              child: ListView.builder(
-                padding: const EdgeInsets.fromLTRB(16, 16, 16, 8),
-                itemCount: _addresses.length,
-                itemBuilder: (context, index) => ManageAddressCard(
-                  data: _addresses[index],
-                  onEdit: () {},
-                  onDelete: () => _deleteAddress(index),
-                  onSetDefault: () => _setDefault(index),
-                ),
-              ),
+              child: addresses.isEmpty
+                  ? EmptyStateView(
+                      icon: Icons.location_off_outlined,
+                      title: AppStrings.noSavedAddressesTitle,
+                      description: AppStrings.noSavedAddressesDesc,
+                    )
+                  : ListView.builder(
+                      padding: const EdgeInsets.fromLTRB(16, 16, 16, 8),
+                      itemCount: addresses.length,
+                      itemBuilder: (context, index) => ManageAddressCard(
+                        data: addresses[index],
+                        onEdit: () {},
+                        onDelete: () => context
+                            .read<AddressesProvider>()
+                            .removeAddress(addresses[index].id),
+                        onSetDefault: () => context
+                            .read<AddressesProvider>()
+                            .setDefault(addresses[index].id),
+                      ),
+                    ),
             ),
             Padding(
               padding: const EdgeInsets.fromLTRB(16, 8, 16, 16),
               child: SizedBox(
                 width: double.infinity,
                 child: ElevatedButton.icon(
-                  onPressed: _openAddAddressSheet,
+                  onPressed: () => _openAddAddressSheet(context),
                   icon: const Icon(Icons.add, size: 18),
                   label: const Text(AppStrings.addNewAddress),
                   style: ElevatedButton.styleFrom(
