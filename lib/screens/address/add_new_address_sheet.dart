@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:meathub/core/constants/app_colors.dart';
 import 'package:meathub/core/constants/app_strings.dart';
+import 'package:meathub/models/address_model.dart';
+import 'package:meathub/providers/addresses_provider.dart';
 import '../../core/widgets/custom_textfield.dart';
 
 class AddNewAddressSheet extends StatefulWidget {
@@ -11,8 +14,85 @@ class AddNewAddressSheet extends StatefulWidget {
 }
 
 class _AddNewAddressSheetState extends State<AddNewAddressSheet> {
+  final _nameController = TextEditingController();
+  final _phoneController = TextEditingController();
+  final _houseController = TextEditingController();
+  final _roadController = TextEditingController();
+  final _areaController = TextEditingController();
+  final _landmarkController = TextEditingController();
+
   String _selectedType = 'Home';
   bool _makeDefault = true;
+
+  @override
+  void dispose() {
+    _nameController.dispose();
+    _phoneController.dispose();
+    _houseController.dispose();
+    _roadController.dispose();
+    _areaController.dispose();
+    _landmarkController.dispose();
+    super.dispose();
+  }
+
+  IconData get _typeIcon {
+    switch (_selectedType) {
+      case 'Home':
+        return Icons.home;
+      case 'Office':
+        return Icons.apartment;
+      default:
+        return Icons.more_horiz;
+    }
+  }
+
+  Color get _typeColor =>
+      _selectedType == 'Home' ? AppColors.primary : AppColors.textDark;
+
+  Color get _typeBg =>
+      _selectedType == 'Home' ? AppColors.primarySoft : AppColors.surface;
+
+  void _submit() {
+    if (_nameController.text.trim().isEmpty ||
+        _phoneController.text.trim().isEmpty ||
+        _houseController.text.trim().isEmpty ||
+        _roadController.text.trim().isEmpty ||
+        _areaController.text.trim().isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Please fill in all required fields')),
+      );
+      return;
+    }
+
+    final parts = [
+      _houseController.text.trim(),
+      _roadController.text.trim(),
+      _areaController.text.trim(),
+      if (_landmarkController.text.trim().isNotEmpty)
+        _landmarkController.text.trim(),
+    ];
+
+    final address = ManagedAddressModel(
+      id: 'addr_${DateTime.now().microsecondsSinceEpoch}',
+      label: _selectedType,
+      labelIcon: _typeIcon,
+      labelColor: _typeColor,
+      labelBg: _typeBg,
+      name: _nameController.text.trim(),
+      phone: '+880 ${_phoneController.text.trim()}',
+      address: parts.join(', '),
+      isDefault: _makeDefault,
+    );
+
+    context.read<AddressesProvider>().addAddress(address);
+    Navigator.of(context).maybePop();
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(
+        content: Text('Address saved'),
+        backgroundColor: AppColors.primary,
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -88,35 +168,41 @@ class _AddNewAddressSheetState extends State<AddNewAddressSheet> {
                   ],
                 ),
                 const SizedBox(height: 20),
-                const CustomTextField(
+                CustomTextField(
                   icon: Icons.person_outline,
                   hint: AppStrings.fullNameHint,
+                  controller: _nameController,
                 ),
                 const SizedBox(height: 12),
-                const CustomTextField(
+                CustomTextField(
                   icon: Icons.call_outlined,
                   hint: AppStrings.mobileNumberHint,
                   keyboardType: TextInputType.phone,
+                  controller: _phoneController,
                 ),
                 const SizedBox(height: 12),
-                const CustomTextField(
+                CustomTextField(
                   icon: Icons.home_outlined,
                   hint: AppStrings.houseFlatHint,
+                  controller: _houseController,
                 ),
                 const SizedBox(height: 12),
-                const CustomTextField(
+                CustomTextField(
                   icon: Icons.route_outlined,
                   hint: AppStrings.roadStreetHint,
+                  controller: _roadController,
                 ),
                 const SizedBox(height: 12),
-                const CustomTextField(
+                CustomTextField(
                   icon: Icons.location_on_outlined,
                   hint: AppStrings.areaHint,
+                  controller: _areaController,
                 ),
                 const SizedBox(height: 12),
-                const CustomTextField(
+                CustomTextField(
                   icon: Icons.flag_outlined,
                   hint: AppStrings.landmarkOptionalHint,
+                  controller: _landmarkController,
                 ),
                 const SizedBox(height: 18),
                 const Text(
@@ -198,7 +284,7 @@ class _AddNewAddressSheetState extends State<AddNewAddressSheet> {
                 SizedBox(
                   width: double.infinity,
                   child: ElevatedButton.icon(
-                    onPressed: () => Navigator.of(context).maybePop(),
+                    onPressed: _submit,
                     icon: const Icon(Icons.save_outlined, size: 18),
                     label: const Text(AppStrings.saveAddress),
                     style: ElevatedButton.styleFrom(
