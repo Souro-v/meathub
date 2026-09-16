@@ -28,6 +28,7 @@ class _UseCurrentLocationSheetState extends State<UseCurrentLocationSheet> {
     });
 
     final serviceEnabled = await Geolocator.isLocationServiceEnabled();
+    if (!mounted) return;
     if (!serviceEnabled) {
       setState(() {
         _loading = false;
@@ -38,8 +39,10 @@ class _UseCurrentLocationSheetState extends State<UseCurrentLocationSheet> {
     }
 
     var permission = await Geolocator.checkPermission();
+    if (!mounted) return;
     if (permission == LocationPermission.denied) {
       permission = await Geolocator.requestPermission();
+      if (!mounted) return;
     }
     if (permission == LocationPermission.denied) {
       setState(() {
