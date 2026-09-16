@@ -13,14 +13,20 @@ import 'package:meathub/providers/cart_provider.dart';
 import 'package:meathub/providers/coupon_provider.dart';
 import '../../core/widgets/empty_state_view.dart';
 
-class CartScreen extends StatelessWidget {
+class CartScreen extends StatefulWidget {
   const CartScreen({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    final cart = context.watch<CartProvider>();
-    final couponProvider = context.watch<CouponProvider>();
+  State<CartScreen> createState() => _CartScreenState();
+}
+
+class _CartScreenState extends State<CartScreen> {
+  @override
+  void initState() {
+    super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (!mounted) return;
+      final couponProvider = context.read<CouponProvider>();
       if (couponProvider.consumeJustApplied() &&
           couponProvider.appliedCoupon != null) {
         ScaffoldMessenger.of(context).showSnackBar(
@@ -33,6 +39,11 @@ class CartScreen extends StatelessWidget {
         );
       }
     });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final cart = context.watch<CartProvider>();
 
     return Scaffold(
       backgroundColor: AppColors.background,
