@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:meathub/core/constants/app_colors.dart';
 import 'package:meathub/models/address_model.dart';
 
 class DummyAddresses {
@@ -37,9 +36,7 @@ class DummyAddresses {
     ManagedAddressModel(
       id: 'addr_1',
       label: 'Home',
-      labelIcon: Icons.home,
-      labelColor: AppColors.primary,
-      labelBg: AppColors.primarySoft,
+      iconType: AddressIconType.home,
       name: 'Rafiq Hasan',
       phone: '+880 1712 345 678',
       address: '123 Green Road, Dhanmondi, Dhaka 1205, Bangladesh',
@@ -48,9 +45,7 @@ class DummyAddresses {
     ManagedAddressModel(
       id: 'addr_2',
       label: 'Office',
-      labelIcon: Icons.apartment,
-      labelColor: AppColors.textDark,
-      labelBg: AppColors.surface,
+      iconType: AddressIconType.office,
       name: 'Rafiq Hasan',
       phone: '+880 1712 345 678',
       address: '45 Gulshan Avenue, Gulshan 1, Dhaka 1212, Bangladesh',
@@ -58,9 +53,7 @@ class DummyAddresses {
     ManagedAddressModel(
       id: 'addr_3',
       label: 'Parents',
-      labelIcon: Icons.people,
-      labelColor: Color(0xFF7B4FC9),
-      labelBg: Color(0xFFF1E9FB),
+      iconType: AddressIconType.family,
       name: 'Rafiq Hasan',
       phone: '+880 1712 345 678',
       address: '32 Old Airport Road, Banani, Dhaka 1213, Bangladesh',
@@ -68,9 +61,7 @@ class DummyAddresses {
     ManagedAddressModel(
       id: 'addr_4',
       label: 'Village',
-      labelIcon: Icons.cottage,
-      labelColor: Color(0xFF2E7D32),
-      labelBg: Color(0xFFE3F5E6),
+      iconType: AddressIconType.village,
       name: 'Rafiq Hasan',
       phone: '+880 1712 345 678',
       address: 'Vill: Chandpur, P.O: Chandpur Bazar, P.S: Hajiganj, Chandpur',
@@ -78,9 +69,7 @@ class DummyAddresses {
     ManagedAddressModel(
       id: 'addr_5',
       label: 'Other',
-      labelIcon: Icons.more_horiz,
-      labelColor: AppColors.textDark,
-      labelBg: AppColors.surface,
+      iconType: AddressIconType.other,
       name: 'Rafiq Hasan',
       phone: '+880 1712 345 678',
       address: 'House 9, Road 18, Nikunja 2, Khilkhet, Dhaka 1229, Bangladesh',
