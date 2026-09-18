@@ -5,7 +5,6 @@ import 'package:meathub/core/constants/app_strings.dart';
 import 'package:meathub/core/utils/date_format_utils.dart';
 import 'package:meathub/core/utils/image_picker_utils.dart';
 import 'package:meathub/core/widgets/user_avatar.dart';
-import 'package:meathub/data/dummy_addresses.dart';
 import 'package:meathub/providers/user_provider.dart';
 import 'package:meathub/screens/address/address_selection_screen.dart';
 
@@ -13,6 +12,7 @@ import '../../core/routes/app_routes.dart';
 import '../../core/services/app_data_sync_service.dart';
 import '../../core/services/auth_service.dart';
 import '../../core/widgets/custom_textfield.dart';
+import '../../providers/addresses_provider.dart';
 
 class EditProfileScreen extends StatefulWidget {
   const EditProfileScreen({super.key});
@@ -239,10 +239,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final defaultAddress = DummyAddresses.managed.firstWhere(
-      (a) => a.isDefault,
-      orElse: () => DummyAddresses.managed.first,
-    );
+    final defaultAddress = context.watch<AddressesProvider>().defaultAddress;
 
     return Scaffold(
       backgroundColor: AppColors.background,
@@ -528,7 +525,8 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
           _MenuRow(
             icon: Icons.location_on_outlined,
             title: AppStrings.defaultDeliveryAddress,
-            subtitle: defaultAddress.address,
+            subtitle:
+                defaultAddress?.address ?? AppStrings.noSavedAddressesDesc,
             onTap: () => Navigator.of(context).push(
               MaterialPageRoute(builder: (_) => const AddressSelectionScreen()),
             ),
