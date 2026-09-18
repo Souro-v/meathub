@@ -46,9 +46,7 @@ class _AddressSelectionScreenState extends State<AddressSelectionScreen> {
             ManagedAddressModel(
               id: 'addr_${DateTime.now().microsecondsSinceEpoch}',
               label: 'Current Location',
-              labelIcon: Icons.my_location,
-              labelColor: AppColors.primary,
-              labelBg: AppColors.primarySoft,
+              iconType: AddressIconType.currentLocation,
               name: user.name,
               phone: user.phone,
               address: resolvedAddress,
