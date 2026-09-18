@@ -35,22 +35,16 @@ class _AddNewAddressSheetState extends State<AddNewAddressSheet> {
     super.dispose();
   }
 
-  IconData get _typeIcon {
+  AddressIconType get _iconType {
     switch (_selectedType) {
       case 'Home':
-        return Icons.home;
+        return AddressIconType.home;
       case 'Office':
-        return Icons.apartment;
+        return AddressIconType.office;
       default:
-        return Icons.more_horiz;
+        return AddressIconType.other;
     }
   }
-
-  Color get _typeColor =>
-      _selectedType == 'Home' ? AppColors.primary : AppColors.textDark;
-
-  Color get _typeBg =>
-      _selectedType == 'Home' ? AppColors.primarySoft : AppColors.surface;
 
   void _submit() {
     if (_nameController.text.trim().isEmpty ||
@@ -75,15 +69,12 @@ class _AddNewAddressSheetState extends State<AddNewAddressSheet> {
     final address = ManagedAddressModel(
       id: 'addr_${DateTime.now().microsecondsSinceEpoch}',
       label: _selectedType,
-      labelIcon: _typeIcon,
-      labelColor: _typeColor,
-      labelBg: _typeBg,
+      iconType: _iconType,
       name: _nameController.text.trim(),
       phone: '+880 ${_phoneController.text.trim()}',
       address: parts.join(', '),
       isDefault: _makeDefault,
     );
-
     context.read<AddressesProvider>().addAddress(address);
     Navigator.of(context).maybePop();
     ScaffoldMessenger.of(context).showSnackBar(
