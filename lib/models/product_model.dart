@@ -14,6 +14,8 @@ class ProductModel {
   final bool isFreshToday;
   final String subCategory;
   final String? badgeLabel;
+  final bool isPopularToday;
+  final bool isTodaysFreshPick;
 
   const ProductModel({
     required this.id,
@@ -31,6 +33,8 @@ class ProductModel {
     this.isFreshToday = true,
     this.subCategory = '',
     this.badgeLabel,
+    this.isPopularToday = false,
+    this.isTodaysFreshPick = false,
   });
 
   bool get hasDiscount => originalPrice != price;
@@ -42,18 +46,40 @@ class ProductModel {
     return (((orig - curr) / orig) * 100).round();
   }
 
-  /// Curated badge (BEST SELLER / NEW) if set, else auto discount badge.
-  String? get computedBadge =>
-      badgeLabel ?? (hasDiscount ? '$discountPercent% OFF' : null);
+  String? get computedBadge => badgeLabel ?? (hasDiscount ? '$discountPercent% OFF' : null);
 
-  List<String> get images =>
-      (gallery != null && gallery!.isNotEmpty) ? gallery! : [image];
+  List<String> get images => (gallery != null && gallery!.isNotEmpty) ? gallery! : [image];
 
   String get fullDescription =>
       description ??
-      'Premium halal $category sourced from trusted farms. Freshly cut after order '
-          'confirmation. Hygienically packed and delivered in insulated packaging to '
-          'ensure maximum freshness.';
+          'Premium halal $category sourced from trusted farms. Freshly cut after order '
+              'confirmation. Hygienically packed and delivered in insulated packaging to '
+              'ensure maximum freshness.';
+
+  /// [image] holds EITHER a local asset path ('assets/images/beef.jpg') OR
+  /// a full Cloudinary URL ('https://res.cloudinary.com/...') —
+  /// SmartProductImage auto-detects which one and loads it correctly.
+  ProductModel copyWith({bool? isPopularToday, bool? isTodaysFreshPick, String? image}) {
+    return ProductModel(
+      id: id,
+      name: name,
+      image: image ?? this.image,
+      category: category,
+      price: price,
+      originalPrice: originalPrice,
+      unit: unit,
+      rating: rating,
+      reviewCount: reviewCount,
+      gallery: gallery,
+      description: description,
+      inStock: inStock,
+      isFreshToday: isFreshToday,
+      subCategory: subCategory,
+      badgeLabel: badgeLabel,
+      isPopularToday: isPopularToday ?? this.isPopularToday,
+      isTodaysFreshPick: isTodaysFreshPick ?? this.isTodaysFreshPick,
+    );
+  }
 
   Map<String, dynamic> toJson() => {
     'id': id,
@@ -67,6 +93,8 @@ class ProductModel {
     'reviewCount': reviewCount,
     'subCategory': subCategory,
     'badgeLabel': badgeLabel,
+    'isPopularToday': isPopularToday,
+    'isTodaysFreshPick': isTodaysFreshPick,
   };
 
   factory ProductModel.fromJson(Map<String, dynamic> json) => ProductModel(
@@ -81,5 +109,7 @@ class ProductModel {
     reviewCount: json['reviewCount'] as int,
     subCategory: json['subCategory'] as String? ?? '',
     badgeLabel: json['badgeLabel'] as String?,
+    isPopularToday: json['isPopularToday'] as bool? ?? false,
+    isTodaysFreshPick: json['isTodaysFreshPick'] as bool? ?? false,
   );
 }
