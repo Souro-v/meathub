@@ -7,6 +7,9 @@ import 'package:meathub/core/widgets/category_item.dart';
 import 'package:meathub/core/widgets/product_card.dart';
 import 'package:meathub/core/widgets/section_header.dart';
 import 'package:meathub/data/dummy_data.dart';
+import 'package:provider/provider.dart';
+
+import '../../providers/catalog_provider.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -29,21 +32,29 @@ class HomeScreen extends StatelessWidget {
             SliverToBoxAdapter(child: _buildCategories()),
             SliverToBoxAdapter(child: _buildPopularToday()),
             SliverToBoxAdapter(child: _buildFreshPicksHeader()),
-            SliverPadding(
-              padding: const EdgeInsets.fromLTRB(16, 14, 16, 0),
-              sliver: SliverGrid(
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2,
-                  mainAxisSpacing: 12,
-                  crossAxisSpacing: 12,
-                  childAspectRatio: 0.72,
-                ),
-                delegate: SliverChildBuilderDelegate(
-                  (context, index) =>
-                      ProductCard(product: DummyData.todaysFreshPicks[index]),
-                  childCount: DummyData.todaysFreshPicks.length,
-                ),
-              ),
+            Builder(
+              builder: (context) {
+                final freshPicks = context
+                    .watch<CatalogProvider>()
+                    .todaysFreshPicks;
+                return SliverPadding(
+                  padding: const EdgeInsets.fromLTRB(16, 14, 16, 0),
+                  sliver: SliverGrid(
+                    gridDelegate:
+                        const SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: 2,
+                          mainAxisSpacing: 12,
+                          crossAxisSpacing: 12,
+                          childAspectRatio: 0.72,
+                        ),
+                    delegate: SliverChildBuilderDelegate(
+                      (context, index) =>
+                          ProductCard(product: freshPicks[index]),
+                      childCount: freshPicks.length,
+                    ),
+                  ),
+                );
+              },
             ),
             const SliverToBoxAdapter(child: SizedBox(height: 24)),
           ],
@@ -242,6 +253,7 @@ class HomeScreen extends StatelessWidget {
   }
 
   Widget _buildPopularToday() {
+    final popularToday = context.watch<CatalogProvider>().popularToday;
     return Padding(
       padding: const EdgeInsets.fromLTRB(16, 22, 16, 0),
       child: Column(
@@ -253,17 +265,15 @@ class HomeScreen extends StatelessWidget {
             height: 220,
             child: ListView.separated(
               scrollDirection: Axis.horizontal,
-              itemCount: DummyData.popularToday.length,
+              itemCount: popularToday.length,
               separatorBuilder: (_, _) => const SizedBox(width: 12),
               itemBuilder: (context, index) => SizedBox(
                 width: 150,
                 child: ProductCard(
-                  product: DummyData.popularToday[index],
-                  onTap: () => Navigator.of(context).push(
-                    AppRoutes.productDetailsRoute(
-                      DummyData.popularToday[index],
-                    ),
-                  ),
+                  product: popularToday[index],
+                  onTap: () => Navigator.of(
+                    context,
+                  ).push(AppRoutes.productDetailsRoute(popularToday[index])),
                 ),
               ),
             ),
