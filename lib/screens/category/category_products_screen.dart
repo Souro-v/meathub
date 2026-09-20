@@ -7,14 +7,13 @@ import 'package:meathub/core/utils/pricing_utils.dart';
 import 'package:meathub/core/widgets/category_product_card.dart';
 import 'package:meathub/core/widgets/subcategory_chip_row.dart';
 import 'package:meathub/data/dummy_category_config.dart';
-import 'package:meathub/data/dummy_data.dart';
 import 'package:meathub/models/category_config_model.dart';
 import 'package:meathub/models/product_model.dart';
 import 'package:meathub/providers/cart_provider.dart';
-
 import '../../core/utils/product_filter_criteria.dart';
 import '../../core/widgets/product_filter_sheet.dart';
 import '../../core/widgets/search_product_row.dart';
+import '../../providers/catalog_provider.dart';
 
 enum _SortOption { popular, priceLowHigh, priceHighLow }
 
@@ -36,15 +35,14 @@ class _CategoryProductsScreenState extends State<CategoryProductsScreen> {
   bool _isGridView = true;
 
   late final CategoryConfigModel _config;
-  late final List<ProductModel> _categoryProducts;
+
+  List<ProductModel> get _categoryProducts =>
+      context.watch<CatalogProvider>().productsInCategory(widget.categoryKey);
 
   @override
   void initState() {
     super.initState();
     _config = DummyCategoryConfig.configs[widget.categoryKey]!;
-    _categoryProducts = DummyData.allProducts
-        .where((p) => p.category == widget.categoryKey)
-        .toList();
     _searchController.addListener(
       () =>
           setState(() => _query = _searchController.text.trim().toLowerCase()),

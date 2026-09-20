@@ -10,13 +10,12 @@ import 'package:meathub/core/widgets/quantity_selector.dart';
 import 'package:meathub/core/widgets/rating_summary_card.dart';
 import 'package:meathub/core/widgets/section_header.dart';
 import 'package:meathub/core/widgets/weight_selector.dart';
-import 'package:meathub/data/dummy_data.dart';
 import 'package:meathub/models/product_model.dart';
 import 'package:meathub/providers/wishlist_provider.dart';
-
 import '../../core/routes/app_routes.dart';
 import '../../models/cart_item_model.dart';
 import '../../providers/cart_provider.dart';
+import '../../providers/catalog_provider.dart';
 
 class ProductDetailsScreen extends StatefulWidget {
   final ProductModel product;
@@ -60,7 +59,9 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
   double get _total => _unitTotal * _quantity;
 
   List<ProductModel> get _related {
-    return DummyData.allProducts
+    return context
+        .watch<CatalogProvider>()
+        .allProducts
         .where(
           (p) =>
               p.category == widget.product.category &&
