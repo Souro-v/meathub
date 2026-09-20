@@ -18,6 +18,8 @@ import 'package:meathub/providers/cart_provider.dart';
 import 'package:meathub/providers/search_history_provider.dart';
 import 'package:speech_to_text/speech_to_text.dart' as stt;
 
+import '../../providers/catalog_provider.dart';
+
 enum _SearchTab { all, products, categories }
 
 class SearchScreen extends StatefulWidget {
@@ -137,14 +139,15 @@ class _SearchScreenState extends State<SearchScreen> {
     final history = context.watch<SearchHistoryProvider>();
     final isSearching = _query.trim().isNotEmpty;
 
+    final catalogProducts = context.watch<CatalogProvider>().allProducts;
     final products = isSearching
-        ? SearchUtils.searchProducts(_query)
+        ? SearchUtils.searchProducts(_query, catalogProducts)
         : <ProductModel>[];
     final categories = isSearching
         ? SearchUtils.searchCategories(_query)
         : <CategoryModel>[];
     final didYouMean = isSearching
-        ? SearchUtils.didYouMeanSuggestions(_query)
+        ? SearchUtils.didYouMeanSuggestions(_query, catalogProducts)
         : <String>[];
     final hasAnyResult = products.isNotEmpty || categories.isNotEmpty;
 
