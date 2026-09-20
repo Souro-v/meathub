@@ -577,7 +577,7 @@ class _SearchScreenState extends State<SearchScreen> {
               ...categories.map(
                 (c) => SearchCategoryRow(
                   category: c,
-                  productCount: DummyData.allProducts
+                  productCount: catalogProducts
                       .where((p) => p.category == c.name)
                       .length,
                   onTap: () => _onSelectCategory(c),
