@@ -30,7 +30,7 @@ class HomeScreen extends StatelessWidget {
               ),
             ),
             SliverToBoxAdapter(child: _buildCategories()),
-            SliverToBoxAdapter(child: _buildPopularToday()),
+            SliverToBoxAdapter(child: _buildPopularToday(context)),
             SliverToBoxAdapter(child: _buildFreshPicksHeader()),
             Builder(
               builder: (context) {
@@ -252,7 +252,7 @@ class HomeScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildPopularToday() {
+  Widget _buildPopularToday(BuildContext context) {
     final popularToday = context.watch<CatalogProvider>().popularToday;
     return Padding(
       padding: const EdgeInsets.fromLTRB(16, 22, 16, 0),
