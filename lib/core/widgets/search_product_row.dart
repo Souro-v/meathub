@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:meathub/core/constants/app_colors.dart';
+import 'package:meathub/core/widgets/smart_product_image.dart';
 import 'package:meathub/models/product_model.dart';
 
 class SearchProductRow extends StatelessWidget {
@@ -37,7 +38,7 @@ class SearchProductRow extends StatelessWidget {
               children: [
                 ClipRRect(
                   borderRadius: BorderRadius.circular(12),
-                  child: Image.asset(
+                  child: SmartProductImage(
                     product.image,
                     width: 68,
                     height: 68,

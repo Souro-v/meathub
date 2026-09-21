@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:meathub/core/widgets/smart_product_image.dart';
 import 'package:provider/provider.dart';
 import 'package:meathub/core/constants/app_colors.dart';
 import 'package:meathub/models/product_model.dart';
@@ -40,7 +41,7 @@ class CategoryProductCard extends StatelessWidget {
               children: [
                 AspectRatio(
                   aspectRatio: 1.15,
-                  child: Image.asset(
+                  child: SmartProductImage(
                     product.image,
                     fit: BoxFit.cover,
                     width: double.infinity,
