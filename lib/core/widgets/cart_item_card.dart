@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:meathub/core/constants/app_colors.dart';
 import 'package:meathub/core/constants/app_strings.dart';
+import 'package:meathub/core/widgets/smart_product_image.dart';
 import 'package:meathub/models/cart_item_model.dart';
 
 class CartItemCard extends StatelessWidget {
@@ -31,10 +32,10 @@ class CartItemCard extends StatelessWidget {
         children: [
           ClipRRect(
             borderRadius: BorderRadius.circular(12),
-            child: Image.asset(
-              product.image,
-              width: 84,
-              height: 84,
+            child: SmartProductImage(
+              item.product.image,
+              width: 96,
+              height: 96,
               fit: BoxFit.cover,
             ),
           ),

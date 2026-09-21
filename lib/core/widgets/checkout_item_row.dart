@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:meathub/core/constants/app_colors.dart';
 import 'package:meathub/core/constants/app_strings.dart';
+import 'package:meathub/core/widgets/smart_product_image.dart';
 import 'package:meathub/models/cart_item_model.dart';
 
 class CheckoutItemRow extends StatelessWidget {
@@ -19,7 +20,7 @@ class CheckoutItemRow extends StatelessWidget {
             children: [
               ClipRRect(
                 borderRadius: BorderRadius.circular(12),
-                child: Image.asset(
+                child: SmartProductImage(
                   item.product.image,
                   width: 76,
                   height: 76,
