@@ -17,7 +17,6 @@ import 'package:meathub/models/product_model.dart';
 import 'package:meathub/providers/cart_provider.dart';
 import 'package:meathub/providers/search_history_provider.dart';
 import 'package:speech_to_text/speech_to_text.dart' as stt;
-
 import '../../providers/catalog_provider.dart';
 
 enum _SearchTab { all, products, categories }
@@ -172,7 +171,12 @@ class _SearchScreenState extends State<SearchScreen> {
                         query: _query,
                         onClearSearch: _clearSearch,
                       )
-                    : _buildResults(products, categories, didYouMean),
+                    : _buildResults(
+                        products,
+                        categories,
+                        didYouMean,
+                        catalogProducts,
+                      ),
               ),
             ),
           ],
@@ -496,6 +500,7 @@ class _SearchScreenState extends State<SearchScreen> {
     List<ProductModel> products,
     List<CategoryModel> categories,
     List<String> didYouMean,
+    List<ProductModel> catalogProducts,
   ) {
     final cart = context.read<CartProvider>();
 
@@ -606,7 +611,7 @@ class _SearchScreenState extends State<SearchScreen> {
               .map(
                 (c) => SearchCategoryRow(
                   category: c,
-                  productCount: DummyData.allProducts
+                  productCount: catalogProducts
                       .where((p) => p.category == c.name)
                       .length,
                   onTap: () => _onSelectCategory(c),
