@@ -6,6 +6,7 @@ import 'package:meathub/models/product_model.dart';
 import 'package:meathub/providers/wishlist_provider.dart';
 
 import '../../core/utils/pricing_utils.dart';
+import '../../core/widgets/smart_product_image.dart';
 import '../../providers/cart_provider.dart';
 
 class WishlistCard extends StatelessWidget {
@@ -30,7 +31,7 @@ class WishlistCard extends StatelessWidget {
             children: [
               ClipRRect(
                 borderRadius: BorderRadius.circular(12),
-                child: Image.asset(
+                child: SmartProductImage(
                   product.image,
                   width: 96,
                   height: 96,

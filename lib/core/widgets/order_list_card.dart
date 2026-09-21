@@ -4,6 +4,7 @@ import 'package:meathub/core/constants/app_strings.dart';
 import 'package:meathub/core/utils/order_utils.dart';
 import 'package:meathub/core/widgets/order_mini_timeline.dart';
 import 'package:meathub/core/widgets/order_status_badge.dart';
+import 'package:meathub/core/widgets/smart_product_image.dart';
 import 'package:meathub/models/order_model.dart';
 
 class OrderListCard extends StatelessWidget {
@@ -27,7 +28,11 @@ class OrderListCard extends StatelessWidget {
     return Container(
       margin: const EdgeInsets.only(bottom: 16),
       padding: const EdgeInsets.all(14),
-      decoration: BoxDecoration(color: AppColors.white, borderRadius: BorderRadius.circular(16), border: Border.all(color: AppColors.divider)),
+      decoration: BoxDecoration(
+        color: AppColors.white,
+        borderRadius: BorderRadius.circular(16),
+        border: Border.all(color: AppColors.divider),
+      ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -38,15 +43,32 @@ class OrderListCard extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text('${AppStrings.orderIdLabel}: ${order.orderId}', style: const TextStyle(fontSize: 13.5, fontWeight: FontWeight.w700, color: AppColors.textDark)),
+                    Text(
+                      '${AppStrings.orderIdLabel}: ${order.orderId}',
+                      style: const TextStyle(
+                        fontSize: 13.5,
+                        fontWeight: FontWeight.w700,
+                        color: AppColors.textDark,
+                      ),
+                    ),
                     const SizedBox(height: 2),
-                    Text(_formatDate(order.placedAt), style: const TextStyle(fontSize: 11.5, color: AppColors.textHint)),
+                    Text(
+                      _formatDate(order.placedAt),
+                      style: const TextStyle(
+                        fontSize: 11.5,
+                        color: AppColors.textHint,
+                      ),
+                    ),
                   ],
                 ),
               ),
               OrderStatusBadge(status: status),
               const SizedBox(width: 4),
-              const Icon(Icons.chevron_right, size: 18, color: AppColors.textHint),
+              const Icon(
+                Icons.chevron_right,
+                size: 18,
+                color: AppColors.textHint,
+              ),
             ],
           ),
           const SizedBox(height: 12),
@@ -55,22 +77,53 @@ class OrderListCard extends StatelessWidget {
             children: [
               ClipRRect(
                 borderRadius: BorderRadius.circular(12),
-                child: Image.asset(firstItem.product.image, width: 76, height: 76, fit: BoxFit.cover),
+                child: SmartProductImage(
+                  firstItem.product.image,
+                  width: 76,
+                  height: 76,
+                  fit: BoxFit.cover,
+                ),
               ),
               const SizedBox(width: 12),
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(firstItem.product.name, style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w700, color: AppColors.textDark)),
+                    Text(
+                      firstItem.product.name,
+                      style: const TextStyle(
+                        fontSize: 14,
+                        fontWeight: FontWeight.w700,
+                        color: AppColors.textDark,
+                      ),
+                    ),
                     const SizedBox(height: 2),
-                    Text('${firstItem.weightLabel} • ${AppStrings.qtyLabel}: ${firstItem.quantity}', style: const TextStyle(fontSize: 12, color: AppColors.textHint)),
+                    Text(
+                      '${firstItem.weightLabel} • ${AppStrings.qtyLabel}: ${firstItem.quantity}',
+                      style: const TextStyle(
+                        fontSize: 12,
+                        color: AppColors.textHint,
+                      ),
+                    ),
                     if (extraCount > 0) ...[
                       const SizedBox(height: 2),
-                      Text('+$extraCount more item${extraCount > 1 ? 's' : ''}', style: const TextStyle(fontSize: 11.5, color: AppColors.textHint)),
+                      Text(
+                        '+$extraCount more item${extraCount > 1 ? 's' : ''}',
+                        style: const TextStyle(
+                          fontSize: 11.5,
+                          color: AppColors.textHint,
+                        ),
+                      ),
                     ],
                     const SizedBox(height: 4),
-                    Text('৳${order.total.toStringAsFixed(0)}', style: const TextStyle(fontSize: 15, fontWeight: FontWeight.w800, color: AppColors.primary)),
+                    Text(
+                      '৳${order.total.toStringAsFixed(0)}',
+                      style: const TextStyle(
+                        fontSize: 15,
+                        fontWeight: FontWeight.w800,
+                        color: AppColors.primary,
+                      ),
+                    ),
                   ],
                 ),
               ),
@@ -78,11 +131,26 @@ class OrderListCard extends StatelessWidget {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
-                  Text(_rightLabel(status), style: const TextStyle(fontSize: 10.5, color: AppColors.textHint), textAlign: TextAlign.right),
+                  Text(
+                    _rightLabel(status),
+                    style: const TextStyle(
+                      fontSize: 10.5,
+                      color: AppColors.textHint,
+                    ),
+                    textAlign: TextAlign.right,
+                  ),
                   const SizedBox(height: 3),
                   SizedBox(
                     width: 100,
-                    child: Text(_rightValue(status), style: const TextStyle(fontSize: 11.5, fontWeight: FontWeight.w700, color: AppColors.textDark), textAlign: TextAlign.right),
+                    child: Text(
+                      _rightValue(status),
+                      style: const TextStyle(
+                        fontSize: 11.5,
+                        fontWeight: FontWeight.w700,
+                        color: AppColors.textDark,
+                      ),
+                      textAlign: TextAlign.right,
+                    ),
                   ),
                 ],
               ),
@@ -100,7 +168,20 @@ class OrderListCard extends StatelessWidget {
   }
 
   String _formatDate(DateTime date) {
-    const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+    const months = [
+      'Jan',
+      'Feb',
+      'Mar',
+      'Apr',
+      'May',
+      'Jun',
+      'Jul',
+      'Aug',
+      'Sep',
+      'Oct',
+      'Nov',
+      'Dec',
+    ];
     final hour12 = date.hour % 12 == 0 ? 12 : date.hour % 12;
     final minute = date.minute.toString().padLeft(2, '0');
     final period = date.hour >= 12 ? 'PM' : 'AM';
@@ -127,12 +208,18 @@ class OrderListCard extends StatelessWidget {
   String _rightValue(OrderStatus status) {
     switch (status) {
       case OrderStatus.delivered:
-        return order.deliveredAt != null ? _formatDate(order.deliveredAt!) : '-';
+        return order.deliveredAt != null
+            ? _formatDate(order.deliveredAt!)
+            : '-';
       case OrderStatus.cancelled:
-        return order.cancelledAt != null ? _formatDate(order.cancelledAt!) : '-';
+        return order.cancelledAt != null
+            ? _formatDate(order.cancelledAt!)
+            : '-';
       case OrderStatus.refundPending:
       case OrderStatus.refunded:
-        return order.refund != null ? _formatDate(order.refund!.requestedAt) : '-';
+        return order.refund != null
+            ? _formatDate(order.refund!.requestedAt)
+            : '-';
       case OrderStatus.deliveryFailed:
         return _formatDate(order.placedAt);
       default:
@@ -141,14 +228,27 @@ class OrderListCard extends StatelessWidget {
   }
 
   Widget _buildActionButtons(OrderStatus status) {
-    const terminal = {OrderStatus.delivered, OrderStatus.cancelled, OrderStatus.refunded, OrderStatus.returned};
+    const terminal = {
+      OrderStatus.delivered,
+      OrderStatus.cancelled,
+      OrderStatus.refunded,
+      OrderStatus.returned,
+    };
 
     return Row(
       children: [
         Expanded(
           child: terminal.contains(status)
-              ? _outlineButton(AppStrings.orderAgain, onOrderAgain, icon: Icons.refresh)
-              : _outlineButton(_leftLabelFor(status), onViewDetails, icon: _leftIconFor(status)),
+              ? _outlineButton(
+                  AppStrings.orderAgain,
+                  onOrderAgain,
+                  icon: Icons.refresh,
+                )
+              : _outlineButton(
+                  _leftLabelFor(status),
+                  onViewDetails,
+                  icon: _leftIconFor(status),
+                ),
         ),
         const SizedBox(width: 10),
         Expanded(child: _filledButton(AppStrings.viewDetails, onViewDetails)),
@@ -211,7 +311,11 @@ class OrderListCard extends StatelessWidget {
     );
   }
 
-  Widget _filledButton(String label, VoidCallback onTap, {IconData icon = Icons.arrow_forward}) {
+  Widget _filledButton(
+    String label,
+    VoidCallback onTap, {
+    IconData icon = Icons.arrow_forward,
+  }) {
     return ElevatedButton(
       onPressed: onTap,
       style: ElevatedButton.styleFrom(
