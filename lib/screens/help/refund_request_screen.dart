@@ -10,6 +10,8 @@ import 'package:meathub/models/order_model.dart';
 import 'package:meathub/models/refund_model.dart';
 import 'package:meathub/providers/orders_provider.dart';
 
+import '../../core/widgets/smart_product_image.dart';
+
 class RefundRequestScreen extends StatefulWidget {
   final String orderId;
 
@@ -294,7 +296,7 @@ class _RefundRequestScreenState extends State<RefundRequestScreen> {
         children: [
           ClipRRect(
             borderRadius: BorderRadius.circular(10),
-            child: Image.asset(
+            child: SmartProductImage(
               order.items.first.product.image,
               width: 48,
               height: 48,

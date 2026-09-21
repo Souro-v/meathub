@@ -11,6 +11,8 @@ import 'package:meathub/core/widgets/issue_type_grid_card.dart';
 import 'package:meathub/providers/orders_provider.dart';
 import 'package:meathub/providers/ticket_provider.dart';
 
+import '../../core/widgets/smart_product_image.dart';
+
 class ReportIssueScreen extends StatefulWidget {
   final String? orderId;
   final String? presetIssueType;
@@ -233,7 +235,7 @@ class _ReportIssueScreenState extends State<ReportIssueScreen> {
                           children: [
                             ClipRRect(
                               borderRadius: BorderRadius.circular(8),
-                              child: Image.asset(
+                              child: SmartProductImage(
                                 selectedOrder.items.first.product.image,
                                 width: 40,
                                 height: 40,
