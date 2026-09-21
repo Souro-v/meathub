@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:meathub/core/constants/app_colors.dart';
 import 'package:meathub/core/constants/app_strings.dart';
+import 'package:meathub/core/widgets/smart_product_image.dart';
 
 class ProductImageGallery extends StatefulWidget {
   final List<String> images;
@@ -31,7 +32,7 @@ class _ProductImageGalleryState extends State<ProductImageGallery> {
             children: [
               AspectRatio(
                 aspectRatio: 1.4,
-                child: Image.asset(
+                child: SmartProductImage(
                   widget.images[_selected],
                   fit: BoxFit.cover,
                   width: double.infinity,
