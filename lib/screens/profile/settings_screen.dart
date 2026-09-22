@@ -6,6 +6,9 @@ import 'package:meathub/screens/profile/about_meathub_screen.dart';
 import 'package:meathub/screens/profile/edit_profile_screen.dart';
 import 'package:meathub/screens/profile/notification_preferences_screen.dart';
 
+import '../../core/services/product_repository.dart';
+import '../../data/dummy_data.dart';
+
 class SettingsScreen extends StatelessWidget {
   const SettingsScreen({super.key});
 
@@ -25,6 +28,52 @@ class SettingsScreen extends StatelessWidget {
       SnackBar(
         content: Text('$label — ${AppStrings.comingSoon}'),
         duration: const Duration(seconds: 2),
+      ),
+    );
+  }
+
+  Future<void> _seedCatalog(BuildContext context) async {
+    final confirmed = await showDialog<bool>(
+      context: context,
+      builder: (dialogContext) => AlertDialog(
+        title: const Text('Seed Product Catalog?'),
+        content: const Text(
+          'This pushes all demo products into Firestore (one-time setup). '
+          'Safe to run again later — it just overwrites the same documents, no duplicates.',
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(dialogContext, false),
+            child: const Text('Cancel'),
+          ),
+          TextButton(
+            onPressed: () => Navigator.pop(dialogContext, true),
+            child: const Text('Seed Now'),
+          ),
+        ],
+      ),
+    );
+    if (confirmed != true || !context.mounted) return;
+
+    final all = [
+      ...DummyData.popularToday.map((p) => p.copyWith(isPopularToday: true)),
+      ...DummyData.todaysFreshPicks.map(
+        (p) => p.copyWith(isTodaysFreshPick: true),
+      ),
+      ...DummyData.categoryOnlyProducts,
+    ];
+
+    ScaffoldMessenger.of(
+      context,
+    ).showSnackBar(const SnackBar(content: Text('Seeding... please wait')));
+    for (final product in all) {
+      await ProductRepository.upsert(product);
+    }
+    if (!context.mounted) return;
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text('Seeded ${all.length} products to Firestore!'),
+        backgroundColor: AppColors.primary,
       ),
     );
   }
@@ -124,6 +173,15 @@ class SettingsScreen extends StatelessWidget {
                       subtitle: AppStrings.appVersionValue,
                       onTap: null,
                       trailing: const SizedBox.shrink(),
+                    ),
+                  ]),
+                  const SizedBox(height: 16),
+                  _sectionCard('Developer Tools', [
+                    _tile(
+                      icon: Icons.cloud_upload_outlined,
+                      title: 'Seed Product Catalog',
+                      subtitle: 'One-time: push demo products into Firestore',
+                      onTap: () => _seedCatalog(context),
                     ),
                   ]),
                 ],
