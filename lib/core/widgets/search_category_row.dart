@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:meathub/core/constants/app_colors.dart';
 import 'package:meathub/core/constants/app_strings.dart';
+import 'package:meathub/core/widgets/smart_product_image.dart';
 import 'package:meathub/models/category_model.dart';
 
 class SearchCategoryRow extends StatelessWidget {
@@ -39,7 +40,10 @@ class SearchCategoryRow extends StatelessWidget {
               ),
               child: Padding(
                 padding: const EdgeInsets.all(10),
-                child: Image.asset(category.icon, fit: BoxFit.contain),
+                child: Padding(
+                  padding: const EdgeInsets.all(10),
+                  child: SmartProductImage(category.icon, fit: BoxFit.contain),
+                ),
               ),
             ),
             const SizedBox(width: 12),

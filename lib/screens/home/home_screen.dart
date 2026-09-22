@@ -10,6 +10,7 @@ import 'package:meathub/data/dummy_data.dart';
 import 'package:provider/provider.dart';
 
 import '../../providers/catalog_provider.dart';
+import '../../providers/category_provider.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -231,21 +232,24 @@ class HomeScreen extends StatelessWidget {
         children: [
           const SectionHeader(title: AppStrings.categories),
           const SizedBox(height: 14),
-          SizedBox(
-            height: 92,
-            child: ListView.separated(
-              scrollDirection: Axis.horizontal,
-              itemCount: DummyData.categories.length,
-              separatorBuilder: (_, _) => const SizedBox(width: 14),
-              itemBuilder: (context, index) => CategoryItem(
-                category: DummyData.categories[index],
-                onTap: () => Navigator.of(context).push(
-                  AppRoutes.categoryProductsRoute(
-                    DummyData.categories[index].name,
+          Consumer<CategoryProvider>(
+            builder: (context, categoryProvider, _) {
+              final categories = categoryProvider.categories;
+              return SizedBox(
+                height: 92,
+                child: ListView.separated(
+                  scrollDirection: Axis.horizontal,
+                  itemCount: categories.length,
+                  separatorBuilder: (_, _) => const SizedBox(width: 14),
+                  itemBuilder: (context, index) => CategoryItem(
+                    category: categories[index],
+                    onTap: () => Navigator.of(context).push(
+                      AppRoutes.categoryProductsRoute(categories[index].name),
+                    ),
                   ),
                 ),
-              ),
-            ),
+              );
+            },
           ),
         ],
       ),
