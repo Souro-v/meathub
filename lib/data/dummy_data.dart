@@ -1,11 +1,9 @@
 import 'package:meathub/core/constants/app_assets.dart';
-import 'package:meathub/core/constants/app_strings.dart';
 import 'package:meathub/models/category_model.dart';
 import 'package:meathub/models/delivery_option_model.dart';
 import 'package:meathub/models/payment_method_model.dart';
 import 'package:meathub/models/product_model.dart';
 import 'package:flutter/material.dart';
-
 import '../core/constants/app_colors.dart';
 import '../models/delivery_rider_model.dart';
 
@@ -20,33 +18,66 @@ class DummyData {
     AppAssets.banner5,
   ];
 
-  static const List<CategoryModel> categories = [
+  static const List<CategoryModel> categorySeeds = [
     CategoryModel(
-      name: AppStrings.categoryBeefLabel,
+      name: 'Beef',
       icon: AppAssets.categoryBeef,
+      themeColorValue: 0xFFB71C1C,
+      themeBgValue: 0xFFFBE8E8,
+      tagline: 'Premium quality beef',
+      chips: ['All', 'Curry Cut', 'Boneless', 'Mince', 'Liver', 'Bone'],
     ),
     CategoryModel(
-      name: AppStrings.categoryMuttonLabel,
+      name: 'Mutton',
       icon: AppAssets.categoryMutton,
+      themeColorValue: 0xFFB71C1C,
+      themeBgValue: 0xFFFBE8E8,
+      tagline: 'Tender & premium quality mutton',
+      chips: ['All', 'Curry Cut', 'Ribs', 'Leg', 'Liver', 'Mince'],
     ),
     CategoryModel(
-      name: AppStrings.categoryChickenLabel,
+      name: 'Chicken',
       icon: AppAssets.categoryChicken,
+      themeColorValue: 0xFFB2560A,
+      themeBgValue: 0xFFFFEFDD,
+      tagline: 'Fresh & hygienic chicken',
+      chips: ['All', 'Curry Cut', 'Whole', 'Boneless', 'Liver', 'Wings'],
     ),
     CategoryModel(
-      name: AppStrings.categoryFishLabel,
+      name: 'Fish',
       icon: AppAssets.categoryFish,
+      themeColorValue: 0xFF3F5FBF,
+      themeBgValue: 0xFFE8EEFB,
+      tagline: 'Fresh water & sea fish',
+      chips: ['All', 'Rui', 'Katla', 'Hilsa', 'Pangas', 'Tilapia'],
     ),
     CategoryModel(
-      name: AppStrings.categoryEggLabel,
-      icon: AppAssets.categoryEgg,
-    ),
-    CategoryModel(
-      name: AppStrings.categoryPrawnLabel,
+      name: 'Prawn',
       icon: AppAssets.categoryPrawn,
+      themeColorValue: 0xFFE2136E,
+      themeBgValue: 0xFFFCE4EF,
+      tagline: 'Fresh & delicious prawns',
+      chips: ['All', 'Golda', 'Bagda', 'Tiger', 'Medium', 'Small'],
+    ),
+    CategoryModel(
+      name: 'Egg',
+      icon: AppAssets.categoryEgg,
+      themeColorValue: 0xFFB8860B,
+      themeBgValue: 0xFFFFF3D6,
+      tagline: 'Farm fresh eggs',
+      chips: [
+        'All',
+        'White',
+        'Brown',
+        'Deshi',
+        'Organic',
+        'Duck',
+        'Quail',
+        'Ostrich',
+        'Swan',
+      ],
     ),
   ];
-
   static const List<ProductModel> popularToday = [
     ProductModel(
       id: 'premium_beef',

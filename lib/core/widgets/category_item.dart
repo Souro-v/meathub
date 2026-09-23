@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:meathub/core/constants/app_colors.dart';
+import 'package:meathub/core/widgets/smart_product_image.dart';
 import 'package:meathub/models/category_model.dart';
 
 class CategoryItem extends StatelessWidget {
@@ -24,7 +25,7 @@ class CategoryItem extends StatelessWidget {
                 color: AppColors.primarySoft,
                 shape: BoxShape.circle,
               ),
-              child: Image.asset(category.icon, fit: BoxFit.contain),
+              child: SmartProductImage(category.icon, fit: BoxFit.contain),
             ),
             const SizedBox(height: 6),
             Text(
