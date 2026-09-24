@@ -1,15 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:meathub/core/constants/app_colors.dart';
 import 'package:meathub/core/constants/app_strings.dart';
 import 'package:meathub/core/routes/app_routes.dart';
-import 'package:meathub/data/dummy_data.dart';
+import 'package:meathub/core/widgets/smart_product_image.dart';
 import 'package:meathub/models/category_model.dart';
+import 'package:meathub/providers/catalog_provider.dart';
+import 'package:meathub/providers/category_provider.dart';
 
 class CategoriesScreen extends StatelessWidget {
   const CategoriesScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final categories = context.watch<CategoryProvider>().categories;
+    final catalog = context.watch<CatalogProvider>();
+
     return Scaffold(
       backgroundColor: AppColors.background,
       body: SafeArea(
@@ -42,7 +48,7 @@ class CategoriesScreen extends StatelessWidget {
             Expanded(
               child: GridView.builder(
                 padding: const EdgeInsets.all(16),
-                itemCount: DummyData.categories.length,
+                itemCount: categories.length,
                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 2,
                   mainAxisSpacing: 14,
@@ -50,9 +56,9 @@ class CategoriesScreen extends StatelessWidget {
                   childAspectRatio: 1.05,
                 ),
                 itemBuilder: (context, index) {
-                  final category = DummyData.categories[index];
-                  final count = DummyData.allProducts
-                      .where((p) => p.category == category.name)
+                  final category = categories[index];
+                  final count = catalog
+                      .productsInCategory(category.name)
                       .length;
                   return _CategoryGridCard(
                     category: category,
@@ -106,7 +112,7 @@ class _CategoryGridCard extends StatelessWidget {
               ),
               child: Padding(
                 padding: const EdgeInsets.all(12),
-                child: Image.asset(category.icon, fit: BoxFit.contain),
+                child: SmartProductImage(category.icon, fit: BoxFit.contain),
               ),
             ),
             const Spacer(),
