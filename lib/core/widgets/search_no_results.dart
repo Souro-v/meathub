@@ -2,9 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:meathub/core/constants/app_colors.dart';
 import 'package:meathub/core/constants/app_strings.dart';
 import 'package:meathub/core/routes/app_routes.dart';
-import 'package:meathub/data/dummy_data.dart';
+import 'package:meathub/core/widgets/smart_product_image.dart';
 import 'package:meathub/screens/help/live_chat_screen.dart';
-
+import 'package:provider/provider.dart';
+import '../../providers/category_provider.dart';
 class SearchNoResults extends StatelessWidget {
   final String query;
   final VoidCallback onClearSearch;
@@ -17,6 +18,7 @@ class SearchNoResults extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final categories = context.watch<CategoryProvider>().categories;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
@@ -134,10 +136,10 @@ class SearchNoResults extends StatelessWidget {
           height: 84,
           child: ListView.separated(
             scrollDirection: Axis.horizontal,
-            itemCount: DummyData.categories.length,
+            itemCount: categories.length,
             separatorBuilder: (_, _) => const SizedBox(width: 16),
             itemBuilder: (context, index) {
-              final category = DummyData.categories[index];
+              final category = categories[index];
               return InkWell(
                 onTap: () => Navigator.of(
                   context,
@@ -154,7 +156,10 @@ class SearchNoResults extends StatelessWidget {
                       ),
                       child: Padding(
                         padding: const EdgeInsets.all(11),
-                        child: Image.asset(category.icon, fit: BoxFit.contain),
+                        child: SmartProductImage(
+                          category.icon,
+                          fit: BoxFit.contain,
+                        ),
                       ),
                     ),
                     const SizedBox(height: 6),

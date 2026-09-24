@@ -1,4 +1,3 @@
-import 'package:meathub/data/dummy_data.dart';
 import 'package:meathub/models/category_model.dart';
 import 'package:meathub/models/product_model.dart';
 
@@ -26,12 +25,13 @@ class SearchUtils {
     }).toList();
   }
 
-  static List<CategoryModel> searchCategories(String query) {
+  static List<CategoryModel> searchCategories(
+    String query,
+    List<CategoryModel> categories,
+  ) {
     if (query.trim().isEmpty) return [];
     final q = query.toLowerCase().trim();
-    return DummyData.categories
-        .where((c) => c.name.toLowerCase().contains(q))
-        .toList();
+    return categories.where((c) => c.name.toLowerCase().contains(q)).toList();
   }
 
   static List<String> didYouMeanSuggestions(
