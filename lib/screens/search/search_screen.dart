@@ -10,14 +10,15 @@ import 'package:meathub/core/widgets/removable_search_chip.dart';
 import 'package:meathub/core/widgets/search_category_row.dart';
 import 'package:meathub/core/widgets/search_no_results.dart';
 import 'package:meathub/core/widgets/search_product_row.dart';
-import 'package:meathub/data/dummy_data.dart';
 import 'package:meathub/data/dummy_search_data.dart';
 import 'package:meathub/models/category_model.dart';
 import 'package:meathub/models/product_model.dart';
 import 'package:meathub/providers/cart_provider.dart';
 import 'package:meathub/providers/search_history_provider.dart';
 import 'package:speech_to_text/speech_to_text.dart' as stt;
+import '../../core/widgets/smart_product_image.dart';
 import '../../providers/catalog_provider.dart';
+import '../../providers/category_provider.dart';
 
 enum _SearchTab { all, products, categories }
 
@@ -139,11 +140,12 @@ class _SearchScreenState extends State<SearchScreen> {
     final isSearching = _query.trim().isNotEmpty;
 
     final catalogProducts = context.watch<CatalogProvider>().allProducts;
+    final allCategories = context.watch<CategoryProvider>().categories;
     final products = isSearching
         ? SearchUtils.searchProducts(_query, catalogProducts)
         : <ProductModel>[];
     final categories = isSearching
-        ? SearchUtils.searchCategories(_query)
+        ? SearchUtils.searchCategories(_query, allCategories)
         : <CategoryModel>[];
     final didYouMean = isSearching
         ? SearchUtils.didYouMeanSuggestions(_query, catalogProducts)
@@ -165,7 +167,7 @@ class _SearchScreenState extends State<SearchScreen> {
               child: SingleChildScrollView(
                 padding: const EdgeInsets.fromLTRB(16, 0, 16, 20),
                 child: !isSearching
-                    ? _buildInitialState(history)
+                    ? _buildInitialState(history, allCategories)
                     : !hasAnyResult
                     ? SearchNoResults(
                         query: _query,
@@ -295,7 +297,10 @@ class _SearchScreenState extends State<SearchScreen> {
     );
   }
 
-  Widget _buildInitialState(SearchHistoryProvider history) {
+  Widget _buildInitialState(
+    SearchHistoryProvider history,
+    List<CategoryModel> categories,
+  ) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -415,10 +420,10 @@ class _SearchScreenState extends State<SearchScreen> {
           height: 84,
           child: ListView.separated(
             scrollDirection: Axis.horizontal,
-            itemCount: DummyData.categories.length,
+            itemCount: categories.length,
             separatorBuilder: (_, _) => const SizedBox(width: 16),
             itemBuilder: (context, index) {
-              final category = DummyData.categories[index];
+              final category = categories[index];
               return InkWell(
                 onTap: () => _onSelectCategory(category),
                 borderRadius: BorderRadius.circular(30),
@@ -433,7 +438,10 @@ class _SearchScreenState extends State<SearchScreen> {
                       ),
                       child: Padding(
                         padding: const EdgeInsets.all(11),
-                        child: Image.asset(category.icon, fit: BoxFit.contain),
+                        child: SmartProductImage(
+                          category.icon,
+                          fit: BoxFit.contain,
+                        ),
                       ),
                     ),
                     const SizedBox(height: 6),
