@@ -6,14 +6,15 @@ import 'package:meathub/core/routes/app_routes.dart';
 import 'package:meathub/core/utils/pricing_utils.dart';
 import 'package:meathub/core/widgets/category_product_card.dart';
 import 'package:meathub/core/widgets/subcategory_chip_row.dart';
-import 'package:meathub/data/dummy_category_config.dart';
-import 'package:meathub/models/category_config_model.dart';
 import 'package:meathub/models/product_model.dart';
 import 'package:meathub/providers/cart_provider.dart';
 import '../../core/utils/product_filter_criteria.dart';
 import '../../core/widgets/product_filter_sheet.dart';
 import '../../core/widgets/search_product_row.dart';
+import '../../core/widgets/smart_product_image.dart';
+import '../../models/category_model.dart';
 import '../../providers/catalog_provider.dart';
+import '../../providers/category_provider.dart';
 
 enum _SortOption { popular, priceLowHigh, priceHighLow }
 
@@ -34,7 +35,8 @@ class _CategoryProductsScreenState extends State<CategoryProductsScreen> {
   ProductFilterCriteria _filterCriteria = const ProductFilterCriteria();
   bool _isGridView = true;
 
-  late final CategoryConfigModel _config;
+  CategoryModel? get _config =>
+      context.watch<CategoryProvider>().byName(widget.categoryKey);
 
   List<ProductModel> get _categoryProducts =>
       context.watch<CatalogProvider>().productsInCategory(widget.categoryKey);
@@ -42,7 +44,6 @@ class _CategoryProductsScreenState extends State<CategoryProductsScreen> {
   @override
   void initState() {
     super.initState();
-    _config = DummyCategoryConfig.configs[widget.categoryKey]!;
     _searchController.addListener(
       () =>
           setState(() => _query = _searchController.text.trim().toLowerCase()),
@@ -183,21 +184,29 @@ class _CategoryProductsScreenState extends State<CategoryProductsScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final config = _config;
+    if (config == null) {
+      return const Scaffold(
+        backgroundColor: AppColors.background,
+        body: Center(
+          child: CircularProgressIndicator(color: AppColors.primary),
+        ),
+      );
+    }
     final cart = context.watch<CartProvider>();
     final products = _filtered;
-
     return Scaffold(
       backgroundColor: AppColors.background,
       body: SafeArea(
         child: Column(
           children: [
-            _buildTopBar(context, cart),
+            _buildTopBar(context, cart, config),
             const SizedBox(height: 12),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16),
               child: Row(
                 children: [
-                  Expanded(child: _buildSearchBar()),
+                  Expanded(child: _buildSearchBar(config)),
                   const SizedBox(width: 10),
                   _buildFilterButton(),
                 ],
@@ -207,7 +216,7 @@ class _CategoryProductsScreenState extends State<CategoryProductsScreen> {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16),
               child: SubCategoryChipRow(
-                chips: _config.chips,
+                chips: config.chips,
                 selected: _selectedChip,
                 onSelected: (c) => setState(() => _selectedChip = c),
               ),
@@ -311,7 +320,11 @@ class _CategoryProductsScreenState extends State<CategoryProductsScreen> {
     );
   }
 
-  Widget _buildTopBar(BuildContext context, CartProvider cart) {
+  Widget _buildTopBar(
+    BuildContext context,
+    CartProvider cart,
+    CategoryModel config,
+  ) {
     return Padding(
       padding: const EdgeInsets.fromLTRB(8, 8, 16, 0),
       child: Row(
@@ -332,12 +345,12 @@ class _CategoryProductsScreenState extends State<CategoryProductsScreen> {
             width: 40,
             height: 40,
             decoration: BoxDecoration(
-              color: Color(_config.themeBgValue),
+              color: config.themeBg,
               shape: BoxShape.circle,
             ),
             child: Padding(
               padding: const EdgeInsets.all(8),
-              child: Image.asset(_config.icon, fit: BoxFit.contain),
+              child: SmartProductImage(config.icon, fit: BoxFit.contain),
             ),
           ),
           const SizedBox(width: 10),
@@ -346,7 +359,7 @@ class _CategoryProductsScreenState extends State<CategoryProductsScreen> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  _config.label,
+                  config.name,
                   style: const TextStyle(
                     fontSize: 17,
                     fontWeight: FontWeight.w800,
@@ -354,7 +367,7 @@ class _CategoryProductsScreenState extends State<CategoryProductsScreen> {
                   ),
                 ),
                 Text(
-                  _config.tagline,
+                  config.tagline,
                   style: const TextStyle(
                     fontSize: 11.5,
                     color: AppColors.textSecondary,
@@ -385,7 +398,7 @@ class _CategoryProductsScreenState extends State<CategoryProductsScreen> {
     );
   }
 
-  Widget _buildSearchBar() {
+  Widget _buildSearchBar(CategoryModel config) {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 14),
       decoration: BoxDecoration(
@@ -402,7 +415,7 @@ class _CategoryProductsScreenState extends State<CategoryProductsScreen> {
               controller: _searchController,
               decoration: InputDecoration(
                 hintText:
-                    '${AppStrings.searchCategoryHintPrefix} ${_config.label.toLowerCase()} products...',
+                    '${AppStrings.searchCategoryHintPrefix} ${config.name.toLowerCase()} products...',
                 hintStyle: const TextStyle(
                   color: AppColors.textHint,
                   fontSize: 13,
