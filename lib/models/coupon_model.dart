@@ -46,4 +46,54 @@ class CouponModel {
     this.image,
     this.offerTags = const [],
   });
+
+  Map<String, dynamic> toJson() => {
+    'code': code,
+    'title': title,
+    'subtitle': subtitle,
+    'categoryLine': categoryLine,
+    'amountLabel': amountLabel,
+    'amountSuffix': amountSuffix,
+    'tagLabel': tagLabel,
+    'themeColorValue': themeColor.toARGB32(),
+    'lightBgValue': lightBg.toARGB32(),
+    'chipBgValue': chipBg.toARGB32(),
+    'type': type.name,
+    'value': value,
+    'minOrderAmount': minOrderAmount,
+    'validUntil': validUntil.toIso8601String(),
+    'category': category,
+    'status': status.name,
+    'isFeatured': isFeatured,
+    'image': image,
+    'offerTags': offerTags,
+  };
+
+  factory CouponModel.fromJson(Map<String, dynamic> json) => CouponModel(
+    code: json['code'] as String,
+    title: json['title'] as String,
+    subtitle: json['subtitle'] as String,
+    categoryLine: json['categoryLine'] as String?,
+    amountLabel: json['amountLabel'] as String,
+    amountSuffix: json['amountSuffix'] as String,
+    tagLabel: json['tagLabel'] as String,
+    themeColor: Color(json['themeColorValue'] as int),
+    lightBg: Color(json['lightBgValue'] as int),
+    chipBg: Color(json['chipBgValue'] as int),
+    type: CouponType.values.firstWhere(
+      (t) => t.name == json['type'],
+      orElse: () => CouponType.flat,
+    ),
+    value: (json['value'] as num).toDouble(),
+    minOrderAmount: (json['minOrderAmount'] as num).toDouble(),
+    validUntil: DateTime.parse(json['validUntil'] as String),
+    category: json['category'] as String?,
+    status: CouponStatus.values.firstWhere(
+      (s) => s.name == json['status'],
+      orElse: () => CouponStatus.available,
+    ),
+    isFeatured: json['isFeatured'] as bool? ?? false,
+    image: json['image'] as String?,
+    offerTags: List<String>.from(json['offerTags'] as List? ?? []),
+  );
 }
