@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:meathub/core/constants/app_colors.dart';
+import 'package:meathub/core/widgets/smart_product_image.dart';
 
 class BannerCarousel extends StatefulWidget {
   final List<String> banners;
@@ -49,7 +50,7 @@ class _BannerCarouselState extends State<BannerCarousel> {
             onPageChanged: (i) => setState(() => _current = i),
             itemBuilder: (context, index) => ClipRRect(
               borderRadius: BorderRadius.circular(18),
-              child: Image.asset(
+              child: SmartProductImage(
                 widget.banners[index],
                 fit: BoxFit.cover,
                 width: double.infinity,

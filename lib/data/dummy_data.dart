@@ -5,19 +5,19 @@ import 'package:meathub/models/payment_method_model.dart';
 import 'package:meathub/models/product_model.dart';
 import 'package:flutter/material.dart';
 import '../core/constants/app_colors.dart';
+import '../models/banner_model.dart';
 import '../models/delivery_rider_model.dart';
 
 class DummyData {
   DummyData._();
 
-  static const List<String> banners = [
-    AppAssets.banner1,
-    AppAssets.banner2,
-    AppAssets.banner3,
-    AppAssets.banner4,
-    AppAssets.banner5,
+  static const List<BannerModel> bannerSeeds = [
+    BannerModel(id: 'banner1', imageUrl: AppAssets.banner1, order: 1),
+    BannerModel(id: 'banner2', imageUrl: AppAssets.banner2, order: 2),
+    BannerModel(id: 'banner3', imageUrl: AppAssets.banner3, order: 3),
+    BannerModel(id: 'banner4', imageUrl: AppAssets.banner4, order: 4),
+    BannerModel(id: 'banner5', imageUrl: AppAssets.banner5, order: 5),
   ];
-
   static const List<CategoryModel> categorySeeds = [
     CategoryModel(
       name: 'Beef',
