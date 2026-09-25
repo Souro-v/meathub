@@ -6,9 +6,8 @@ import 'package:meathub/core/widgets/banner_carousel.dart';
 import 'package:meathub/core/widgets/category_item.dart';
 import 'package:meathub/core/widgets/product_card.dart';
 import 'package:meathub/core/widgets/section_header.dart';
-import 'package:meathub/data/dummy_data.dart';
 import 'package:provider/provider.dart';
-
+import '../../providers/banner_provider.dart';
 import '../../providers/catalog_provider.dart';
 import '../../providers/category_provider.dart';
 
@@ -25,9 +24,17 @@ class HomeScreen extends StatelessWidget {
             SliverToBoxAdapter(child: _buildHeader(context)),
             SliverToBoxAdapter(child: _buildSearchBar(context)),
             SliverToBoxAdapter(
-              child: Padding(
-                padding: const EdgeInsets.fromLTRB(16, 16, 16, 0),
-                child: BannerCarousel(banners: DummyData.banners),
+              child: Consumer<BannerProvider>(
+                builder: (context, bannerProvider, _) {
+                  final banners = bannerProvider.banners;
+                  if (banners.isEmpty) return const SizedBox.shrink();
+                  return Padding(
+                    padding: const EdgeInsets.fromLTRB(16, 16, 16, 0),
+                    child: BannerCarousel(
+                      banners: banners.map((b) => b.imageUrl).toList(),
+                    ),
+                  );
+                },
               ),
             ),
             SliverToBoxAdapter(child: _buildCategories()),
