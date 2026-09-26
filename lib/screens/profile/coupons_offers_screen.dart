@@ -6,7 +6,6 @@ import 'package:meathub/core/routes/app_routes.dart';
 import 'package:meathub/core/utils/coupon_utils.dart';
 import 'package:meathub/core/widgets/coupon_list_card.dart';
 import 'package:meathub/core/widgets/featured_coupon_card.dart';
-import 'package:meathub/data/dummy_coupons.dart';
 import 'package:meathub/models/coupon_model.dart';
 import 'package:meathub/providers/cart_provider.dart';
 import 'package:meathub/providers/coupon_provider.dart';
@@ -22,13 +21,9 @@ class CouponsOffersScreen extends StatefulWidget {
 
 class _CouponsOffersScreenState extends State<CouponsOffersScreen> {
   _CouponTab _selectedTab = _CouponTab.all;
-  late final List<CouponModel> _allCoupons;
 
-  @override
-  void initState() {
-    super.initState();
-    _allCoupons = DummyCoupons.all;
-  }
+  List<CouponModel> get _allCoupons =>
+      context.watch<CouponProvider>().allCoupons;
 
   List<CouponModel> get _filtered {
     switch (_selectedTab) {
