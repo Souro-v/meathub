@@ -7,7 +7,6 @@ import 'package:meathub/core/utils/coupon_utils.dart';
 import 'package:meathub/core/utils/offer_filter_utils.dart';
 import 'package:meathub/core/widgets/all_offer_list_card.dart';
 import 'package:meathub/core/widgets/featured_offer_mini_card.dart';
-import 'package:meathub/data/dummy_coupons.dart';
 import 'package:meathub/models/coupon_model.dart';
 import 'package:meathub/providers/cart_provider.dart';
 import 'package:meathub/providers/coupon_provider.dart';
@@ -27,21 +26,23 @@ class _AllOffersScreenState extends State<AllOffersScreen> {
   late String _selectedTag;
   bool _endingSoonFirst = false;
 
-  late final List<CouponModel> _available;
-  late final List<CouponModel> _featured;
-
   @override
   void initState() {
     super.initState();
     _selectedTag = widget.initialTag;
-    _available = DummyCoupons.all
-        .where((c) => c.status == CouponStatus.available)
-        .toList();
-    _featured = _available.where((c) => c.isFeatured).toList();
-    _searchController.addListener(() {
-      setState(() => _query = _searchController.text);
-    });
+    _searchController.addListener(
+      () => setState(() => _query = _searchController.text),
+    );
   }
+
+  List<CouponModel> get _available => context
+      .watch<CouponProvider>()
+      .allCoupons
+      .where((c) => c.status == CouponStatus.available)
+      .toList();
+
+  List<CouponModel> get _featured =>
+      _available.where((c) => c.isFeatured).toList();
 
   @override
   void dispose() {
@@ -253,7 +254,8 @@ class _AllOffersScreenState extends State<AllOffersScreen> {
           Padding(
             padding: const EdgeInsets.only(top: 10),
             child: InkWell(
-              onTap: () => Navigator.of(context).pushNamed(AppRoutes.howItWorks),
+              onTap: () =>
+                  Navigator.of(context).pushNamed(AppRoutes.howItWorks),
               child: Row(
                 children: const [
                   Icon(Icons.help_outline, size: 16, color: AppColors.primary),
