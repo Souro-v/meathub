@@ -3,6 +3,7 @@ import 'package:meathub/core/constants/app_colors.dart';
 import 'package:meathub/core/constants/app_strings.dart';
 import 'package:meathub/core/utils/date_format_utils.dart';
 import 'package:meathub/core/widgets/coupon_code_chip.dart';
+import 'package:meathub/core/widgets/smart_product_image.dart';
 import 'package:meathub/models/coupon_model.dart';
 
 class FeaturedCouponCard extends StatelessWidget {
@@ -162,7 +163,7 @@ class FeaturedCouponCard extends StatelessWidget {
                       const SizedBox(width: 10),
                       ClipRRect(
                         borderRadius: BorderRadius.circular(12),
-                        child: Image.asset(
+                        child: SmartProductImage(
                           coupon.image!,
                           width: 60,
                           height: 100,
