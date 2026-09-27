@@ -8,12 +8,20 @@ import 'package:meathub/models/coupon_model.dart';
 class FeaturedCouponCard extends StatelessWidget {
   final CouponModel coupon;
   final VoidCallback onUseNow;
-  const FeaturedCouponCard({super.key, required this.coupon, required this.onUseNow});
+
+  const FeaturedCouponCard({
+    super.key,
+    required this.coupon,
+    required this.onUseNow,
+  });
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: BoxDecoration(border: Border.all(color: AppColors.divider), borderRadius: BorderRadius.circular(18)),
+      decoration: BoxDecoration(
+        border: Border.all(color: AppColors.divider),
+        borderRadius: BorderRadius.circular(18),
+      ),
       clipBehavior: Clip.antiAlias,
       child: IntrinsicHeight(
         child: Row(
@@ -28,19 +36,59 @@ class FeaturedCouponCard extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-                    decoration: BoxDecoration(color: coupon.chipBg, borderRadius: BorderRadius.circular(8)),
-                    child: Text(coupon.tagLabel, style: TextStyle(fontSize: 9, fontWeight: FontWeight.w800, color: coupon.themeColor)),
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 8,
+                      vertical: 4,
+                    ),
+                    decoration: BoxDecoration(
+                      color: coupon.chipBg,
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                    child: Text(
+                      coupon.tagLabel,
+                      style: TextStyle(
+                        fontSize: 9,
+                        fontWeight: FontWeight.w800,
+                        color: coupon.themeColor,
+                      ),
+                    ),
                   ),
                   const SizedBox(height: 10),
-                  Text(coupon.amountLabel, style: TextStyle(fontSize: 30, fontWeight: FontWeight.w900, color: coupon.themeColor)),
-                  Text(coupon.amountSuffix, style: TextStyle(fontSize: 13, fontWeight: FontWeight.w700, color: coupon.themeColor)),
+                  Text(
+                    coupon.amountLabel,
+                    style: TextStyle(
+                      fontSize: 30,
+                      fontWeight: FontWeight.w900,
+                      color: coupon.themeColor,
+                    ),
+                  ),
+                  Text(
+                    coupon.amountSuffix,
+                    style: TextStyle(
+                      fontSize: 13,
+                      fontWeight: FontWeight.w700,
+                      color: coupon.themeColor,
+                    ),
+                  ),
                   if (coupon.categoryLine != null) ...[
                     const SizedBox(height: 4),
-                    Text(coupon.categoryLine!, style: const TextStyle(fontSize: 11.5, color: AppColors.textDark, fontWeight: FontWeight.w600)),
+                    Text(
+                      coupon.categoryLine!,
+                      style: const TextStyle(
+                        fontSize: 11.5,
+                        color: AppColors.textDark,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
                   ],
                   const SizedBox(height: 4),
-                  Text(coupon.subtitle, style: const TextStyle(fontSize: 11, color: AppColors.textSecondary)),
+                  Text(
+                    coupon.subtitle,
+                    style: const TextStyle(
+                      fontSize: 11,
+                      color: AppColors.textSecondary,
+                    ),
+                  ),
                 ],
               ),
             ),
@@ -57,15 +105,34 @@ class FeaturedCouponCard extends StatelessWidget {
                         children: [
                           Row(
                             children: [
-                              const Icon(Icons.access_time, size: 12, color: AppColors.textHint),
+                              const Icon(
+                                Icons.access_time,
+                                size: 12,
+                                color: AppColors.textHint,
+                              ),
                               const SizedBox(width: 4),
-                              Text('Valid till ${DateFormatUtils.formatFullDate(coupon.validUntil)}', style: const TextStyle(fontSize: 11, color: AppColors.textHint)),
+                              Text(
+                                'Valid till ${DateFormatUtils.formatFullDate(coupon.validUntil)}',
+                                style: const TextStyle(
+                                  fontSize: 11,
+                                  color: AppColors.textHint,
+                                ),
+                              ),
                             ],
                           ),
                           const SizedBox(height: 10),
-                          const Text('Use code', style: TextStyle(fontSize: 11.5, color: AppColors.textHint)),
+                          const Text(
+                            'Use code',
+                            style: TextStyle(
+                              fontSize: 11.5,
+                              color: AppColors.textHint,
+                            ),
+                          ),
                           const SizedBox(height: 4),
-                          CouponCodeChip(code: coupon.code, color: coupon.themeColor),
+                          CouponCodeChip(
+                            code: coupon.code,
+                            color: coupon.themeColor,
+                          ),
                           const SizedBox(height: 12),
                           SizedBox(
                             width: double.infinity,
@@ -74,9 +141,16 @@ class FeaturedCouponCard extends StatelessWidget {
                               style: ElevatedButton.styleFrom(
                                 backgroundColor: coupon.themeColor,
                                 foregroundColor: AppColors.white,
-                                padding: const EdgeInsets.symmetric(vertical: 10),
-                                textStyle: const TextStyle(fontSize: 13, fontWeight: FontWeight.w700),
-                                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                                padding: const EdgeInsets.symmetric(
+                                  vertical: 10,
+                                ),
+                                textStyle: const TextStyle(
+                                  fontSize: 13,
+                                  fontWeight: FontWeight.w700,
+                                ),
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(10),
+                                ),
                               ),
                               child: const Text(AppStrings.useNow),
                             ),
@@ -88,7 +162,12 @@ class FeaturedCouponCard extends StatelessWidget {
                       const SizedBox(width: 10),
                       ClipRRect(
                         borderRadius: BorderRadius.circular(12),
-                        child: Image.asset(coupon.image!, width: 60, height: 100, fit: BoxFit.cover),
+                        child: Image.asset(
+                          coupon.image!,
+                          width: 60,
+                          height: 100,
+                          fit: BoxFit.cover,
+                        ),
                       ),
                     ],
                   ],
