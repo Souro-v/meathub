@@ -6,7 +6,11 @@ import 'package:meathub/screens/profile/about_meathub_screen.dart';
 import 'package:meathub/screens/profile/edit_profile_screen.dart';
 import 'package:meathub/screens/profile/notification_preferences_screen.dart';
 
+import '../../core/services/banner_repository.dart';
+import '../../core/services/category_repository.dart';
+import '../../core/services/coupon_repository.dart';
 import '../../core/services/product_repository.dart';
+import '../../data/dummy_coupons.dart';
 import '../../data/dummy_data.dart';
 
 class SettingsScreen extends StatelessWidget {
@@ -73,6 +77,117 @@ class SettingsScreen extends StatelessWidget {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         content: Text('Seeded ${all.length} products to Firestore!'),
+        backgroundColor: AppColors.primary,
+      ),
+    );
+  }
+
+  Future<void> _seedCategories(BuildContext context) async {
+    final confirmed = await showDialog<bool>(
+      context: context,
+      builder: (dialogContext) => AlertDialog(
+        title: const Text('Seed Categories?'),
+        content: const Text(
+          'Pushes all demo categories into Firestore. Safe to run again — overwrites the same documents.',
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(dialogContext, false),
+            child: const Text('Cancel'),
+          ),
+          TextButton(
+            onPressed: () => Navigator.pop(dialogContext, true),
+            child: const Text('Seed Now'),
+          ),
+        ],
+      ),
+    );
+    if (confirmed != true || !context.mounted) return;
+
+    ScaffoldMessenger.of(
+      context,
+    ).showSnackBar(const SnackBar(content: Text('Seeding categories...')));
+    for (final category in DummyData.categorySeeds) {
+      await CategoryRepository.upsert(category);
+    }
+    if (!context.mounted) return;
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text('Seeded ${DummyData.categorySeeds.length} categories!'),
+        backgroundColor: AppColors.primary,
+      ),
+    );
+  }
+
+  Future<void> _seedBanners(BuildContext context) async {
+    final confirmed = await showDialog<bool>(
+      context: context,
+      builder: (dialogContext) => AlertDialog(
+        title: const Text('Seed Banners?'),
+        content: const Text(
+          'Pushes all demo banners into Firestore. Safe to run again — overwrites the same documents.',
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(dialogContext, false),
+            child: const Text('Cancel'),
+          ),
+          TextButton(
+            onPressed: () => Navigator.pop(dialogContext, true),
+            child: const Text('Seed Now'),
+          ),
+        ],
+      ),
+    );
+    if (confirmed != true || !context.mounted) return;
+
+    ScaffoldMessenger.of(
+      context,
+    ).showSnackBar(const SnackBar(content: Text('Seeding banners...')));
+    for (final banner in DummyData.bannerSeeds) {
+      await BannerRepository.upsert(banner);
+    }
+    if (!context.mounted) return;
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text('Seeded ${DummyData.bannerSeeds.length} banners!'),
+        backgroundColor: AppColors.primary,
+      ),
+    );
+  }
+
+  Future<void> _seedCoupons(BuildContext context) async {
+    final confirmed = await showDialog<bool>(
+      context: context,
+      builder: (dialogContext) => AlertDialog(
+        title: const Text('Seed Coupons?'),
+        content: const Text(
+          'Pushes all demo coupons into Firestore. Safe to run again — overwrites the same documents.',
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(dialogContext, false),
+            child: const Text('Cancel'),
+          ),
+          TextButton(
+            onPressed: () => Navigator.pop(dialogContext, true),
+            child: const Text('Seed Now'),
+          ),
+        ],
+      ),
+    );
+    if (confirmed != true || !context.mounted) return;
+
+    ScaffoldMessenger.of(
+      context,
+    ).showSnackBar(const SnackBar(content: Text('Seeding coupons...')));
+    for (final coupon in DummyCoupons.all) {
+      await CouponRepository.upsert(coupon);
+    }
+    if (!context.mounted) return;
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text('Seeded ${DummyCoupons.all.length} coupons!'),
         backgroundColor: AppColors.primary,
       ),
     );
@@ -182,6 +297,24 @@ class SettingsScreen extends StatelessWidget {
                       title: 'Seed Product Catalog',
                       subtitle: 'One-time: push demo products into Firestore',
                       onTap: () => _seedCatalog(context),
+                    ),
+                    _tile(
+                      icon: Icons.category_outlined,
+                      title: 'Seed Categories',
+                      subtitle: 'One-time: push demo categories into Firestore',
+                      onTap: () => _seedCategories(context),
+                    ),
+                    _tile(
+                      icon: Icons.view_carousel_outlined,
+                      title: 'Seed Banners',
+                      subtitle: 'One-time: push demo banners into Firestore',
+                      onTap: () => _seedBanners(context),
+                    ),
+                    _tile(
+                      icon: Icons.confirmation_number_outlined,
+                      title: 'Seed Coupons',
+                      subtitle: 'One-time: push demo coupons into Firestore',
+                      onTap: () => _seedCoupons(context),
                     ),
                   ]),
                 ],
