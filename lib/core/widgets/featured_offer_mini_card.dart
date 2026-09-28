@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:meathub/core/constants/app_colors.dart';
 import 'package:meathub/core/utils/date_format_utils.dart';
 import 'package:meathub/core/widgets/coupon_code_chip.dart';
+import 'package:meathub/core/widgets/smart_product_image.dart';
 import 'package:meathub/models/coupon_model.dart';
 
 class FeaturedOfferMiniCard extends StatelessWidget {
@@ -113,7 +114,7 @@ class FeaturedOfferMiniCard extends StatelessWidget {
               if (offer.image != null)
                 ClipRRect(
                   borderRadius: BorderRadius.circular(10),
-                  child: Image.asset(
+                  child: SmartProductImage(
                     offer.image!,
                     width: 44,
                     height: 60,
