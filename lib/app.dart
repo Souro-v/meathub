@@ -22,21 +22,21 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
-      providers: [
-        ChangeNotifierProvider(create: (_) => WishlistProvider()),
-        ChangeNotifierProvider(create: (_) => CartProvider()),
-        ChangeNotifierProvider(create: (_) => OrdersProvider()),
-        ChangeNotifierProvider(create: (_) => UserProvider()),
-        ChangeNotifierProvider(create: (_) => CouponProvider()),
-        ChangeNotifierProvider(create: (_) => TicketProvider()),
-        ChangeNotifierProvider(create: (_) => SearchHistoryProvider()),
-        ChangeNotifierProvider(create: (_) => PaymentMethodsProvider()),
-        ChangeNotifierProvider(create: (_) => SettingsProvider()),
-        ChangeNotifierProvider(create: (_) => AddressesProvider()),
-        ChangeNotifierProvider(create: (_) => CatalogProvider()),
-        ChangeNotifierProvider(create: (_) => CategoryProvider()),
-        ChangeNotifierProvider(create: (_) => BannerProvider()),
-      ],
+        providers: [
+          ChangeNotifierProvider(create: (_) => WishlistProvider()),
+          ChangeNotifierProvider(create: (_) => CartProvider()),
+          ChangeNotifierProvider(create: (_) => OrdersProvider()),
+          ChangeNotifierProvider(create: (_) => UserProvider()),
+          ChangeNotifierProvider(create: (_) => CouponProvider()),
+          ChangeNotifierProvider(create: (_) => TicketProvider()),
+          ChangeNotifierProvider(create: (_) => SearchHistoryProvider()),
+          ChangeNotifierProvider(create: (_) => PaymentMethodsProvider()),
+          ChangeNotifierProvider(create: (_) => SettingsProvider()),
+          ChangeNotifierProvider(create: (_) => AddressesProvider()),
+          ChangeNotifierProvider(create: (_) => CatalogProvider()),
+          ChangeNotifierProvider(create: (_) => CategoryProvider()),
+          ChangeNotifierProvider(create: (_) => BannerProvider()),
+        ],
       child: MaterialApp(
         title: 'MeatHub',
         debugShowCheckedModeBanner: false,
