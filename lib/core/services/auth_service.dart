@@ -66,11 +66,16 @@ class AuthService {
     }
   }
 
-  static Future<String?> deleteAccount({required String currentPassword}) async {
+  static Future<String?> deleteAccount({
+    required String currentPassword,
+  }) async {
     try {
       final user = _auth.currentUser;
       if (user == null || user.email == null) return 'No signed-in user found.';
-      final cred = EmailAuthProvider.credential(email: user.email!, password: currentPassword);
+      final cred = EmailAuthProvider.credential(
+        email: user.email!,
+        password: currentPassword,
+      );
       await user.reauthenticateWithCredential(cred);
       await user.delete();
       return null;
